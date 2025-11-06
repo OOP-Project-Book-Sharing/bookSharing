@@ -1,0 +1,80 @@
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #f9f9f9, #e8e8e8);
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-padding: 20;
+}
+
+/* --- LABELS --- */
+.label {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Title Label (Make it stand out) */
+#titleLabel {
+    -fx-font-size: 22px;
+    -fx-text-fill: #1a237e;
+    -fx-font-weight: bold;
+}
+
+/* Author Label (Subtle secondary info) */
+#authorLabel {
+    -fx-font-size: 18px;
+    -fx-text-fill: #3949ab;
+}
+
+/* Description (longer text block) */
+#descriptionArea {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+    -fx-wrap-text: true;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+/* --- BUTTONS --- */
+.button {
+    -fx-background-color: linear-gradient(to right, #4CAF50, #2E7D32);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 8 20 8 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 2);
+    -fx-transition: 0.3s;
+}
+
+/* Hover effect */
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #66BB6A, #388E3C);
+}
+
+/* Disabled button (like when amount is negative) */
+.button:disabled {
+    -fx-background-color: #b0bec5;
+    -fx-text-fill: #eeeeee;
+    -fx-opacity: 0.8;
+    -fx-cursor: default;
+}
+
+/* --- IMAGE --- */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);
+    -fx-background-radius: 15;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 15;
+    -fx-padding: 5;
+}
+
+/* --- NEXT BUTTON --- */
+#nextBookButton {
+    -fx-background-color: linear-gradient(to right, #2196F3, #1565C0);
+}
+
+#nextBookButton:hover {
+    -fx-background-color: linear-gradient(to right, #42A5F5, #1976D2);
+}
