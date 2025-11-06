@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -106,18 +107,21 @@ public class myBooksController {
     private void openBookDetails(Book selectedBook) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("bookDetails.fxml"));
-            Parent root = loader.load();
+            Parent detailsPage = loader.load();
 
             BookDetailsController controller = loader.getController();
             controller.setBooks(books);
             controller.setBookDetails(selectedBook);
 
-            Stage stage = (Stage) bookListVBox.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle(selectedBook.getTitle() + " - Details");
-            stage.show();
+            // Get the main stack pane from current scene
+            StackPane mainStackPane = (StackPane) bookListVBox.getScene().lookup("#mainStackPane");
+            if (mainStackPane != null) {
+                mainStackPane.getChildren().add(detailsPage);  // push details page on top
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

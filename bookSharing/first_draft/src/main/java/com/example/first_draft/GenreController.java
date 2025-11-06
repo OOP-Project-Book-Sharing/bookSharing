@@ -26,7 +26,7 @@ public class GenreController {
         loadGenres(); // populate buttons
     }
 
-    private void loadGenres() {
+    public void loadGenres() {
         vbox.getChildren().clear();
 
         for (Genre g : genres) {

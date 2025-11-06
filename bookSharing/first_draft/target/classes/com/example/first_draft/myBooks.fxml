@@ -4,42 +4,40 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderpane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.myBooksController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.myBooksController">
 
-    <top>
-        <VBox alignment="CENTER" spacing="10">
-            <children>
-                <Label alignment="CENTER" text="MY BOOKS" textAlignment="CENTER">
-                    <font>
-                        <Font size="34.0" />
-                    </font>
-                </Label>
-                <HBox alignment="CENTER" spacing="20">
-                    <children>
-                        <Button fx:id="btnForSaleRent" prefWidth="150" text="For Sale/Rent" />
-                        <Button fx:id="btnRented" prefWidth="150" text="Rented" />
-                        <Button fx:id="btnBorrowed" prefWidth="150" text="Borrowed" />
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
-    </top>
+    <!-- Top VBox -->
+    <VBox fx:id="topVBox" alignment="CENTER" spacing="10" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <children>
+            <Label alignment="CENTER" text="MY BOOKS" textAlignment="CENTER">
+                <font>
+                    <Font size="34.0" />
+                </font>
+            </Label>
+            <HBox alignment="CENTER" spacing="20">
+                <children>
+                    <Button fx:id="btnForSaleRent" prefWidth="150" text="For Sale/Rent" />
+                    <Button fx:id="btnRented" prefWidth="150" text="Rented" />
+                    <Button fx:id="btnBorrowed" prefWidth="150" text="Borrowed" />
+                </children>
+            </HBox>
+        </children>
+    </VBox>
 
-    <center>
-        <ScrollPane fx:id="scrollPane" fitToWidth="true">
-            <content>
-                <VBox fx:id="bookListVBox" spacing="10">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </VBox>
-            </content>
-        </ScrollPane>
-    </center>
+    <!-- Center ScrollPane -->
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" AnchorPane.topAnchor="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <content>
+            <VBox fx:id="bookListVBox" spacing="10">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                </padding>
+            </VBox>
+        </content>
+    </ScrollPane>
 
-</BorderPane>
+</AnchorPane>
