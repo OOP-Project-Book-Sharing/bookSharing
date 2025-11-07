@@ -1,0 +1,54 @@
+/* mainLayout.css - put in same package as the FXML */
+
+/* Background for the whole scene - BorderPane is root here */
+.border-pane {
+    -fx-background-color: linear-gradient(to bottom right, #f4f4f8, #e0e6ef);
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+/* Top bar styling */
+#topBar {
+    -fx-padding: 8 12;
+    -fx-background-color: linear-gradient(to right, #3f51b5, #5c6bc0);
+    -fx-alignment: center-left;
+}
+
+/* Bottom navigation styling */
+#bottomNav {
+    -fx-padding: 6 10;
+    -fx-background-color: linear-gradient(to right, #3f51b5, #5c6bc0);
+    -fx-alignment: center;
+    -fx-spacing: 8;
+}
+
+
+/* Default button style for nav bar */
+.button {
+    -fx-background-color: crimson;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 14;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+/* Hover and pressed states */
+.button:hover {
+    -fx-background-color: rgba(255,255,255,0.12);
+}
+.button:pressed {
+    -fx-background-color: rgba(255,255,255,0.22);
+}
+
+/* Back button (top) - inverse style for visibility */
+#prevButton {
+    -fx-background-color: white;
+    -fx-text-fill: #3f51b5;
+    -fx-border-color: transparent;
+    -fx-font-weight: bold;
+}
+#prevButton:hover {
+    -fx-background-color: #e8eefc;
+}

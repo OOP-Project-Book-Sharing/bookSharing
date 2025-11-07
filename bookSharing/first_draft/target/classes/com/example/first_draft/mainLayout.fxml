@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.MainLayoutController">
+<BorderPane stylesheets="@css/mainLayout.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.MainLayoutController">
     <bottom>
         <HBox prefHeight="37.0" prefWidth="602.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
@@ -19,8 +19,7 @@
    <top>
       <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="prevButton" mnemonicParsing="false" text="prev" />
-            <Button fx:id="nextButton" mnemonicParsing="false" text="next" />
+            <Button fx:id="prevButton" mnemonicParsing="false" text="Back" />
          </children>
       </HBox>
    </top>

@@ -18,6 +18,7 @@ public class MainLayoutController {
     @FXML private Button myBooksButton;
     @FXML private Button searchButton;
     @FXML private Button accountButton;
+    @FXML private Button prevButton;
 
     private List<Book> books;
     private List<Genre> genres;
@@ -28,6 +29,7 @@ public class MainLayoutController {
         SceneManager.setMainStackPane(mainStackPane);
 
         // Button actions to switch pages
+        //prevButton.setOnAction(e -> SceneManager.goBack());
         homeButton.setOnAction(e -> loadPage("homeWithGenre.fxml"));
         myBooksButton.setOnAction(e -> loadPage("myBooks.fxml"));
         searchButton.setOnAction(e -> loadPage("homePage.fxml"));
