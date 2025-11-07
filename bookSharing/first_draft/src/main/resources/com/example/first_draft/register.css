@@ -1,0 +1,31 @@
+.root {
+    -fx-background-image: url("../images/register_bg.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: linear-gradient(to bottom right, #56ab2f, #a8e063);
+}
+
+.register-container {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-background-radius: 20;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0.3, 0, 0);
+}
+
+.text-field, .password-field {
+    -fx-background-color: rgba(255,255,255,0.8);
+    -fx-text-fill: #1a1a1a;
+    -fx-background-radius: 10;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to right, #43cea2, #185a9d);
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #185a9d, #43cea2);
+}

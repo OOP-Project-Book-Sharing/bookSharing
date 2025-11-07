@@ -28,7 +28,7 @@ public class MainLayoutController {
     private final String[] pages = {
             "homeWithGenre.fxml",  // home page with genres
             "myBooks.fxml",       // user's books
-            "homePage.fxml",    // search section
+            "searchPage.fxml",    // search section
             "accountPage.fxml"    // account page
     };
 
@@ -87,9 +87,9 @@ public class MainLayoutController {
             } else if (controller instanceof GenreController genreCtrl) {
                 genreCtrl.setGenres(genres);
                 genreCtrl.loadGenres();
-            } else if (controller instanceof HomePageController homeCtrl) {
-                homeCtrl.setBooks(books);
-                homeCtrl.displayBooks();
+            } else if (controller instanceof SearchPageController srchCtrl) {
+                srchCtrl.setBooks(books);
+                srchCtrl.displayBooks();
             }
 
             mainStackPane.getChildren().setAll(page);
