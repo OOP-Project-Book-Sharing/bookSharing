@@ -36,8 +36,6 @@ public class myBooksController {
     @FXML
     private VBox bookListVBox;
 
-    private BorderPane borderPane;
-
     private List<Book> books;
 
     public void setBooks(List<Book> books) {
@@ -106,18 +104,17 @@ public class myBooksController {
     // Open book details page
     private void openBookDetails(Book selectedBook) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("bookDetails.fxml"));
+            // Load BookDetails FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/first_draft/bookDetails.fxml"));
             Parent detailsPage = loader.load();
 
+            // Inject data into controller
             BookDetailsController controller = loader.getController();
             controller.setBooks(books);
             controller.setBookDetails(selectedBook);
 
-            // Get the main stack pane from current scene
-            StackPane mainStackPane = (StackPane) bookListVBox.getScene().lookup("#mainStackPane");
-            if (mainStackPane != null) {
-                mainStackPane.getChildren().add(detailsPage);  // push details page on top
-            }
+            // Replace current view in mainStackPane
+            SceneManager.getMainStackPane().getChildren().setAll(detailsPage);
 
         } catch (IOException e) {
             e.printStackTrace();

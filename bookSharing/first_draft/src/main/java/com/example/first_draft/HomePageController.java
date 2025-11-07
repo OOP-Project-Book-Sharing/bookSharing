@@ -5,14 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,10 +21,10 @@ public class HomePageController {
     @FXML
     private GridPane gridPane;
 
-    private List<Book> ListOfBooks;
+    private List<Book> books;
 
     public void setBooks(List<Book> books) {
-        this.ListOfBooks = books;
+        this.books = books;
     }
 
     public void displayBooks() {
@@ -42,8 +41,8 @@ public class HomePageController {
             gridPane.getColumnConstraints().add(cc);
         }
 
-        for (int i = 0; i < ListOfBooks.size(); i++) {
-            Book book = ListOfBooks.get(i);
+        for (int i = 0; i < books.size(); i++) {
+            Book book = books.get(i);
 
             Label title = new Label(book.getTitle());
             Label author = new Label(book.getAuthor());
@@ -95,17 +94,18 @@ public class HomePageController {
 
     private void openBookDetails(Book selectedBook) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("bookDetails.fxml"));
-            Parent root = loader.load();
+            // Load BookDetails FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/first_draft/bookDetails.fxml"));
+            Parent detailsPage = loader.load();
 
+            // Inject data into controller
             BookDetailsController controller = loader.getController();
-            controller.setBooks(ListOfBooks);
+            controller.setBooks(books);
             controller.setBookDetails(selectedBook);
 
-            Stage stage = (Stage) gridPane.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle(selectedBook.getTitle() + " - Details");
-            stage.show();
+            // Replace current view in mainStackPane
+            SceneManager.getMainStackPane().getChildren().setAll(detailsPage);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
