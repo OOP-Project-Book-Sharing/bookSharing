@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.GenreController">
-   <bottom>
-      <HBox prefHeight="38.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="164.0" text="Home" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" text="My Books" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="170.0" text="Search" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Account" />
-         </children>
-      </HBox>
-   </bottom>
-   <top>
-      <VBox prefHeight="65.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="610.0" text="Book Sharing and Rental App">
-               <font>
-                  <Font size="27.0" />
-               </font>
-            </Label>
-            <TextField promptText="S" text="Search Books" />
-         </children>
-      </VBox>
-   </top>
-   <center>
-      <VBox fx:id="vbox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
-   </center>
-</BorderPane>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.GenreController" stylesheets="@homeWithGenre.css">
+   <children>
+      <Label layoutX="216.0" layoutY="14.0" text="Book Panda">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <ScrollPane fitToWidth="true" layoutY="66.0" prefHeight="333.0" prefWidth="600.0">
+         <content>
+            <VBox fx:id="vbox" prefHeight="1171.0" prefWidth="585.0" spacing="10.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

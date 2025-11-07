@@ -1,0 +1,51 @@
+/* ========== VBox Styling ========== */
+.vbox {
+    -fx-alignment: top-center;
+    -fx-spacing: 20; /* space between genres */
+    -fx-padding: 20;
+    -fx-background-color: #fafafa;
+}
+
+/* ========== HBox (for book display) ========== */
+.hbox {
+    -fx-alignment: center;
+    -fx-spacing: 5%; /* relative spacing mimic */
+}
+
+/* ========== Genre Buttons ========== */
+.button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #3f51b5;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3,0,0,2);
+}
+
+.button:hover {
+    -fx-background-color: #5c6bc0;
+}
+
+/* ========== Book VBox ========== */
+.book-box {
+    -fx-alignment: top-center;
+    -fx-spacing: 10;
+}
+
+/* ========== Labels for Book Info ========== */
+.label {
+    -fx-font-family: "Segoe UI";
+    -fx-text-alignment: center;
+}
+
+.label.title {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.label.author {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555;
+}
