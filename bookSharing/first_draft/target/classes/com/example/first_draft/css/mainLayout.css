@@ -52,3 +52,13 @@
 #prevButton:hover {
     -fx-background-color: #e8eefc;
 }
+
+#centerPane {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f2f4f9);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 5);
+    -fx-border-color: rgba(63, 81, 181, 0.2);
+    -fx-border-width: 1;
+}
