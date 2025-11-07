@@ -1,5 +1,6 @@
 package com.example.first_draft;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -7,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -14,6 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageController {
@@ -21,10 +24,25 @@ public class HomePageController {
     @FXML
     private GridPane gridPane;
 
+    @FXML
+    private TextField searchTextField;
+
     private List<Book> books;
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @FXML
+    public void search(ActionEvent event){
+        //gridPane.getChildren().clear();
+        if (searchTextField.getText().isEmpty()) {
+            displayBooks();
+            return;
+        }
+//        ArrayList<Book> searchResults = searchlist(searchTextField.getText());
+        this.books = searchlist(searchTextField.getText());
+        displayBooks();
     }
 
     public void displayBooks() {
@@ -90,6 +108,20 @@ public class HomePageController {
                 row++;
             }
         }
+    }
+
+    public ArrayList<Book> searchlist(String searchKeyword){
+        ArrayList<Book> searchResults = new ArrayList<>();
+
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(searchKeyword.toLowerCase()) ||
+                    book.getAuthor().toLowerCase().contains(searchKeyword.toLowerCase())) {
+
+                searchResults.add(book);
+            }
+        }
+        return searchResults;
+
     }
 
     private void openBookDetails(Book selectedBook) {
