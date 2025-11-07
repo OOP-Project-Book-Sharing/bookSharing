@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -96,10 +97,12 @@ public class GenreController {
         homeController.setBooks(selectedGenre.getBooks()); // set the book list
         homeController.displayBooks(); // show books
 
+        if (root instanceof Region region) {
+            region.prefWidthProperty().bind(SceneManager.getMainStackPane().widthProperty());
+            region.prefHeightProperty().bind(SceneManager.getMainStackPane().heightProperty());
+        }
+
         // Switch the scene
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        SceneManager.getMainStackPane().getChildren().setAll(root);
     }
 }
