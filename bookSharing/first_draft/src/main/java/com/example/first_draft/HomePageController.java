@@ -45,8 +45,8 @@ public class HomePageController {
 //        displayBooks();
 
         gridPane.getChildren().clear();
-//        gridPane.getColumnConstraints().clear();
-//        gridPane.getRowConstraints().clear();
+        gridPane.getColumnConstraints().clear();
+        gridPane.getRowConstraints().clear();
 
         int columns = 3;
         int col = 0, row = 0;
