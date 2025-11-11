@@ -1,0 +1,7 @@
+Detective
+Thriller
+Romance
+Sci-Fi
+Fantasy
+Horror
+dwa

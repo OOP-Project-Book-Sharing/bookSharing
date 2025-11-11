@@ -1,2 +1,0 @@
-Death on the Nile|Agatha Christie|Fantasy adventure story|/com/example/first_draft/images/book1.jpg|300|150|true
-The Murder of Roger Ackroyd|Agatha Christie|A classic detective novel.|/com/example/first_draft/images/roger_ackroyd.jpg|250|100|true

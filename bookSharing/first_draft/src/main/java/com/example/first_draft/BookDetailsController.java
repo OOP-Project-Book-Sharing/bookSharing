@@ -1,11 +1,12 @@
 package com.example.first_draft;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -33,14 +34,22 @@ public class BookDetailsController {
     private Button nextBookButton;
 
     private String paymentPassword = "1234"; // Example password
-    private List<Book> books;                // List of books
-    private int currentIndex = 0;            // Track which book is currently shown
+    private List<Book> books;
+    private int currentIndex = 0;
+
+    private static final double IMAGE_WIDTH = 200;
+    private static final double IMAGE_HEIGHT = 252;
 
     @FXML
     public void initialize() {
         buyAmount.setOnAction(event -> handlePayment("Buy", buyAmount.getText()));
         rentAmount.setOnAction(event -> handlePayment("Rent", rentAmount.getText()));
         nextBookButton.setOnAction(event -> loadNextBook());
+
+        // Ensure fixed image size
+        bookImage.setFitWidth(IMAGE_WIDTH);
+        bookImage.setFitHeight(IMAGE_HEIGHT);
+        bookImage.setPreserveRatio(true);
     }
 
     public void setBooks(List<Book> books) {
@@ -54,7 +63,6 @@ public class BookDetailsController {
     private void loadNextBook() {
         if (books == null || books.isEmpty()) return;
 
-        // Move to next book, loop back to first if at the end
         currentIndex = (currentIndex + 1) % books.size();
         setBookDetails(books.get(currentIndex));
     }
@@ -66,7 +74,6 @@ public class BookDetailsController {
         authorLabel.setText(book.getAuthor());
         descriptionArea.setText("Summary: " + book.getDescription());
 
-        // --- Set button text and disable based on value ---
         if (book.getBuyAmount() < 0) {
             buyAmount.setText("Not for Sale");
             buyAmount.setDisable(true);
@@ -87,21 +94,43 @@ public class BookDetailsController {
             rentAmount.setStyle("-fx-opacity: 1.0;");
         }
 
-        // --- Set image ---
+        // Load image
         if (book.getImagePath() != null && !book.getImagePath().isEmpty()) {
             bookImage.setImage(book.getCover().getImage());
         }
     }
 
     private void handlePayment(String actionType, String amountText) {
-        TextInputDialog passwordDialog = new TextInputDialog();
-        passwordDialog.setTitle(actionType + " Payment");
-        passwordDialog.setHeaderText("Enter your password to complete " + actionType.toLowerCase() + " payment");
-        passwordDialog.setContentText("Password:");
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle(actionType + " Payment");
+        dialog.setHeaderText("Enter your password to complete " + actionType.toLowerCase() + " payment");
 
-        Optional<String> result = passwordDialog.showAndWait();
-        if (result.isPresent()) {
-            String enteredPassword = result.get();
+        // Styled dialog content
+        Label label = new Label("Password:");
+        label.setFont(new Font("Arial", 14));
+
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPrefWidth(200);
+
+        VBox content = new VBox(10);
+        content.getChildren().addAll(label, passwordField);
+        content.setMinWidth(300);
+        dialog.getDialogPane().setContent(content);
+
+        // Buttons
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        // Result converter
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                return passwordField.getText();
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(enteredPassword -> {
             if (enteredPassword.equals(paymentPassword)) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setTitle("Payment Successful");
@@ -115,6 +144,6 @@ public class BookDetailsController {
                 denied.setContentText("Incorrect password! Payment denied.");
                 denied.showAndWait();
             }
-        }
+        });
     }
 }

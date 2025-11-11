@@ -16,31 +16,40 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenreController {
 
     @FXML
     private VBox vbox;
 
-    private List<Genre> genres;
+    private List<Book> allBooks;
 
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
+    public void setBooks(List<Book> allBooks) {
+        this.allBooks = allBooks;
         loadGenres();
     }
 
     public void loadGenres() {
         vbox.getChildren().clear();
-        vbox.setAlignment(Pos.TOP_LEFT); // align all content from left
+        vbox.setAlignment(Pos.TOP_LEFT);
 
-        for (Genre g : genres) {
-            // Genre name button
-            Button genreButton = new Button(g.getName());
+        List<String> genreNames = GenreDatabase.loadGenres();
+
+        for (String genreName : genreNames) {
+            Button genreButton = new Button(genreName);
             genreButton.setPrefWidth(200);
+
+            // Filter books for this genre
+            List<Book> booksInGenre = allBooks.stream()
+                    .filter(b -> genreName.equalsIgnoreCase(b.getGenre()))
+                    .collect(Collectors.toList());
+
             genreButton.setOnAction(event -> {
                 try {
-                    switchToViewBooks(g, event);
+                    switchToViewBooks(genreName, booksInGenre, event);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -48,14 +57,11 @@ public class GenreController {
 
             vbox.getChildren().add(genreButton);
 
-            List<Book> booksInGenre = g.getBooks();
-
-            // Create a horizontal box for book previews + "More" button
+            // Horizontal box for book previews
             HBox displayBox = new HBox(20);
             displayBox.setAlignment(Pos.CENTER_LEFT);
-            displayBox.setPadding(new Insets(10, 0, 10, 30)); // left padding for visual margin
+            displayBox.setPadding(new Insets(10, 0, 10, 30));
 
-            // limit preview to first 2 books (or available count)
             int previewCount = Math.min(2, booksInGenre.size());
             for (int i = 0; i < previewCount; i++) {
                 Book book = booksInGenre.get(i);
@@ -77,16 +83,15 @@ public class GenreController {
                 displayBox.getChildren().add(bookBox);
             }
 
-            // Spacer between books and "More" button
+            // Spacer & More button
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
             displayBox.getChildren().add(spacer);
 
-
             Button moreButton = new Button("More Books →");
             moreButton.setOnAction(event -> {
                 try {
-                    switchToViewBooks(g, event);
+                    switchToViewBooks(genreName, booksInGenre, event);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -98,12 +103,12 @@ public class GenreController {
         }
     }
 
-    private void switchToViewBooks(Genre selectedGenre, ActionEvent event) throws IOException {
+    private void switchToViewBooks(String genreName, List<Book> booksInGenre, ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homePage.fxml"));
         Parent root = fxmlLoader.load();
 
         HomePageController homeController = fxmlLoader.getController();
-        homeController.setBooks(selectedGenre.getBooks());
+        homeController.setBooks(booksInGenre);
         homeController.displayBooks();
 
         if (root instanceof Region region) {

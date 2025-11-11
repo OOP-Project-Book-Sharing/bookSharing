@@ -20,8 +20,20 @@ public class MainLayoutController {
     @FXML private Button accountButton;
     @FXML private Button prevButton;
 
-    private List<Book> books;
-    private List<Genre> genres;
+    private BookDatabase bookDatabase;
+    private String currentUser;
+
+    /** Inject BookDatabase */
+    public void setBookDatabase(BookDatabase bookDatabase) {
+        this.bookDatabase = bookDatabase;
+        tryLoadFirstPage();
+    }
+
+    /** Inject current logged-in user */
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+        tryLoadFirstPage();
+    }
 
     @FXML
     public void initialize() {
@@ -29,35 +41,20 @@ public class MainLayoutController {
         SceneManager.setMainStackPane(mainStackPane);
 
         // Button actions to switch pages
-        //prevButton.setOnAction(e -> SceneManager.goBack());
         homeButton.setOnAction(e -> loadPage("homeWithGenre.fxml"));
         myBooksButton.setOnAction(e -> loadPage("myBooks.fxml"));
         searchButton.setOnAction(e -> loadPage("homePage.fxml"));
         accountButton.setOnAction(e -> loadPage("accountPage.fxml"));
-
-        // Do NOT load a page here; wait until books and genres are set
     }
 
-    /** Called from LoginController to inject books */
-    public void setBooks(List<Book> books) {
-        this.books = books;
-        tryLoadFirstPage();
-    }
-
-    /** Called from LoginController to inject genres */
-    public void setGenres(List<Genre> genres) {
-        this.genres = genres;
-        tryLoadFirstPage();
-    }
-
-    /** Load the first page only after books & genres are available */
+    /** Load the first page only after DB and user are available */
     private void tryLoadFirstPage() {
-        if (books != null && genres != null && mainStackPane != null && mainStackPane.getChildren().isEmpty()) {
+        if (bookDatabase != null && currentUser != null && mainStackPane != null && mainStackPane.getChildren().isEmpty()) {
             loadPage("homeWithGenre.fxml");
         }
     }
 
-    /** Load an FXML page and inject data if required */
+    /** Load an FXML page and inject filtered books if needed */
     private void loadPage(String fxmlFile) {
         try {
             URL fxmlUrl = getClass().getResource("/com/example/first_draft/" + fxmlFile);
@@ -70,28 +67,43 @@ public class MainLayoutController {
             Node page = loader.load();
             Object controller = loader.getController();
 
+            // --- Pass filtered book lists to controllers ---
+            if (controller instanceof myBooksController myBooksCtrl) {
+                // Books owned by current user
+                List<Book> myBooks = bookDatabase.getBooksByOwner(currentUser);
+                myBooksCtrl.displayBooks();
+
+            } else if (controller instanceof GenreController genreCtrl) {
+                // Pass all books so controller can filter per genre dynamically
+                genreCtrl.setBooks(bookDatabase.getAllBooks());
+
+            } else if (controller instanceof HomePageController homeCtrl) {
+                // Show all available books
+                List<Book> availableBooks = bookDatabase.getAvailableBooks();
+                homeCtrl.setBooks(availableBooks);
+                homeCtrl.displayBooks();
+
+            } else if (controller instanceof HomePageController searchCtrl) {
+                // Show all books, can be filtered later
+                searchCtrl.setBooks(bookDatabase.getAllBooks());
+                searchCtrl.displayBooks();
+            }
+
             if (page instanceof Region region) {
                 region.prefWidthProperty().bind(mainStackPane.widthProperty());
                 region.prefHeightProperty().bind(mainStackPane.heightProperty());
             }
 
-            // Inject books/genres into specific controllers
-            if (controller instanceof myBooksController myBooksCtrl) {
-                myBooksCtrl.setBooks(books);
-                myBooksCtrl.displayBooks();
-            } else if (controller instanceof GenreController genreCtrl) {
-                genreCtrl.setGenres(genres);
-                genreCtrl.loadGenres();
-            } else if (controller instanceof HomePageController homeCtrl) {
-                homeCtrl.setBooks(books);
-                homeCtrl.displayBooks();
-            }
-
-            // Replace current page (do NOT stack)
+            // Replace current page
             mainStackPane.getChildren().setAll(page);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /** Utility: Get books rented to current user */
+    public List<Book> getRentedBooksForUser() {
+        return bookDatabase.getBooksRentedTo(currentUser);
     }
 }

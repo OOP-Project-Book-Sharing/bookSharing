@@ -1,2 +1,0 @@
-Feluda|Satyajit Ray|Fantasy adventure story.|/com/example/first_draft/images/feluda.jpg|300|150|true
-Byomkesh|Swardindu|A classic detective novel.|/com/example/first_draft/images/byomkesh.jpg|250|100|true

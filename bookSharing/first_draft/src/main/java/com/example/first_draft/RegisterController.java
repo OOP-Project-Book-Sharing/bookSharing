@@ -2,45 +2,28 @@ package com.example.first_draft;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class RegisterController {
 
-    @FXML
-    private TextField usernameField;
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;
+    @FXML private TextField emailField;
+    @FXML private TextField phoneField;
+    @FXML private TextField locationField;
+    @FXML private Label messageLabel;
 
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField phoneField;
-
-    @FXML
-    private TextField locationField;
-
-    @FXML
-    private Label messageLabel;
+    private UserDatabase userDB = new UserDatabase();
 
     @FXML
     private void handleRegister(ActionEvent event) {
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
-        String email    = emailField.getText().trim();
-        String phone    = phoneField.getText().trim();
+        String email = emailField.getText().trim();
+        String phone = phoneField.getText().trim();
         String location = locationField.getText().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
@@ -48,31 +31,24 @@ public class RegisterController {
             return;
         }
 
-        saveUser(username, password, email, phone, location);
-        messageLabel.setText("User registered successfully!");
-    }
-
-    private void saveUser(String username, String password, String email, String phone, String location) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("users.txt", true))) {
-
-            bw.write(username + "," + password + "," + email + "," + phone + "," + location);
-            bw.newLine();
-
-        } catch (IOException e) {
-            messageLabel.setText("Error saving user!");
-            e.printStackTrace();
+        if (userDB.userExists(username)) {
+            messageLabel.setText("Username already exists!");
+            return;
         }
+
+        userDB.addUser(new User(username, password, email, phone, location));
+        messageLabel.setText("User registered successfully!");
     }
 
     @FXML
     private void handleBackToLogin(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("login.fxml"));
+            javafx.scene.Parent root = loader.load();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new javafx.scene.Scene(root));
             stage.show();
         } catch (Exception e) {
-            System.out.println("Cannot load login.fxml");
             e.printStackTrace();
         }
     }

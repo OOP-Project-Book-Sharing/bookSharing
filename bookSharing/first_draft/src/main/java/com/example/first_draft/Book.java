@@ -3,7 +3,9 @@ package com.example.first_draft;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String title;
     private String author;
     private String description;
@@ -11,52 +13,76 @@ public class Book {
     private int buyAmount;
     private int rentAmount;
     private boolean isAvailable;
-    private double rating;
-    private ImageView cover;
+    private String owner;
+    private String rentedTo;
+    private String dueDate;
+    private String genre;
 
+    public Book() {}
 
-    public Book(String title, String author, String description, String imagePath, int buyAmount, int rentAmount, boolean isAvailable) {
+    public Book(String title, String author, String description, String imagePath,
+                int buyAmount, int rentAmount, boolean isAvailable,
+                String owner, String rentedTo, String dueDate, String genre) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.imagePath = imagePath;
         this.buyAmount = buyAmount;
         this.rentAmount = rentAmount;
-        this.isAvailable = true;
-        this.cover= new ImageView(new Image(getClass().getResource(imagePath).toExternalForm()));
+        this.isAvailable = isAvailable;
+        this.owner = owner;
+        this.rentedTo = rentedTo;
+        this.dueDate = dueDate;
+        this.genre = genre;
     }
 
-    // Getters
-    public String getTitle() {
-        return title;
-    }
+    // --- Getters ---
+    public String getTitle() { return title; }
+    public String getAuthor() { return author; }
+    public String getDescription() { return description; }
+    public String getImagePath() { return imagePath; }
+    public int getBuyAmount() { return buyAmount; }
+    public int getRentAmount() { return rentAmount; }
+    public boolean isAvailable() { return isAvailable; }
+    public String getOwner() { return owner; }
+    public String getRentedTo() { return rentedTo; }
+    public String getDueDate() { return dueDate; }
+    public String getGenre() { return genre; }
 
-    public String getAuthor() {
-        return author;
-    }
+    // --- Setters ---
+    public void setTitle(String title) { this.title = title; }
+    public void setAuthor(String author) { this.author = author; }
+    public void setDescription(String description) { this.description = description; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+    public void setBuyAmount(int buyAmount) { this.buyAmount = buyAmount; }
+    public void setRentAmount(int rentAmount) { this.rentAmount = rentAmount; }
+    public void setAvailable(boolean available) { isAvailable = available; }
+    public void setOwner(String owner) { this.owner = owner; }
+    public void setRentedTo(String rentedTo) { this.rentedTo = rentedTo; }
+    public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+    public void setGenre(String genre) { this.genre = genre; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public int getRentAmount() {
-        return rentAmount;
-    }
-
-    public int getBuyAmount() {
-        return buyAmount;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
+    // --- Helper for JavaFX ---
     public ImageView getCover() {
-        return cover;
-    }
+        ImageView img = new ImageView();
+        img.setFitWidth(100);
+        img.setFitHeight(150);
+        img.setPreserveRatio(true);
 
+        if (imagePath == null || imagePath.isEmpty()) return img;
+
+        try {
+            java.io.File file = new java.io.File(imagePath);
+            if (file.exists()) {
+                // Load from absolute file path
+                img.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+            } else {
+                // Load from project resources
+                img.setImage(new javafx.scene.image.Image(getClass().getResource(imagePath).toExternalForm()));
+            }
+        } catch (Exception e) {
+            System.out.println("Could not load image: " + imagePath);
+        }
+        return img;
+    }
 }
