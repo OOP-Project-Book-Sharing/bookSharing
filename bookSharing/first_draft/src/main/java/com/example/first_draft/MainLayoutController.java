@@ -19,6 +19,8 @@ public class MainLayoutController {
     @FXML private Button searchButton;
     @FXML private Button accountButton;
     @FXML private Button prevButton;
+    @FXML private Button chatButton;
+
 
     private BookDatabase bookDatabase;
     private String currentUser;
@@ -45,6 +47,7 @@ public class MainLayoutController {
         myBooksButton.setOnAction(e -> loadPage("myBooks.fxml"));
         searchButton.setOnAction(e -> loadPage("homePage.fxml"));
         accountButton.setOnAction(e -> loadPage("accountPage.fxml"));
+        chatButton.setOnAction(e -> loadChatPage());
     }
 
     /** Load the first page only after DB and user are available */
@@ -101,6 +104,27 @@ public class MainLayoutController {
             e.printStackTrace();
         }
     }
+
+    private void loadChatPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/first_draft/chatPage.fxml"));
+            Node page = loader.load();
+
+            // Pass username to ChatPageController
+            ChatPageController chatCtrl = loader.getController();
+            chatCtrl.setUsername(currentUser); // You need to add setUsername in ChatPageController
+
+            if (page instanceof Region region) {
+                region.prefWidthProperty().bind(mainStackPane.widthProperty());
+                region.prefHeightProperty().bind(mainStackPane.heightProperty());
+            }
+
+            mainStackPane.getChildren().setAll(page);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /** Utility: Get books rented to current user */
     public List<Book> getRentedBooksForUser() {

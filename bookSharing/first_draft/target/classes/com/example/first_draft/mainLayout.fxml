@@ -15,22 +15,23 @@
                 <Button fx:id="myBooksButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" text="My Books" />
                 <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="170.0" text="Search" />
                 <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Account" />
+                <Button fx:id="chatButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="120.0" text="Chat" />
             </children>
         </HBox>
     </bottom>
-   <top>
-      <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="prevButton" mnemonicParsing="false" text="Back" />
-            <Label alignment="CENTER" prefHeight="42.0" prefWidth="458.0" text="BookPanda" textAlignment="CENTER">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-   </top>
-   <center>
-      <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
+    <top>
+        <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="prevButton" mnemonicParsing="false" text="Back" />
+                <Label alignment="CENTER" prefHeight="42.0" prefWidth="458.0" text="BookPanda" textAlignment="CENTER">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+    </top>
+    <center>
+        <StackPane fx:id="mainStackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+    </center>
 </BorderPane>
