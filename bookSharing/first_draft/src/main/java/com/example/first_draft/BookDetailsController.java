@@ -3,78 +3,61 @@ package com.example.first_draft;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 public class BookDetailsController {
 
-    @FXML
-    private Label titleLabel;
+    @FXML private Label titleLabel;
+    @FXML private Label authorLabel;
+    @FXML private Label descriptionArea;
+    @FXML private ImageView bookImage;
+    @FXML private Button buyAmount;
+    @FXML private Button rentAmount;
+    @FXML private Label ownerLabel;
+    @FXML private Label genreLabel;
 
-    @FXML
-    private Label authorLabel;
-
-    @FXML
-    private Label descriptionArea;
-
-    @FXML
-    private ImageView bookImage;
-
-    @FXML
-    private Button buyAmount;
-
-    @FXML
-    private Button rentAmount;
-
-    @FXML
-    private Button nextBookButton;
-
-    private String paymentPassword = "1234"; // Example password
-    private List<Book> books;
-    private int currentIndex = 0;
-
+    Book book;
     private static final double IMAGE_WIDTH = 200;
     private static final double IMAGE_HEIGHT = 252;
 
+    private String currentUser;
+
+    private BookDatabase bookDatabase = new BookDatabase();
+    private UserDatabase userDatabase = new UserDatabase();
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+
     @FXML
     public void initialize() {
-        buyAmount.setOnAction(event -> handlePayment("Buy", buyAmount.getText()));
-        rentAmount.setOnAction(event -> handlePayment("Rent", rentAmount.getText()));
-        nextBookButton.setOnAction(event -> loadNextBook());
-
-        // Ensure fixed image size
         bookImage.setFitWidth(IMAGE_WIDTH);
         bookImage.setFitHeight(IMAGE_HEIGHT);
         bookImage.setPreserveRatio(true);
+
+        buyAmount.setOnAction(e -> handleBuy());
+        rentAmount.setOnAction(e -> handleRent());
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-        if (books != null && !books.isEmpty()) {
-            currentIndex = 0;
-            setBookDetails(books.get(currentIndex));
-        }
+    public void setBook(Book book) {
+        this.book = book;
+        setBookDetails();
     }
 
-    private void loadNextBook() {
-        if (books == null || books.isEmpty()) return;
-
-        currentIndex = (currentIndex + 1) % books.size();
-        setBookDetails(books.get(currentIndex));
-    }
-
-    public void setBookDetails(Book book) {
+    public void setBookDetails() {
         if (book == null) return;
 
         titleLabel.setText(book.getTitle());
         authorLabel.setText(book.getAuthor());
-        descriptionArea.setText("Summary: " + book.getDescription());
+        descriptionArea.setText(book.getDescription());
+        ownerLabel.setText(book.getOwner());
+        genreLabel.setText(book.getGenre());
 
-        if (book.getBuyAmount() < 0) {
+        if (book.getBuyAmount() <= 0) {
             buyAmount.setText("Not for Sale");
             buyAmount.setDisable(true);
             buyAmount.setStyle("-fx-opacity: 0.5;");
@@ -84,7 +67,7 @@ public class BookDetailsController {
             buyAmount.setStyle("-fx-opacity: 1.0;");
         }
 
-        if (book.getRentAmount() < 0) {
+        if (book.getRentAmount() <= 0) {
             rentAmount.setText("Not for Rent");
             rentAmount.setDisable(true);
             rentAmount.setStyle("-fx-opacity: 0.5;");
@@ -94,55 +77,132 @@ public class BookDetailsController {
             rentAmount.setStyle("-fx-opacity: 1.0;");
         }
 
-        // Load image
         if (book.getImagePath() != null && !book.getImagePath().isEmpty()) {
             bookImage.setImage(book.getCover().getImage());
         }
     }
 
-    private void handlePayment(String actionType, String amountText) {
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle(actionType + " Payment");
-        dialog.setHeaderText("Enter your password to complete " + actionType.toLowerCase() + " payment");
+    private void handleBuy() {
+        // Password dialog
+        Dialog<String> passDialog = createPasswordDialog(
+                "Buy Payment",
+                "Enter your password to buy \"" + book.getTitle() + "\""
+        );
 
-        // Styled dialog content
-        Label label = new Label("Password:");
-        label.setFont(new Font("Arial", 14));
+        Optional<String> passResult = passDialog.showAndWait();
+        if (passResult.isEmpty()) return;
+
+        String password = passResult.get();
+        if (!userDatabase.validateUser(currentUser, password)) {
+            showAlert(Alert.AlertType.ERROR, "Incorrect password. Payment denied.");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Purchase");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Pay $" + book.getBuyAmount() + " to buy this book?");
+        Optional<ButtonType> result = confirm.showAndWait();
+        if (result.isEmpty() || result.get() != ButtonType.OK) return;
+
+        // ---- DELETE BOOK ----
+        book.setOwner(currentUser);
+        book.setAvailable(true);
+        bookDatabase.updateBook(book);
+        //bookDatabase.deleteBook(book.getTitle());
+
+        redirectToSearchPage();
+
+        showAlert(Alert.AlertType.INFORMATION, "Book purchased successfully!");
+    }
+
+    private void handleRent() {
+        Dialog<String> passDialog = createPasswordDialog(
+                "Rent Payment",
+                "Enter your password to rent \"" + book.getTitle() + "\""
+        );
+
+        Optional<String> passResult = passDialog.showAndWait();
+        if (passResult.isEmpty()) return;
+
+        String password = passResult.get();
+        if (!userDatabase.validateUser(currentUser, password)) {
+            showAlert(Alert.AlertType.ERROR, "Incorrect password. Payment denied.");
+            return;
+        }
+
+        // Due date selection
+        Dialog<LocalDate> dateDialog = new Dialog<>();
+        dateDialog.setTitle("Select Due Date");
+        dateDialog.setHeaderText("Choose a due date for returning the book");
+
+        DatePicker datePicker = new DatePicker(LocalDate.now().plusDays(1));
+        VBox dateContent = new VBox(10, new Label("Due Date:"), datePicker);
+        dateContent.setMinWidth(300);
+        dateDialog.getDialogPane().setContent(dateContent);
+        dateDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        dateDialog.setResultConverter(btn -> btn == ButtonType.OK ? datePicker.getValue() : null);
+
+        Optional<LocalDate> dateResult = dateDialog.showAndWait();
+        if (dateResult.isEmpty()) return;
+
+        LocalDate dueDate = dateResult.get();
+        long days = ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
+
+        if (days <= 0) {
+            showAlert(Alert.AlertType.ERROR, "Invalid due date selected.");
+            return;
+        }
+
+        int totalPrice = (int) (days * book.getRentAmount());
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Rent");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Total rent: $" + totalPrice + "\nProceed to rent?");
+        Optional<ButtonType> confirmResult = confirm.showAndWait();
+        if (confirmResult.isEmpty() || confirmResult.get() != ButtonType.OK) return;
+
+        // Update book rental
+        book.setRentedTo(currentUser);
+        book.setAvailable(false);
+        book.setDueDate(dueDate.toString());
+        bookDatabase.updateBook(book);
+
+        redirectToSearchPage();
+
+        showAlert(Alert.AlertType.INFORMATION, "Book rented successfully! Due date: " + dueDate);
+    }
+
+    private Dialog<String> createPasswordDialog(String title, String header) {
+        Dialog<String> passDialog = new Dialog<>();
+        passDialog.setTitle(title);
+        passDialog.setHeaderText(header);
 
         PasswordField passwordField = new PasswordField();
-        passwordField.setPrefWidth(200);
-
-        VBox content = new VBox(10);
-        content.getChildren().addAll(label, passwordField);
+        VBox content = new VBox(10, new Label("Password:"), passwordField);
         content.setMinWidth(300);
-        dialog.getDialogPane().setContent(content);
+        passDialog.getDialogPane().setContent(content);
+        passDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        passDialog.setResultConverter(btn -> btn == ButtonType.OK ? passwordField.getText() : null);
 
-        // Buttons
-        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+        return passDialog;
+    }
 
-        // Result converter
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == okButtonType) {
-                return passwordField.getText();
-            }
-            return null;
-        });
+    private void showAlert(Alert.AlertType type, String msg) {
+        Alert alert = new Alert(type);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(enteredPassword -> {
-            if (enteredPassword.equals(paymentPassword)) {
-                Alert success = new Alert(Alert.AlertType.INFORMATION);
-                success.setTitle("Payment Successful");
-                success.setHeaderText(null);
-                success.setContentText(actionType + " payment completed successfully (" + amountText + ")");
-                success.showAndWait();
-            } else {
-                Alert denied = new Alert(Alert.AlertType.ERROR);
-                denied.setTitle("Payment Denied");
-                denied.setHeaderText(null);
-                denied.setContentText("Incorrect password! Payment denied.");
-                denied.showAndWait();
+    private void redirectToSearchPage() {
+        SceneManager.switchViewWithData("/com/example/first_draft/searchPage.fxml", controller -> {
+            BookDatabase db = new BookDatabase();
+            if (controller instanceof SearchPageController c) {
+                c.setBooks(db.getAvailableBooksNotOwnedBy(currentUser));
+                c.setUsername(currentUser);
+                c.displayBooks();
             }
         });
     }

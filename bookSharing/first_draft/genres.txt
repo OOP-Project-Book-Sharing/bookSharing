@@ -1,7 +1,5 @@
 Detective
-Thriller
-Romance
-Sci-Fi
-Fantasy
+Comics
 Horror
-dwa
+Detectiv
+Romance

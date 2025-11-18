@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.first_draft.AddBookController"
+      spacing="10" alignment="CENTER"
+      prefWidth="420" prefHeight="520"
+      style="-fx-padding:18;">
+
+    <Label text="Add New Book" style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+    <TextField fx:id="titleField" promptText="Title" />
+    <TextField fx:id="authorField" promptText="Author" />
+    <TextArea fx:id="descField" promptText="Description" prefRowCount="3" wrapText="true"/>
+
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <TextField fx:id="genreField" promptText="Genre" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="uploadButton" text="Upload Cover" />
+    </HBox>
+
+    <ImageView fx:id="previewImage" fitWidth="120" fitHeight="160" preserveRatio="true"
+               style="-fx-border-color: #ddd; -fx-border-width: 1; -fx-padding:6;" />
+
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="buyField" promptText="Buy Price" />
+        <TextField fx:id="rentField" promptText="Rent Price" />
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="cancelButton" text="Cancel"/>
+        <Button fx:id="saveButton" text="Save" style="-fx-background-color:#4CAF50; -fx-text-fill:white;"/>
+    </HBox>
+
+    <Label fx:id="messageLabel" textFill="red"/>
+
+</VBox>

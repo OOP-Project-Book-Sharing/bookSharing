@@ -9,25 +9,34 @@ public class UserDatabase {
 
     public UserDatabase() {
         users = new ArrayList<>();
-        load();
+        try {
+            load();
+        } catch (FileNotFoundException e) {
+            System.err.println("User database file not found. Creating a new one...");
+            save();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            System.err.println("Error loading user database: " + e.getMessage());
+        }
     }
 
-    public void load() {
+    public void load() throws IOException, ClassNotFoundException {
         File file = new File(FILE_PATH);
-        if (!file.exists()) return;
+        if (!file.exists()) {
+            throw new FileNotFoundException("User database file not found: " + FILE_PATH);
+        }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             users = (List<User>) ois.readObject();
-        } catch (Exception e) {
-            System.out.println("Error loading user database: " + e.getMessage());
         }
     }
 
     public void save() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(users);
-        } catch (Exception e) {
-            System.out.println("Error saving user database: " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error saving user database: " + e.getMessage());
         }
     }
 
@@ -38,13 +47,41 @@ public class UserDatabase {
 
     public boolean validateUser(String username, String password) {
         for (User u : users) {
-            if (u.getUsername().equals(username) && u.getPassword().equals(password)) return true;
+            if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                return true;
+            }
         }
         return false;
     }
 
     public boolean userExists(String username) {
-        for (User u : users) if (u.getUsername().equals(username)) return true;
+        for (User u : users) {
+            if (u.getUsername().equals(username)) return true;
+        }
         return false;
+    }
+
+    public boolean emailExists(String email) {
+        for (User u : users) {
+            if (u.getEmail().equalsIgnoreCase(email)) return true;
+        }
+        return false;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public User getUserByUsername(String username) {
+        try {
+            load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (User u : users) {
+            if (u.getUsername().equals(username)) return u;
+        }
+        return null;
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,7 +20,6 @@ public class LoginController {
     @FXML private Label messageLabel;
 
     private UserDatabase userDB = new UserDatabase();
-    private BookDatabase bookDB = new BookDatabase();
 
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
@@ -32,22 +32,25 @@ public class LoginController {
         }
 
         if (userDB.validateUser(username, password)) {
-            goToHome(event, username);
+            goToMainLayout(event, username);
         } else {
             messageLabel.setText("Invalid username or password");
         }
     }
 
-    private void goToHome(ActionEvent event, String username) throws IOException {
+    private void goToMainLayout(ActionEvent event, String username) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/first_draft/mainLayout.fxml"));
         Scene scene = new Scene(loader.load(), 800, 600);
 
         MainLayoutController controller = loader.getController();
-        controller.setBookDatabase(bookDB);
         controller.setCurrentUser(username);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("📚 Book Sharing App");
+        stage.setTitle("BookPanda");
+        stage.setResizable(false);
+
+        Image icon = new Image(getClass().getResourceAsStream("images/logo.png"));
+        stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
     }
@@ -57,7 +60,7 @@ public class LoginController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
+            stage.setScene(new Scene(loader.load(), 800, 600));
             stage.show();
         } catch (Exception e) {
             System.out.println("Cannot load register.fxml");

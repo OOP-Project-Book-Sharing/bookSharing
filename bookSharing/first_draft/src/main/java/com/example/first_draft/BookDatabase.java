@@ -2,7 +2,6 @@ package com.example.first_draft;
 
 import java.io.*;
 import java.util.*;
-import java.time.LocalDate;
 
 public class BookDatabase {
     private static final String FILE_PATH = "books.dat";
@@ -54,21 +53,51 @@ public class BookDatabase {
 
     public List<Book> getAllBooks() { return books; }
 
-    public List<Book> getBooksByOwner(String owner) {
+    public List<Book> getBooksForSaleOrRent(String username) {
         List<Book> result = new ArrayList<>();
-        for (Book b : books) if (b.getOwner().equalsIgnoreCase(owner)) result.add(b);
+        for (Book b : books) {
+            if (b.getOwner().equalsIgnoreCase(username) &&
+                    (b.getRentedTo() == null || b.getRentedTo().isEmpty())) {
+                result.add(b);
+            }
+        }
         return result;
     }
 
-    public List<Book> getBooksRentedTo(String user) {
+    public List<Book> getBorrowedBooks(String username) {
         List<Book> result = new ArrayList<>();
-        for (Book b : books) if (user.equalsIgnoreCase(b.getRentedTo())) result.add(b);
+        for (Book b : books) {
+            if (username.equalsIgnoreCase(b.getRentedTo()) &&
+                    !b.getOwner().equalsIgnoreCase(username)) {
+                result.add(b);
+            }
+        }
         return result;
     }
 
-    public List<Book> getAvailableBooks() {
+    public List<Book> getRentedOutBooks(String username) {
         List<Book> result = new ArrayList<>();
-        for (Book b : books) if (b.isAvailable()) result.add(b);
+        for (Book b : books) {
+            if (b.getOwner().equalsIgnoreCase(username) &&
+                    b.getRentedTo() != null &&
+                    !b.getRentedTo().isEmpty()) {
+                result.add(b);
+            }
+        }
+        return result;
+    }
+
+    public List<Book> getAvailableBooksNotOwnedBy(String username) {
+        List<Book> result = new ArrayList<>();
+        for (Book b : books) {
+            boolean notOwnedByUser = !b.getOwner().equalsIgnoreCase(username);
+            boolean isAvailable = b.isAvailable(); // Your Book class already has this
+            boolean notRented = (b.getRentedTo() == null || b.getRentedTo().isEmpty());
+
+            if (notOwnedByUser && isAvailable && notRented) {
+                result.add(b);
+            }
+        }
         return result;
     }
 }

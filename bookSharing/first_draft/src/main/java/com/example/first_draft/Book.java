@@ -3,6 +3,7 @@ package com.example.first_draft;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class Book implements Serializable {
@@ -72,13 +73,13 @@ public class Book implements Serializable {
         if (imagePath == null || imagePath.isEmpty()) return img;
 
         try {
-            java.io.File file = new java.io.File(imagePath);
+            File file = new File(imagePath);
             if (file.exists()) {
                 // Load from absolute file path
-                img.setImage(new javafx.scene.image.Image(file.toURI().toString()));
+                img.setImage(new Image(file.toURI().toString()));
             } else {
                 // Load from project resources
-                img.setImage(new javafx.scene.image.Image(getClass().getResource(imagePath).toExternalForm()));
+                img.setImage(new Image(getClass().getResource(imagePath).toExternalForm()));
             }
         } catch (Exception e) {
             System.out.println("Could not load image: " + imagePath);

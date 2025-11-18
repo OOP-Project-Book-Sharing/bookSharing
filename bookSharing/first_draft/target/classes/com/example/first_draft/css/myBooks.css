@@ -1,0 +1,83 @@
+
+#bookListVBox {
+    -fx-padding: 15px;
+    -fx-spacing: 12px;
+    -fx-background-color: #f5f5f5;
+}
+
+.book-row {
+    -fx-background-color: white;
+    -fx-padding: 18px 22px;
+    -fx-spacing: 22px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1px;
+}
+
+.book-row:hover {
+    -fx-background-color: #f0f4ff;
+    -fx-border-color: #b2c9ff;
+}
+
+.details-vbox {
+    -fx-spacing: 6px;
+    -fx-pref-width: 560px;
+}
+
+.book-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2b2b2b;
+}
+
+.book-author {
+    -fx-font-size: 15px;
+    -fx-text-fill: #555;
+    -fx-font-style: italic;
+}
+.book-genre,
+.book-owner,
+.book-rented,
+.book-due {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+}
+
+/*.book-desc {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+}*/
+
+
+.edit-button {
+    -fx-background-color: #db324f;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 12px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.edit-button:hover {
+    -fx-background-color: #335fd6;
+}
+
+.book-cover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0.2, 0, 2);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+.details-grid {
+    -fx-padding: 10;
+    -fx-hgap: 20;
+    -fx-vgap: 8;
+    -fx-pref-width: 560px;
+}
+
+.book-buy,
+.book-rent {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+}

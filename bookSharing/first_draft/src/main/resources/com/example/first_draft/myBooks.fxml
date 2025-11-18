@@ -8,9 +8,9 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0"
             xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.first_draft.myBooksController">
+            fx:controller="com.example.first_draft.MyBooksController" stylesheets="@css/myBooks.css">
 
-    <!-- Top VBox -->
+    <!-- Top VBox with filter buttons -->
     <VBox fx:id="topVBox" alignment="CENTER" spacing="10" AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
         <children>
@@ -25,14 +25,14 @@
         </children>
     </VBox>
 
-    <!-- Center ScrollPane -->
+    <!-- Center ScrollPane for books -->
     <ScrollPane fx:id="scrollPane" fitToWidth="true" layoutY="54.0" prefHeight="546.0" prefWidth="800.0"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="54.0">
         <content>
-            <VBox fx:id="bookListVBox" spacing="10">
+            <VBox fx:id="bookListVBox" spacing="12">
                 <padding>
-                    <Insets bottom="10" left="10" right="10" top="10" />
+                    <Insets bottom="15" left="15" right="15" top="15" />
                 </padding>
             </VBox>
         </content>

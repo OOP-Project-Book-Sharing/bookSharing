@@ -3,10 +3,12 @@ package com.example.first_draft;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class ChatPageController {
 
@@ -14,109 +16,142 @@ public class ChatPageController {
     @FXML private VBox chatBox;
     @FXML private ScrollPane chatScrollPane;
     @FXML private TextField messageField;
-    @FXML private TextField recipientField;
     @FXML private Button sendButton;
+    @FXML private ListView<String> userList;
 
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
     private String username;
+    private String currentChatUser = "";
 
     @FXML
     private void initialize() {
-        // Assign a temporary username for testing; replace with actual login username later
-        username = "User" + (int)(Math.random() * 1000);
-        usernameLabel.setText("Chat - " + username);
-
-        // Disable message input and send button until connected
         sendButton.setDisable(true);
         messageField.setDisable(true);
 
-        // Connect to the chat server in a new thread
         connectToServer();
-    }
 
-    private void connectToServer() {
-        new Thread(() -> {
-            try {
-                socket = new Socket("localhost", 5000);
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream(), true);
-
-                // Wait for server to ask for username
-                String serverPrompt = in.readLine();
-                if ("Enter username:".equals(serverPrompt)) {
-                    out.println(username);
-                }
-
-                // Enable sending messages on the JavaFX Application Thread
-                Platform.runLater(() -> {
-                    sendButton.setDisable(false);
-                    messageField.setDisable(false);
-                });
-
-                // Start listening for incoming messages
-                String line;
-                while ((line = in.readLine()) != null) {
-                    String msg = line;
-                    Platform.runLater(() -> addMessage(msg));
-                }
-
-            } catch (IOException e) {
-                Platform.runLater(() -> addMessage("Unable to connect to server"));
-                e.printStackTrace();
+        userList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selectedUser) -> {
+            if (selectedUser != null) {
+                currentChatUser = selectedUser;
+                loadChatWith(selectedUser);
             }
-        }).start();
-
-        // Set send button action
-        sendButton.setOnAction(e -> sendMessage());
-        messageField.setOnAction(e -> sendMessage()); // allow Enter key to send
-    }
-
-    @FXML
-    private void sendMessage() {
-        if (out == null) {
-            addMessage("Connection not ready. Please wait...");
-            return;
-        }
-
-        String recipient = recipientField.getText().trim();
-        String message = messageField.getText().trim();
-        if (!message.isEmpty()) {
-            if (!recipient.isEmpty()) {
-                out.println("@" + recipient + " " + message);
-                addMessage("(You → " + recipient + "): " + message);
-            } else {
-                out.println(message);
-                addMessage("(You): " + message);
-            }
-            messageField.clear();
-        }
-    }
-
-    private void addMessage(String message) {
-        Label msgLabel = new Label(message);
-        msgLabel.setWrapText(true);
-        chatBox.getChildren().add(msgLabel);
-
-        // Auto-scroll to bottom
-        chatScrollPane.layout();
-        chatScrollPane.setVvalue(1.0);
-    }
-
-    /** Optional: Call this to close socket on application exit */
-    public void closeConnection() {
-        try {
-            if (out != null) out.close();
-            if (in != null) in.close();
-            if (socket != null && !socket.isClosed()) socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     public void setUsername(String currentUser) {
         this.username = currentUser;
         usernameLabel.setText("Chat - " + username);
+    }
+
+    private void loadChatWith(String otherUser) {
+        chatBox.getChildren().clear();
+        if (otherUser == null || otherUser.isEmpty()) return;
+
+        currentChatUser = otherUser;
+
+        // Load history from ChatLogManager
+        List<String> history = ChatLogManager.loadMessages(username, otherUser);
+        for (String msg : history) {
+            boolean isMe = msg.startsWith("(Me →");
+            addMessage(msg, isMe ? username : otherUser);
+        }
+    }
+
+    // Update connectToServer() to remove duplicate saving for incoming messages
+    private void connectToServer() {
+        new Thread(() -> {
+            try {
+                socket = new Socket("localhost", ChatServer.PORT);
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+
+                out.println(username);
+
+                Platform.runLater(() -> {
+                    sendButton.setDisable(false);
+                    messageField.setDisable(false);
+                });
+
+                String line;
+                while ((line = in.readLine()) != null) {
+
+                    if (line.contains("|")) {
+                        String[] parts = line.split("\\|", 2);
+                        String sender = parts[0];
+                        String msgContent = parts[1];
+
+                        // ✅ Only save incoming messages from server perspective
+                       // ChatLogManager.saveMessage(sender, username, msgContent, false);
+
+                        if (sender.equals(currentChatUser)) {
+                            String formatted = "(" + sender + " → Me): " + msgContent;
+                            Platform.runLater(() -> addMessage(formatted, sender));
+                        }
+                    } else if (line.startsWith("USER_LIST:")) {
+                        updateUserList(line.substring(10));
+                    }
+                }
+
+            } catch (IOException e) {
+                Platform.runLater(() -> addMessage("Unable to connect", "System"));
+                e.printStackTrace();
+            }
+        }).start();
+
+        sendButton.setOnAction(e -> sendMessage());
+        messageField.setOnAction(e -> sendMessage());
+    }
+
+
+    private void updateUserList(String csvNames) {
+        String[] names = csvNames.split(",");
+        Platform.runLater(() -> {
+            userList.getItems().clear();
+            for (String user : names) {
+                if (!user.equals(username) && !user.isEmpty()) userList.getItems().add(user);
+            }
+        });
+    }
+
+    @FXML
+    private void sendMessage() {
+        String message = messageField.getText().trim();
+        if (currentChatUser.isEmpty() || message.isEmpty()) return;
+
+        out.println("@" + currentChatUser + " " + message);
+
+        String formatted = "(Me → " + currentChatUser + "): " + message;
+        //ChatLogManager.saveMessage(username, currentChatUser, message, true);
+        addMessage(formatted, username);
+
+        messageField.clear();
+    }
+
+    private void addMessage(String message, String sender) {
+        HBox msgContainer = new HBox();
+        Label msgLabel = new Label(message);
+        msgLabel.setWrapText(true);
+        msgLabel.setMaxWidth(300);
+        msgLabel.getStyleClass().add("message-bubble");
+
+        if (sender.equals(username)) {
+            msgContainer.setStyle("-fx-alignment: CENTER-RIGHT;");
+            msgLabel.getStyleClass().add("message-right");
+        } else {
+            msgContainer.setStyle("-fx-alignment: CENTER-LEFT;");
+            msgLabel.getStyleClass().add("message-left");
+        }
+
+        msgContainer.getChildren().add(msgLabel);
+        chatBox.getChildren().add(msgContainer);
+
+        // 🚀 Auto-scroll
+        Platform.runLater(() -> {
+            chatScrollPane.setVvalue(1.0);
+            chatScrollPane.layout();
+            Platform.runLater(() -> chatScrollPane.setVvalue(chatScrollPane.getVmax()));
+        });
     }
 }

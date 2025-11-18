@@ -8,201 +8,133 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomePageController {
 
     @FXML
-    private GridPane gridPane;
+    private VBox vbox;
 
-    @FXML
-    private TextField searchTextField;
+    private List<Book> allBooks;
 
-    private List<Book> books;
+    private String username;
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setCurrentUser(String currentUser) {
+        this.username = currentUser;
+    }
+
+    public void setBooks(List<Book> allBooks) {
+        this.allBooks = allBooks;
     }
 
     @FXML
-    public void search(ActionEvent e){
-        //gridPane.getChildren().clear();
-        if (searchTextField.getText().isEmpty()) {
-            displayBooks();
-            return;
-        }
-        ArrayList<Book> searchResults = searchlist(searchTextField.getText());
-//        this.books = searchlist(searchTextField.getText());
-//        displayBooks();
-
-        gridPane.getChildren().clear();
-        gridPane.getColumnConstraints().clear();
-        gridPane.getRowConstraints().clear();
-
-        int columns = 3;
-        int col = 0, row = 0;
-
-        for (int i = 0; i < columns; i++) {
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / columns);
-            gridPane.getColumnConstraints().add(cc);
-        }
-
-        for (int i = 0; i < searchResults.size(); i++) {
-            Book book = searchResults.get(i);
-
-            Label title = new Label(book.getTitle());
-            Label author = new Label(book.getAuthor());
-            ImageView cover = book.getCover();
-            cover.setFitWidth(120);
-            cover.setFitHeight(160);
-            cover.setPreserveRatio(true);
-
-            // --- Availability / Type label ---
-            Label statusLabel = new Label();
-            if (book.getBuyAmount() < 0 && book.getRentAmount() < 0) {
-                statusLabel.setText("Not for Sale or Rent");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-            } else if (book.getBuyAmount() < 0) {
-                statusLabel.setText("For Rent Only");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-            } else if (book.getRentAmount() < 0) {
-                statusLabel.setText("For Sale Only");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-            } else {
-                statusLabel.setText("For Sale & Rent");
-                statusLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
-            }
-
-            // --- See Details button ---
-            Button detailsButton = new Button("See Details");
-            detailsButton.setOnAction(event -> openBookDetails(book));
-
-            // --- VBox layout for each book ---
-            VBox vbox = new VBox(8);
-            vbox.setAlignment(Pos.TOP_CENTER);
-            vbox.setPadding(new Insets(10));
-            vbox.setPrefWidth(160);
-            vbox.setPrefHeight(270);
-            vbox.getChildren().addAll(cover, title, author, statusLabel, detailsButton);
-
-            vbox.setStyle("-fx-background-color: white; -fx-border-color: #ccc; "
-                    + "-fx-border-radius: 6; -fx-background-radius: 6;");
-
-            gridPane.add(vbox, col, row);
-
-            col++;
-            if (col == columns) {
-                col = 0;
-                row++;
-            }
-        }
-    }
-
     public void displayBooks() {
-        gridPane.getChildren().clear();
-        gridPane.getColumnConstraints().clear();
-        gridPane.getRowConstraints().clear();
+        vbox.getChildren().clear();
+        vbox.setAlignment(Pos.TOP_LEFT);
 
-        int columns = 3;
-        int col = 0, row = 0;
+        List<String> genreNames = GenreDatabase.loadGenres();
 
-        for (int i = 0; i < columns; i++) {
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / columns);
-            gridPane.getColumnConstraints().add(cc);
-        }
+        for (String genreName : genreNames) {
+            List<Book> booksInGenre = allBooks.stream()
+                    .filter(b -> genreName.equalsIgnoreCase(b.getGenre()))
+                    .filter(b -> !b.getOwner().equalsIgnoreCase(username)) // not my book
+                    .filter(Book::isAvailable)                             // must be available
+                    .filter(b -> b.getRentedTo() == null || b.getRentedTo().isEmpty()) // not rented
+                    .collect(Collectors.toList());
 
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
+            if (booksInGenre.isEmpty())
+                continue;
 
-            Label title = new Label(book.getTitle());
-            Label author = new Label(book.getAuthor());
-            ImageView cover = book.getCover();
-            cover.setFitWidth(120);
-            cover.setFitHeight(160);
-            cover.setPreserveRatio(true);
+            Button genreButton = new Button(genreName);
+            genreButton.setPrefWidth(200);
 
-            // --- Availability / Type label ---
-            Label statusLabel = new Label();
-            if (book.getBuyAmount() < 0 && book.getRentAmount() < 0) {
-                statusLabel.setText("Not for Sale or Rent");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-            } else if (book.getBuyAmount() < 0) {
-                statusLabel.setText("For Rent Only");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-            } else if (book.getRentAmount() < 0) {
-                statusLabel.setText("For Sale Only");
-                statusLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-            } else {
-                statusLabel.setText("For Sale & Rent");
-                statusLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+            // Filter books for this genre
+
+
+
+            genreButton.setOnAction(event -> {
+                try {
+                    switchToViewBooks(booksInGenre);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+
+            vbox.getChildren().add(genreButton);
+
+            // Horizontal box for book previews
+            HBox displayBox = new HBox(20);
+            displayBox.setAlignment(Pos.CENTER_LEFT);
+            displayBox.setPadding(new Insets(10, 0, 10, 30));
+
+            int previewCount = Math.min(3, booksInGenre.size());
+            for (int i = 0; i < previewCount; i++) {
+                Book book = booksInGenre.get(i);
+                VBox bookBox = new VBox(5);
+                bookBox.setAlignment(Pos.TOP_CENTER);
+                bookBox.getStyleClass().add("book-box");
+
+                ImageView cover = book.getCover();
+                cover.setFitWidth(110);
+                cover.setFitHeight(130);
+                cover.setPreserveRatio(true);
+
+                Label title = new Label(book.getTitle());
+                title.getStyleClass().add("title");
+                Label author = new Label(book.getAuthor());
+                author.getStyleClass().add("author");
+
+                bookBox.getChildren().addAll(cover, title, author);
+                displayBox.getChildren().add(bookBox);
             }
 
-            // --- See Details button ---
-            Button detailsButton = new Button("See Details");
-            detailsButton.setOnAction(event -> openBookDetails(book));
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+            displayBox.getChildren().add(spacer);
 
-            // --- VBox layout for each book ---
-            VBox vbox = new VBox(8);
-            vbox.setAlignment(Pos.TOP_CENTER);
-            vbox.setPadding(new Insets(10));
-            vbox.setPrefWidth(160);
-            vbox.setPrefHeight(270);
-            vbox.getChildren().addAll(cover, title, author, statusLabel, detailsButton);
+            Button moreButton = new Button("More Books →");
+            moreButton.setOnAction(event -> {
+                switchToViewBooks(booksInGenre);
+            });
+            moreButton.getStyleClass().add("more-button");
+            displayBox.getChildren().add(moreButton);
 
-            vbox.setStyle("-fx-background-color: white; -fx-border-color: #ccc; "
-                    + "-fx-border-radius: 6; -fx-background-radius: 6;");
-
-            gridPane.add(vbox, col, row);
-
-            col++;
-            if (col == columns) {
-                col = 0;
-                row++;
-            }
+            vbox.getChildren().add(displayBox);
         }
     }
 
-    public ArrayList<Book> searchlist(String searchKeyword){
-        ArrayList<Book> searchResults = new ArrayList<>();
+//    private void switchToViewBooks(List<Book> booksInGenre, ActionEvent event) throws IOException {
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("searchPage.fxml"));
+//        Parent root = fxmlLoader.load();
+//
+//        SearchPageController searchPageController = fxmlLoader.getController();
+//        searchPageController.setUsername(username);
+//        searchPageController.setBooks(booksInGenre);
+//        searchPageController.displayBooks();
+//
+//        if (root instanceof Region region) {
+//            region.prefWidthProperty().bind(SceneManager.getMainStackPane().widthProperty());
+//            region.prefHeightProperty().bind(SceneManager.getMainStackPane().heightProperty());
+//        }
+//
+//        SceneManager.getMainStackPane().getChildren().setAll(root);
+//    }
 
-        for (Book book : books) {
-            if (book.getTitle().toLowerCase().contains(searchKeyword.toLowerCase()) ||
-                    book.getAuthor().toLowerCase().contains(searchKeyword.toLowerCase())) {
-
-                searchResults.add(book);
+    private void switchToViewBooks(List<Book> booksInGenre) {
+        SceneManager.switchViewWithData("/com/example/first_draft/searchPage.fxml", controller -> {
+            if (controller instanceof SearchPageController searchCtrl) {
+                searchCtrl.setUsername(username);
+                searchCtrl.setBooks(booksInGenre);
+                searchCtrl.displayBooks();
             }
-        }
-        return searchResults;
-
-    }
-
-    private void openBookDetails(Book selectedBook) {
-        try {
-            // Load BookDetails FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/first_draft/bookDetails.fxml"));
-            Parent detailsPage = loader.load();
-
-            // Inject data into controller
-            BookDetailsController controller = loader.getController();
-            controller.setBooks(books);
-            controller.setBookDetails(selectedBook);
-
-            // Replace current view in mainStackPane
-            SceneManager.getMainStackPane().getChildren().setAll(detailsPage);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
     }
 }
