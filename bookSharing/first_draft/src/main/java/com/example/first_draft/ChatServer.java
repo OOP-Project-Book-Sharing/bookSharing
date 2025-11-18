@@ -9,25 +9,25 @@ import java.util.Map;
 public class ChatServer {
     static final int PORT = 5000;
     private static ServerSocket serverSocket;
-
     protected static final Map<String, ClientHandler> clients = new HashMap<>();
 
     public static void main(String[] args) {
         try {
             serverSocket = new ServerSocket(PORT);
             System.out.println("Chat server started on port " + PORT);
-
             while (true) {
                 Socket socket = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(socket);
                 new Thread(clientHandler).start();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try { serverSocket.close(); }
-            catch (IOException ignored) {}
+            if (serverSocket != null && !serverSocket.isClosed()) {
+                try {
+                    serverSocket.close();
+                } catch (IOException ignored) {}
+            }
         }
     }
 
@@ -39,7 +39,9 @@ public class ChatServer {
             }
             String finalList = list.toString();
             for (ClientHandler c : clients.values()) {
-                c.out.println(finalList);
+                if (c != null && c.out != null) {
+                    c.out.println(finalList);
+                }
             }
         }
     }
