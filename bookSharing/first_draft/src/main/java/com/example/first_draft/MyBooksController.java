@@ -99,7 +99,7 @@ public class MyBooksController {
     private void displayFiltered(Filter filter) {
         bookListVBox.getChildren().clear();
 
-        boolean foundAny = false;   // 🔥 NEW
+        boolean foundAny = false;
 
         for (Book book : allBooks) {
             if (!filter.test(book)) continue;
@@ -148,12 +148,24 @@ public class MyBooksController {
                             : "Due Date: " + book.getDueDate()
             );
             dueDateLabel.getStyleClass().add("book-due");
-
-            Label buyAmountLabel = new Label("Buy Price: " + book.getBuyAmount());
-            buyAmountLabel.getStyleClass().add("book-buy");
-
-            Label rentAmountLabel = new Label("Rent Price: " + book.getRentAmount());
-            rentAmountLabel.getStyleClass().add("book-rent");
+            Label buyAmountLabel;
+            if(book.getBuyAmount()>0) {
+                buyAmountLabel = new Label("Buy Price: " + book.getBuyAmount());
+                buyAmountLabel.getStyleClass().add("book-buy");
+            }
+            else {
+                buyAmountLabel = new Label("Buy Price: -");
+                buyAmountLabel.getStyleClass().add("book-buy");
+            }
+            Label rentAmountLabel;
+            if(book.getRentAmount()>0) {
+                rentAmountLabel = new Label("Rent Price: " + book.getRentAmount());
+                rentAmountLabel.getStyleClass().add("book-buy");
+            }
+            else {
+                rentAmountLabel = new Label("Rent Price: -");
+                rentAmountLabel.getStyleClass().add("book-buy");
+            }
 
             infoGrid.add(titleLabel, 0, 0);
             infoGrid.add(authorLabel, 0, 1);
@@ -165,9 +177,7 @@ public class MyBooksController {
             infoGrid.add(dueDateLabel, 1, 3);
             infoGrid.add(buyAmountLabel, 1, 0);
 
-            // ------------------------------------------------------
-            // 🔥 BUTTON LOGIC BASED ON CURRENT MODE
-            // ------------------------------------------------------
+
 
             if (currentMode == ViewMode.FOR_SALE_RENT) {
                 Button editButton = new Button("Edit Details");
