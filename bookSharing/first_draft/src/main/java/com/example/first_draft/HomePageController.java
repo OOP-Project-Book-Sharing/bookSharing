@@ -75,7 +75,7 @@ public class HomePageController {
             displayBox.setAlignment(Pos.CENTER_LEFT);
             displayBox.setPadding(new Insets(10, 0, 10, 30));
 
-            int previewCount = Math.min(3, booksInGenre.size());
+            int previewCount = Math.min(5, booksInGenre.size());
             for (int i = 0; i < previewCount; i++) {
                 Book book = booksInGenre.get(i);
                 VBox bookBox = new VBox(5);

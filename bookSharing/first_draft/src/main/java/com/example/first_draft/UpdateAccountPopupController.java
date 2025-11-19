@@ -73,7 +73,7 @@ public class UpdateAccountPopupController {
             return;
         }
 
-        if (userDB.emailExists(email)) {
+        if (userDB.emailExists(email) && email.compareTo(currentUser.getEmail()) != 0) {
             messageLabel.setText("Email already registered!");
             return;
         }
