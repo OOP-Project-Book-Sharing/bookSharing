@@ -5,3 +5,5 @@ Detective
 Fantacy
 Sci fi
 Adventure
+Academics
+Bangla Novel
