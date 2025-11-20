@@ -42,14 +42,14 @@ public class SearchPageController {
         gridPane.getColumnConstraints().clear();
         gridPane.getRowConstraints().clear();
 
-        int columns = 3;
+        int columns = 4;
         int col = 0, row = 0;
 
-        for (int i = 0; i < columns; i++) {
-            ColumnConstraints cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / columns);
-            gridPane.getColumnConstraints().add(cc);
-        }
+//        for (int i = 0; i < columns; i++) {
+//            ColumnConstraints cc = new ColumnConstraints();
+//            cc.setPercentWidth(100.0 / columns);
+//            gridPane.getColumnConstraints().add(cc);
+//        }
 
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
@@ -115,7 +115,7 @@ public class SearchPageController {
         gridPane.getColumnConstraints().clear();
         gridPane.getRowConstraints().clear();
 
-        int columns = 3;
+        int columns = 4;
         int col = 0, row = 0;
 
         for (int i = 0; i < columns; i++) {
