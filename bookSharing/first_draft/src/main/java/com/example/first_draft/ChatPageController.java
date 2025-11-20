@@ -26,11 +26,9 @@ public class ChatPageController {
 
     @FXML
     private void initialize() {
-        // disable send until we have connected and set username
         sendButton.setDisable(true);
         messageField.setDisable(true);
 
-        // selection listener for chat users
         userList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selectedUser) -> {
             if (selectedUser != null && !selectedUser.trim().isEmpty()) {
                 currentChatUser = selectedUser;
@@ -38,16 +36,13 @@ public class ChatPageController {
             }
         });
 
-        // set handlers now (they will do nothing until connected)
         sendButton.setOnAction(e -> sendMessage());
         messageField.setOnAction(e -> sendMessage());
     }
 
-    // This must be called by the caller (login controller) AFTER username is known
     public void setUsername(String currentUser) {
         this.username = currentUser;
         usernameLabel.setText("Chat - " + username);
-        // connect after username is set (prevents "null" username being sent)
         connectToServer();
     }
 
@@ -56,7 +51,6 @@ public class ChatPageController {
         if (otherUser == null || otherUser.isEmpty()) return;
         currentChatUser = otherUser;
 
-        // Load history from ChatLogManager (perspective = this.username)
         List<String> history = ChatLogManager.loadMessages(username, otherUser);
         for (String msg : history) {
             boolean isMe = msg.startsWith("(Me →");
@@ -71,9 +65,7 @@ public class ChatPageController {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
-                // send username (we ensure setUsername() happened before connectToServer)
                 if (username == null || username.trim().isEmpty()) {
-                    // Defensive: if somehow username missing, close connection
                     socket.close();
                     return;
                 }
@@ -91,20 +83,17 @@ public class ChatPageController {
                         String sender = parts[0];
                         String msgContent = parts[1];
 
-                        // Note: server already saved messages (both perspectives), so client should not save again.
-
                         if (sender.equals(currentChatUser)) {
                             String formatted = "(" + sender + " → Me): " + msgContent;
                             Platform.runLater(() -> addMessage(formatted, sender));
                         } else {
-                            // Optionally notify of incoming message from other user (not currently open)
-                            // For now, still save and show nothing if not current chat.
+
+
                         }
                     } else if (line.startsWith("USER_LIST:")) {
                         String csv = line.substring("USER_LIST:".length());
                         updateUserList(csv);
                     } else {
-                        // Other system messages: show in chat as system messages
                         String systemMsg = line;
                         Platform.runLater(() -> addMessage(systemMsg, "System"));
                     }
@@ -124,9 +113,9 @@ public class ChatPageController {
             for (String raw : names) {
                 if (raw == null) continue;
                 String user = raw.trim();
-                if (user.isEmpty()) continue;          // skip empty entries from trailing commas
+                if (user.isEmpty()) continue;
                 if ("null".equalsIgnoreCase(user)) continue;
-                if (username != null && user.equals(username)) continue; // don't add self
+                if (username != null && user.equals(username)) continue;
                 userList.getItems().add(user);
             }
         });
@@ -136,7 +125,7 @@ public class ChatPageController {
     private void sendMessage() {
         String message = messageField.getText().trim();
         if (currentChatUser == null || currentChatUser.isEmpty() || message.isEmpty()) return;
-        // send to server (server dispatches and persists)
+
         out.println("@" + currentChatUser + " " + message);
 
         String formatted = "(Me → " + currentChatUser + "): " + message;
@@ -165,7 +154,7 @@ public class ChatPageController {
         msgContainer.getChildren().add(msgLabel);
         Platform.runLater(() -> {
             chatBox.getChildren().add(msgContainer);
-            // Auto-scroll
+
             chatScrollPane.layout();
             chatScrollPane.setVvalue(1.0);
             Platform.runLater(() -> chatScrollPane.setVvalue(chatScrollPane.getVmax()));

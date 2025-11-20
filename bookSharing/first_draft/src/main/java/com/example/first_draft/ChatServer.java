@@ -9,7 +9,7 @@ import java.util.Map;
 public class ChatServer {
     static final int PORT = 5000;
     private static ServerSocket serverSocket;
-    protected static final Map<String, ClientHandler> clients = new HashMap<>();
+    static final Map<String, ClientHandler> clients = new HashMap<>();
 
     public static void main(String[] args) {
         try {
@@ -31,7 +31,7 @@ public class ChatServer {
         }
     }
 
-    protected static void sendUserListToAll() {
+    static void sendUserListToAll() {
         synchronized (clients) {
             StringBuilder list = new StringBuilder("USER_LIST:");
             for (String user : clients.keySet()) {

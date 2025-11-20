@@ -5,9 +5,9 @@ import java.net.Socket;
 
 public class ClientHandler implements Runnable {
     private Socket socket;
-    protected String username;
-    protected BufferedReader in;
-    protected PrintWriter out;
+    public String username;
+    public BufferedReader in;
+    public PrintWriter out;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -19,10 +19,8 @@ public class ClientHandler implements Runnable {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
-            // First line must be the username (client responsibility)
             username = in.readLine();
             if (username == null || username.trim().isEmpty()) {
-                // invalid username -> close
                 socket.close();
                 return;
             }
@@ -40,7 +38,7 @@ public class ClientHandler implements Runnable {
                         String target = message.substring(1, space);
                         String privateMsg = message.substring(space + 1);
 
-                        // Send to target ClientHandler (if online)
+
                         ClientHandler targetHandler;
                         synchronized (ChatServer.clients) {
                             targetHandler = ChatServer.clients.get(target);
@@ -49,12 +47,10 @@ public class ClientHandler implements Runnable {
                             targetHandler.out.println(username + "|" + privateMsg);
                         }
 
-                        // Save messages once per perspective on server side:
                         ChatLogManager.saveMessage(username, target, privateMsg, true);  // sender's perspective
                         ChatLogManager.saveMessage(username, target, privateMsg, false); // receiver's perspective
                     }
                 }
-                // (Optionally handle more commands here)
             }
         } catch (IOException e) {
             System.out.println(username + " disconnected.");
