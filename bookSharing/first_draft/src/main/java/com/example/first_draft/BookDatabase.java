@@ -91,7 +91,7 @@ public class BookDatabase {
         List<Book> result = new ArrayList<>();
         for (Book b : books) {
             boolean notOwnedByUser = !b.getOwner().equalsIgnoreCase(username);
-            boolean isAvailable = b.isAvailable(); // Your Book class already has this
+            boolean isAvailable = b.isAvailable();
             boolean notRented = (b.getRentedTo() == null || b.getRentedTo().isEmpty());
 
             if (notOwnedByUser && isAvailable && notRented) {

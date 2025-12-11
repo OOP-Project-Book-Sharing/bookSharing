@@ -45,7 +45,6 @@ public class SceneManager {
 
     public static void switchViewWithData(String fxmlPath, Consumer<Object> controllerInitializer) {
         try {
-            // PUSH previous scene to history
             if (currentFXML != null && !currentFXML.equals(fxmlPath)) {
                 history.push(new SceneEntry(currentFXML, currentInitializer));
             }

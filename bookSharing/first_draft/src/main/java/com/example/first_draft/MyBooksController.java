@@ -68,8 +68,6 @@ public class MyBooksController {
         showForSaleRent();
     }
 
-    // -------------------- FILTERS --------------------
-
     private void showForSaleRent() {
         displayFiltered(book ->
                 book.getOwner() != null &&
@@ -188,7 +186,6 @@ public class MyBooksController {
                 Button deleteButton = new Button("Delete");
                 deleteButton.getStyleClass().add("edit-button");
 
-                // 🔥 NEW DELETE CONFIRMATION
                 deleteButton.setOnAction(e -> {
                     if (showConfirmDialog("Are you sure you want to delete this book?")) {
                         bookDatabase.deleteBook(book.getTitle());
@@ -227,9 +224,6 @@ public class MyBooksController {
 
         scrollPane.setFitToWidth(true);
 
-        // ------------------------------------------------------
-        // 🔥 NEW: IF NO BOOKS FOUND → SHOW MESSAGE
-        // ------------------------------------------------------
         if (!foundAny) {
             Label emptyMsg = new Label();
             emptyMsg.setStyle("-fx-font-size: 20px; -fx-text-fill: grey;");
@@ -244,7 +238,6 @@ public class MyBooksController {
         }
     }
 
-    // -------------------- DELETE CONFIRMATION --------------------
     private boolean showConfirmDialog(String message) {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -280,8 +273,6 @@ public class MyBooksController {
         return result[0];
     }
 
-    // -------------------- RETURN HANDLER --------------------
-
     private void handleReturnBook(Book book) {
         try {
             Stage dialog = new Stage();
@@ -312,7 +303,6 @@ public class MyBooksController {
                     return;
                 }
 
-                // ✔ RESET BOOK DATA
                 book.setAvailable(true);
                 book.setRentedTo(null);
                 book.setDueDate(null);
@@ -335,8 +325,6 @@ public class MyBooksController {
             e.printStackTrace();
         }
     }
-
-    // -------------------- NAVIGATION --------------------
 
     private void openAddBookPage() {
         try {

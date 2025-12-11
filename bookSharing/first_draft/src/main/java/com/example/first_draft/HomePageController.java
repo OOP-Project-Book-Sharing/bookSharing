@@ -111,23 +111,6 @@ public class HomePageController {
         }
     }
 
-//    private void switchToViewBooks(List<Book> booksInGenre, ActionEvent event) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("searchPage.fxml"));
-//        Parent root = fxmlLoader.load();
-//
-//        SearchPageController searchPageController = fxmlLoader.getController();
-//        searchPageController.setUsername(username);
-//        searchPageController.setBooks(booksInGenre);
-//        searchPageController.displayBooks();
-//
-//        if (root instanceof Region region) {
-//            region.prefWidthProperty().bind(SceneManager.getMainStackPane().widthProperty());
-//            region.prefHeightProperty().bind(SceneManager.getMainStackPane().heightProperty());
-//        }
-//
-//        SceneManager.getMainStackPane().getChildren().setAll(root);
-//    }
-
     private void switchToViewBooks(List<Book> booksInGenre) {
         SceneManager.switchViewWithData("/com/example/first_draft/searchPage.fxml", controller -> {
             if (controller instanceof SearchPageController searchCtrl) {

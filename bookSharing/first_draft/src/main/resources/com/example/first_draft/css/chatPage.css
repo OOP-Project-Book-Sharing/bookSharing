@@ -1,123 +1,162 @@
 /* chatPage.css */
 
-/* Root styles for BorderPane */
-.border-pane {
-    -fx-background-color: #f5f5f5;
-    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+/* 1. GLOBAL ROOT STYLES */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica", "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
 }
 
-/* Top HBox (username label) */
-.top .hbox {
-    -fx-background-color: #2C3E50;
-    -fx-padding: 10px;
-    -fx-alignment: CENTER_LEFT;
-    -fx-spacing: 10px;
+/* 2. TOP BAR (Matches fx:id="topHBox") */
+#topHBox {
+    -fx-background-color: #4A90E2; /* Modern Blue */
+    -fx-padding: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
 }
 
 #usernameLabel {
-    -fx-text-fill: #ECF0F1;
+    -fx-text-fill: white;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
 }
 
-/* Chat messages ScrollPane */
+/* 3. SIDEBAR & USER LIST (Matches fx:id="userList") */
+#sidebar {
+    -fx-background-color: #F5F7FA;
+    -fx-border-color: #E6E9ED;
+    -fx-border-width: 0 1px 0 0; /* Right border only */
+}
+
+/* The List View Itself */
+#userList {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 5px;
+}
+
+/* Individual User Cells */
+#userList .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #434a54;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+}
+
+/* Hover effect on users */
+#userList .list-cell:filled:hover {
+    -fx-background-color: #E6E9ED;
+    -fx-cursor: hand;
+}
+
+/* Selected User */
+#userList .list-cell:filled:selected {
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
+}
+
+/* Empty cells (hide them) */
+#userList .list-cell:empty {
+    -fx-background-color: transparent;
+}
+
+/* 4. CHAT AREA (Matches fx:id="chatScrollPane" and "chatBox") */
 #chatScrollPane {
-    -fx-background: #ECF0F1;
-    -fx-border-color: #BDC3C7;
-    -fx-border-width: 1px;
-    -fx-padding: 10px;
+    -fx-background: #ffffff;
+    -fx-border-width: 0;
 }
 
-/* VBox containing messages */
+#chatScrollPane .viewport {
+    -fx-background-color: #ffffff;
+}
+
 #chatBox {
-    -fx-background-color: #ECF0F1;
-    -fx-padding: 10px;
-}
-
-/* Individual chat message labels */
-#chatBox > Label {
-    -fx-background-color: #ffffff;
-    -fx-padding: 8px 12px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-border-color: #BDC3C7;
-    -fx-border-width: 1px;
-    -fx-font-size: 14px;
-    -fx-wrap-text: true;
-}
-
-/* Different style for own messages */
-#chatBox > Label:contains("You ->") {
-    -fx-background-color: #3498DB;
-    -fx-text-fill: #ffffff;
-    -fx-alignment: CENTER_RIGHT;
-}
-
-/* Bottom HBox (input area) */
-.bottom .hbox {
-    -fx-background-color: #ecf0f1;
-    -fx-padding: 10px;
+    -fx-padding: 15px;
     -fx-spacing: 10px;
-    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: #ffffff;
 }
 
-/* Message input field */
+/* ------------------------------------------------ */
+/* 5. MESSAGE BUBBLES (Matches logic in Controller) */
+/* ------------------------------------------------ */
+
+/* Base class: msgLabel.getStyleClass().add("message-bubble") */
+.message-bubble {
+    -fx-padding: 10px 14px;
+    -fx-background-radius: 15px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 2, 0, 0, 1);
+}
+
+/* YOUR MESSAGES: msgLabel.getStyleClass().add("message-right") */
+.message-right {
+    -fx-background-color: #4A90E2; /* Blue */
+    -fx-text-fill: white;
+    /* Round all corners except bottom-right */
+    -fx-background-radius: 15px 15px 0 15px;
+}
+
+/* THEIR MESSAGES: msgLabel.getStyleClass().add("message-left") */
+.message-left {
+    -fx-background-color: #F1F0F0; /* Light Grey */
+    -fx-text-fill: #333333;
+    /* Round all corners except bottom-left */
+    -fx-background-radius: 15px 15px 15px 0;
+}
+
+/* SYSTEM MESSAGES: msgLabel.getStyleClass().add("message-system") */
+.message-system {
+    -fx-background-color: transparent;
+    -fx-text-fill: #999999;
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+    -fx-padding: 5px;
+    -fx-effect: null; /* Remove shadow for system messages */
+    -fx-alignment: CENTER;
+}
+
+/* 6. INPUT AREA (Matches fx:id="messageField" & "sendButton") */
+.bottom {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-border-color: #E6E9ED;
+    -fx-border-width: 1px 0 0 0;
+}
+
 #messageField {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #BDC3C7;
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-    -fx-padding: 6px 10px;
-    -fx-font-size: 14px;
+    -fx-background-color: #F5F7FA;
+    -fx-border-color: #CCD1D9;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 15px;
 }
 
-/* Recipient input field */
-#recipientField {
+#messageField:focused {
     -fx-background-color: #ffffff;
-    -fx-border-color: #BDC3C7;
-    -fx-border-radius: 6px;
-    -fx-background-radius: 6px;
-    -fx-padding: 6px 10px;
-    -fx-font-size: 14px;
-    -fx-pref-width: 120px;
+    -fx-border-color: #4A90E2;
 }
 
-/* Send button */
 #sendButton {
-    -fx-background-color: #27AE60;
-    -fx-text-fill: #ffffff;
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-padding: 6px 14px;
-    -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
+    -fx-background-radius: 20px;
+    -fx-padding: 8px 20px;
     -fx-cursor: hand;
 }
 
 #sendButton:hover {
-    -fx-background-color: #2ECC71;
+    -fx-background-color: #357ABD;
 }
 
-/* ScrollPane content styling */
-#chatScrollPane .viewport {
-    -fx-background-color: #ECF0F1;
+#sendButton:disabled {
+    -fx-background-color: #AAB2BD;
 }
 
-/* Chat bubbles */
-.message-bubble {
-    -fx-padding: 10px;
-    -fx-background-radius: 12px;
-    -fx-font-size: 14px;
+/* 7. SCROLLBARS (Optional polish) */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
 }
-
-/* Message from OTHER users -> LEFT (gray) */
-.message-left {
-    -fx-background-color: #E8E8E8;
-    -fx-text-fill: black;
-}
-
-/* Message from ME -> RIGHT (light green) */
-.message-right {
-    -fx-background-color: #DCF8C6;
-    -fx-text-fill: black;
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #CCD1D9;
+    -fx-background-radius: 10px;
 }

@@ -1,50 +1,60 @@
-/* Account info section background (below navbar) */
+/* Main Background */
 .account-content {
-    -fx-background-color: #ea5454; /* Dark Sea Blue */
-    -fx-padding: 30;
+    -fx-background-color: #f4f6f8; /* Very light gray/blue */
+    -fx-padding: 40;
+    -fx-alignment: center; /* Centers the card */
 }
 
-/* Info block container */
+/* The Card Container */
 .info-block {
-    -fx-background-color: #814f4f; /* light black panel behind fields */
-    -fx-padding: 20;
-    -fx-background-radius: 12;
+    -fx-background-color: #ffffff; /* Pure white */
+    -fx-background-radius: 15;
+    -fx-padding: 30;
+    /* Soft drop shadow for depth */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 5);
+    -fx-max-width: 600; /* Prevents it from being too wide */
 }
 
-/* Title label */
+/* Title "My Account" */
 .title-label {
-    -fx-font-size: 26px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #f8f8f8; /* off-white */
+    -fx-text-fill: #2c3e50; /* Dark Navy */
+    -fx-border-color: transparent transparent #e0e0e0 transparent; /* Bottom divider line */
+    -fx-border-width: 2;
+    -fx-padding: 0 0 15 0;
 }
 
-/* Labels for field names */
+/* "Username:", "Email:", etc. */
 .info-label {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #f8f8f8; /* off-white */
-}
-
-/* Labels for field values */
-.info-value {
-    -fx-font-size: 20px;
-    -fx-text-fill: #f0f0f0; /* off-white */
-}
-
-/* Update button style */
-.update-button {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-background-radius: 8;
-    -fx-padding: 8 25 8 25;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 4, 0.5, 0, 0);
+    -fx-text-fill: #7f8c8d; /* Muted gray for labels */
 }
 
-/* Profile image styling */
-#profileImage {
-    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.4), 10, 0.5, 0, 0);
-    -fx-border-radius: 8;
+/* The actual data (e.g. John Doe) */
+.info-value {
+    -fx-font-size: 16px;
+    -fx-text-fill: #34495e; /* Darker gray for values */
+    -fx-font-weight: normal;
+}
+
+/* Update Button */
+.update-button {
+    -fx-background-color: #3498db; /* Professional Blue */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 10 30;
+    -fx-cursor: hand;
+}
+
+.update-button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}
+
+.update-button:pressed {
+    -fx-background-color: #1f618d;
 }
