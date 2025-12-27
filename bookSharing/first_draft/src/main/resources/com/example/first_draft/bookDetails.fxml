@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600" prefWidth="700" stylesheets="@css/bookDetails.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.BookDetailsController">
+<AnchorPane prefHeight="600" prefWidth="700" stylesheets="@css/bookDetails.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.BookDetailsController">
 
     <children>
         <VBox alignment="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="502.0" prefWidth="652.0" spacing="15" style="-fx-padding: 0 0 0 60;">
@@ -37,8 +37,8 @@
                     <Label alignment="CENTER" prefHeight="19.0" prefWidth="122.0" styleClass="field-label" text="Genre:" GridPane.rowIndex="2" />
                     <Label fx:id="genreLabel" styleClass="field-value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                    <Button fx:id="buyAmount" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-padding: 6 0 0 0;" />
-                    <Button fx:id="rentAmount" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-padding: 6 0 0 0;" />
+                    <Button fx:id="buyAmount" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-padding: 6 0 0 0;" text="Add to Cart (Buy)"/>
+                    <Button fx:id="rentAmount" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-padding: 6 0 0 0;" text="Add to Cart (Rent)"/>
                     <rowConstraints>
                         <RowConstraints minHeight="20"/>
                         <RowConstraints minHeight="20"/>

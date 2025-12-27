@@ -2,6 +2,7 @@
 
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
@@ -16,7 +17,28 @@
     <TextField fx:id="emailField" promptText="Email"/>
     <TextField fx:id="phoneField" promptText="Phone"/>
     <TextField fx:id="locationField" promptText="Location"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
+
+    <!-- Password Field with Toggle -->
+    <StackPane maxWidth="400">
+        <!-- Hidden password (default visible) -->
+        <PasswordField fx:id="passwordField"
+                       promptText="Password"
+                       prefWidth="400"/>
+
+        <!-- Visible password (initially hidden) -->
+        <TextField fx:id="passwordVisibleField"
+                   promptText="Password"
+                   prefWidth="400"
+                   visible="false"
+                   managed="false"/>
+
+        <!-- Eye toggle button -->
+        <Button fx:id="togglePasswordBtn"
+                text="👁"
+                style="-fx-background-color: transparent; -fx-font-size: 16px; -fx-text-fill: white;"
+                StackPane.alignment="CENTER_RIGHT"
+                translateX="-10" />
+    </StackPane>
 
     <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
 

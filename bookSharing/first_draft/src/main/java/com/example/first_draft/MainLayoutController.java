@@ -2,6 +2,7 @@ package com.example.first_draft;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ public class MainLayoutController {
     @FXML private Button homeButton;
     @FXML private Button myBooksButton;
     @FXML private Button searchButton;
+    @FXML private Button cartButton;
     @FXML private Button accountButton;
     @FXML private Button chatButton;
     @FXML private Button prevButton;
@@ -34,6 +36,7 @@ public class MainLayoutController {
         homeButton.setOnAction(e -> SceneManager.switchView("/com/example/first_draft/homePage.fxml"));
         myBooksButton.setOnAction(e -> SceneManager.switchView("/com/example/first_draft/myBooks.fxml"));
         searchButton.setOnAction(e -> SceneManager.switchView("/com/example/first_draft/searchPage.fxml"));
+        cartButton.setOnAction(e -> SceneManager.switchView("/com/example/first_draft/cart.fxml"));
         accountButton.setOnAction(e -> SceneManager.switchView("/com/example/first_draft/accountPage.fxml"));
         chatButton.setOnAction(e -> SceneManager.switchView("/com/example/first_draft/chatPage.fxml"));
 
@@ -50,6 +53,7 @@ public class MainLayoutController {
         }
     }
 
+
     private void logout() {
         try {
             SceneManager.clearHistory(); // Clear navigation history
@@ -62,6 +66,8 @@ public class MainLayoutController {
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.setTitle("Login");
+            Image icon = new Image(getClass().getResourceAsStream("images/logo.png"));
+            stage.getIcons().add(icon);
             loginStage.show();
         } catch (Exception e) {
             e.printStackTrace();

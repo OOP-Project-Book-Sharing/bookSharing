@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600" prefWidth="800" stylesheets="@css/accountPage.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="com.example.first_draft.AccountPageController">
+<BorderPane prefHeight="600" prefWidth="800" stylesheets="@css/accountPage.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.first_draft.AccountPageController">
 
     <center>
         <HBox alignment="TOP_LEFT" spacing="50" styleClass="account-content">

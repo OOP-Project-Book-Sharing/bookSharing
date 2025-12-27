@@ -32,8 +32,8 @@
                 <!-- CENTER (expanded so label stays centered) -->
                 <HBox alignment="CENTER">
                     <children>
-                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="130.0"
-                               text="BookPanda" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="180.0"
+                               text="BookPanda" textAlignment="CENTER" styleClass="bookpanda-label">
                             <font>
                                 <Font size="24.0"/>
                             </font>
@@ -63,11 +63,12 @@
     <bottom>
         <HBox prefHeight="37.0" prefWidth="602.0" spacing="10.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="164.0" text="Home"/>
-                <Button fx:id="myBooksButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="137.0" text="My Books"/>
-                <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="170.0" text="Search"/>
-                <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" text="Account"/>
-                <Button fx:id="chatButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="120.0" text="Chat"/>
+                <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Home"/>
+                <Button fx:id="myBooksButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="120.0" text="My Books"/>
+                <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Search"/>
+                <Button fx:id="cartButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Cart"/>
+                <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="140.0" text="Account"/>
+                <Button fx:id="chatButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" text="Chat"/>
             </children>
         </HBox>
     </bottom>

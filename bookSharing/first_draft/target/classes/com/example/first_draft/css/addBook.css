@@ -1,96 +1,82 @@
-/* Bookstore Theme - Add Book Form
-    Palette: Warm Paper (#FDFBF7), Leather Brown (#5D4037), Old Gold (#FFECB3)
-*/
+/* addBook.css - BookPanda Add Book Page */
 
-/* 1. The Main Container */
 .root {
-    -fx-background-color: #FDFBF7; /* Cream/Old Paper background */
-    -fx-font-family: "Segoe UI", "Helvetica", sans-serif; /* Clean, modern font */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
+}
+
+.anchor-pane {
+    -fx-background-color: transparent; /* Make transparent to show main background */
+}
+
+.vbox {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-field, .text-area, .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #8ec5fc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 10;
     -fx-font-size: 14px;
 }
 
-/* 2. Headings (The "Add New Book" Label) */
-.label {
-    -fx-text-fill: #3E2723; /* Very Dark Brown text */
+.text-field:focused, .text-area:focused, .combo-box:focused {
+    -fx-border-color: #e0c3fc;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(142, 197, 252, 0.4), 8, 0.3, 0, 0);
 }
 
-/* Specifically target the large title if needed, based on the inline font size */
-.label:header {
-    -fx-font-family: "Georgia", serif; /* Serif font for the title feels more "bookish" */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
-}
-
-/* 3. Inputs (TextFields and TextArea) */
-.text-field, .text-area {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 4;
-    -fx-border-color: #A1887F; /* Soft brown border */
-    -fx-border-radius: 4;
-    -fx-border-width: 1px;
-    -fx-prompt-text-fill: #9E9E9E;
-    -fx-text-fill: #333333;
-}
-
-.text-field:focused, .text-area:focused {
-    -fx-border-color: #5D4037; /* Darker leather brown on focus */
-    -fx-background-color: #FFF8E1; /* Subtle warm tint when typing */
-    -fx-effect: dropshadow(gaussian, rgba(93, 64, 55, 0.2), 5, 0, 0, 2);
-}
-
-/* 4. General Buttons (Upload, Cancel) */
 .button {
-    -fx-background-color: #8D6E63; /* Muted leather brown */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #667eea 0%, #764ba2 100%);
     -fx-text-fill: white;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-background-radius: 5;
+    -fx-padding: 10 25;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
     -fx-cursor: hand;
-    -fx-padding: 8 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 6, 0.3, 0, 2);
 }
 
 .button:hover {
-    -fx-background-color: #6D4C41; /* Darker brown on hover */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 0, 1);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #764ba2 0%, #667eea 100%);
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.5), 10, 0.4, 0, 3);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
 }
 
-.button:pressed {
-    -fx-background-color: #4E342E;
-    -fx-translate-y: 1; /* Slight press down effect */
+.label {
+    -fx-text-fill: #2d3748;
+    -fx-font-size: 14px;
 }
 
-
-#saveButton {
-    -fx-background-color: #388E3C;
-}
-#saveButton:hover {
-    -fx-background-color: #2E7D32;
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.3, 0, 2);
+    -fx-border-radius: 8;
 }
 
-#cancelButton {
-    -fx-background-color: #BCAAA4;
-    -fx-text-fill: #3E2723;
-}
-#cancelButton:hover {
-    -fx-background-color: #A1887F;
+.check-box {
+    -fx-text-fill: #2d3748;
+    -fx-font-size: 14px;
 }
 
-/* The Upload Button - Secondary Action */
-#uploadButton {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #8D6E63;
-    -fx-text-fill: #5D4037;
-}
-#uploadButton:hover {
-    -fx-background-color: #EFEBE9;
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #8ec5fc;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
 }
 
-/* 6. Image Preview Area */
-#previewImage {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
+.check-box:selected .mark {
+    -fx-background-color: #667eea;
 }
 
-/* 7. Error Message Label */
-#messageLabel {
-    -fx-text-fill: #D32F2F; /* Brick Red - easier on eyes than bright red */
-    -fx-font-weight: bold;
-    -fx-font-size: 12px;
-}

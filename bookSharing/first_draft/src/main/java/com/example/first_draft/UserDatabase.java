@@ -84,4 +84,18 @@ public class UserDatabase {
         }
         return null;
     }
+
+    public List<String> getAllUsernames() {
+        try {
+            load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<String> usernames = new ArrayList<>();
+        for (User u : users) {
+            usernames.add(u.getUsername());
+        }
+        return usernames;
+    }
 }

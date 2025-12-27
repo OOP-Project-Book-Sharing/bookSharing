@@ -1,6 +1,7 @@
 package com.example.first_draft;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -15,10 +16,37 @@ public class UpdateAccountPopupController {
     @FXML private TextField phoneField;
     @FXML private TextField locationField;
     @FXML private PasswordField passwordField;
+    @FXML private TextField passwordVisibleField;
+    @FXML private Button togglePasswordBtn;
     @FXML private Label messageLabel;
 
     private User currentUser;
     private UserDatabase userDB = new UserDatabase();
+    private boolean isPasswordVisible = false;
+
+
+    @FXML
+    public void initialize() {
+        if (passwordVisibleField != null && passwordField != null) {
+            passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
+            togglePasswordBtn.setOnAction(event -> {
+                if (isPasswordVisible) { // Hide password
+                    passwordVisibleField.setVisible(false);
+                    passwordVisibleField.setManaged(false);
+                    passwordField.setVisible(true);
+                    passwordField.setManaged(true);
+                    togglePasswordBtn.setText("👁"); // closed eye
+                } else { // Show password
+                    passwordField.setVisible(false);
+                    passwordField.setManaged(false);
+                    passwordVisibleField.setVisible(true);
+                    passwordVisibleField.setManaged(true);
+                    togglePasswordBtn.setText("👁🗨"); // open eye
+                }
+                isPasswordVisible = !isPasswordVisible;
+            });
+        }
+    }
 
     public void setUser(User user) {
         this.currentUser = user;
@@ -34,7 +62,8 @@ public class UpdateAccountPopupController {
         String email = emailField.getText().trim();
         String phone = phoneField.getText().trim();
         String location = locationField.getText().trim();
-        String password = passwordField.getText().trim();
+        String password = passwordField.isVisible() ? passwordField.getText() : passwordVisibleField.getText();
+        password = password.trim();
 
         // VALIDATIONS
         if (password.isEmpty()) {

@@ -1,0 +1,146 @@
+/* ===============================================
+   SHOPPING CART PAGE - Modern Colorful Design
+=============================================== */
+
+.root {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+/* ==================== PAGE LABEL ==================== */
+.root > .label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF6B6B;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.3, 0, 2);
+}
+
+/* ==================== SCROLL PANE ==================== */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 15;
+}
+
+.scroll-pane:focused {
+    -fx-border-width: 0;
+}
+
+/* ==================== ITEMS VBOX ==================== */
+.vbox {
+    -fx-spacing: 15;
+    -fx-padding: 0;
+}
+
+/* ==================== BOOK ROW ==================== */
+.book-row {
+    -fx-background-color: white;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.3, 0, 2);
+}
+
+.book-row:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FFFFFF 0%, #F0F9FF 100%);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 15, 0.3, 0, 4);
+}
+
+/* ==================== DETAILS GRID ==================== */
+.details-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 8;
+    -fx-padding: 0;
+}
+
+.details-grid .label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1F2937;
+}
+
+/* Book Title in Cart */
+.book-row .label {
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-text-fill: #1F2937;
+}
+
+/* ==================== BOOK IMAGE IN CART ==================== */
+.book-row .image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0.3, 0, 2);
+}
+
+/* ==================== ACTION BUTTONS IN CART ==================== */
+.book-row .button {
+    -fx-padding: 8 16 8 16;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 6, 0.3, 0, 1);
+}
+
+/* Buy/Rent Button */
+.book-row .button:nth-child(1) {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #4ECDC4 0%, #45BEB3 100%);
+    -fx-text-fill: white;
+}
+
+.book-row .button:nth-child(1):hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #45BEB3 0%, #3BA89D 100%);
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.4), 10, 0.3, 0, 3);
+}
+
+/* Remove Button */
+.book-row .button:nth-child(2) {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FF6B6B 0%, #FF5252 100%);
+    -fx-text-fill: white;
+}
+
+.book-row .button:nth-child(2):hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FF5252 0%, #FF3333 100%);
+    -fx-effect: dropshadow(gaussian, rgba(255, 107, 107, 0.4), 10, 0.3, 0, 3);
+}
+
+/* ==================== EMPTY CART MESSAGE ==================== */
+.root > .label {
+    -fx-text-alignment: center;
+    -fx-text-fill: #9CA3AF;
+    -fx-font-size: 20px;
+}
+
+/* ==================== BUTTON BOX AT BOTTOM ==================== */
+.hbox {
+    -fx-alignment: center-left;
+    -fx-spacing: 15;
+    -fx-padding: 15;
+    -fx-background-color: transparent;
+}
+
+/* Purchase All Button */
+#purchaseAllButton {
+    -fx-padding: 12 28 12 28;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FFD700 0%, #FFC700 100%);
+    -fx-text-fill: #1F2937;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.3), 10, 0.3, 0, 2);
+}
+
+#purchaseAllButton:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FFC700 0%, #FFB700 100%);
+    -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.5), 14, 0.3, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#purchaseAllButton:disabled {
+    -fx-background-color: #CCCCCC;
+    -fx-text-fill: #888888;
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+

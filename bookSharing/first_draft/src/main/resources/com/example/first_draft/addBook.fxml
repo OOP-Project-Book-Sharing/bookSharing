@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="520" prefWidth="420" spacing="10" style="-fx-padding:18;" stylesheets="@css/addBook.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="com.example.first_draft.AddBookController">
+<VBox alignment="CENTER" prefHeight="520" prefWidth="420" spacing="10" style="-fx-padding:18;" stylesheets="@css/addBook.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.example.first_draft.AddBookController">
 
     <Label style="-fx-font-size:18; -fx-font-weight:bold;" text="Add New Book" />
 

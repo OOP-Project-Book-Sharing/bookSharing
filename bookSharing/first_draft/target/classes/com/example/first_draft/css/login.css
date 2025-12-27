@@ -2,7 +2,7 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
-    -fx-background-color: linear-gradient(to bottom right, #141E30, #243B55);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #8b0000 0%, #4a0000 100%);
 }
 
 .login-container {
@@ -21,12 +21,24 @@
 }
 
 .button {
-    -fx-background-color: linear-gradient(to right, #00c6ff, #0072ff);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, rgb(173, 70, 5) 0%, rgb(160, 50, 0) 100%);
     -fx-text-fill: white;
     -fx-background-radius: 20;
     -fx-font-weight: bold;
     -fx-cursor: hand;
 }
 .button:hover {
-    -fx-background-color: linear-gradient(to right, #0072ff, #00c6ff);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, rgb(160, 50, 0) 0%, rgb(173, 70, 5) 100%);
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.hyperlink {
+    -fx-text-fill: blue;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #e0e0e0;
 }

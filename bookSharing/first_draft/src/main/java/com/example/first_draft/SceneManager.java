@@ -80,6 +80,9 @@ public class SceneManager {
                 addCtrl.setBookDatabase(bookDatabase);
             } else if (controller instanceof AccountPageController accCtrl) {
                 accCtrl.setUsername(currentUser);
+            } else if (controller instanceof CartController cartCtrl) {
+                cartCtrl.setCurrentUser(currentUser);
+                cartCtrl.displayCart();
             }
 
             mainStackPane.getChildren().setAll(root);

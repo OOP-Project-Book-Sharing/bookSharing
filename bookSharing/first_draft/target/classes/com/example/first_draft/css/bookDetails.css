@@ -1,87 +1,130 @@
-/* ===============================
-   GENERAL PAGE STYLING
-=================================*/
+/* ===============================================
+   BOOK DETAILS PAGE - Modern Colorful Design
+=============================================== */
+
 .root {
-    -fx-background-color: #f4f6fc;
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
 }
 
-/* Page Title */
+/* ==================== PAGE TITLE ==================== */
 .page-title {
-    -fx-font-size: 28px;
+    -fx-font-size: 32px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1a237e;
+    -fx-text-fill: #FF6B6B;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.3, 0, 2);
 }
 
-/* Section title */
+/* ==================== SECTION TITLES ==================== */
 .section-title {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #333;
+    -fx-text-fill: #4ECDC4;
     -fx-padding: 10 0 5 0;
 }
 
-/* Labels */
+/* ==================== FIELD LABELS ==================== */
 .field-label {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #444;
+    -fx-text-fill: #1F2937;
+    -fx-padding: 5 0;
 }
 
 .field-value {
     -fx-font-size: 15px;
-    -fx-text-fill: #333;
+    -fx-text-fill: #4B5563;
+    -fx-padding: 5 0;
 }
 
-/* Book Image Styling */
+/* ==================== BOOK COVER IMAGE ==================== */
 .book-cover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0.4, 0, 4);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0.4, 0, 6);
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
 
-/* Description ScrollPane */
+/* ==================== DESCRIPTION PANE ==================== */
 .desc-pane {
-    -fx-background-color: transparent;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 12;
+    -fx-background-color: white;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 5, 0.3, 0, 1);
 }
 
-/* Description text */
+.desc-pane:focused {
+    -fx-border-color: #4ECDC4;
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.2), 10, 0.3, 0, 2);
+}
+
+/* ==================== DESCRIPTION TEXT ==================== */
 .description-area {
-    -fx-font-size: 15px;
-    -fx-text-fill: #444;
-    -fx-padding: 10;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4B5563;
+    -fx-line-spacing: 4;
 }
 
-/* ===============================
-   BUTTONS
-=================================*/
+/* ==================== ACTION BUTTONS ==================== */
 .button {
-    -fx-background-radius: 8;
-    -fx-padding: 10 16;
+    -fx-padding: 12 24 12 24;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-cursor: hand;
     -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0.3, 0, 2);
+    -fx-border-width: 0;
 }
 
+/* Buy Button */
 #buyAmount {
-    -fx-background-color: #1e88e5;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FF6B6B 0%, #FF5252 100%);
 }
+
 #buyAmount:hover {
-    -fx-background-color: #1565c0;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FF5252 0%, #FF3333 100%);
+    -fx-effect: dropshadow(gaussian, rgba(255, 107, 107, 0.4), 12, 0.3, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
-#rentAmount {
-    -fx-background-color: #43a047;
-}
-#rentAmount:hover {
-    -fx-background-color: #2e7d32;
-}
-
-.button:disabled {
-    -fx-background-color: #b0b0b0;
-    -fx-text-fill: #ececec;
+#buyAmount:disabled {
+    -fx-background-color: #CCCCCC;
+    -fx-text-fill: #888888;
     -fx-opacity: 0.6;
+    -fx-cursor: default;
 }
+
+/* Rent Button */
+#rentAmount {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #4ECDC4 0%, #45BEB3 100%);
+}
+
+#rentAmount:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #45BEB3 0%, #3BA89D 100%);
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.4), 12, 0.3, 0, 4);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#rentAmount:disabled {
+    -fx-background-color: #CCCCCC;
+    -fx-text-fill: #888888;
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+/* ==================== GRID PANE ==================== */
+.grid-pane {
+    -fx-hgap: 20;
+    -fx-vgap: 12;
+    -fx-padding: 15;
+}
+
+/* ==================== ANCHOR PANE ==================== */
+.anchor-pane {
+    -fx-padding: 20;
+}
+

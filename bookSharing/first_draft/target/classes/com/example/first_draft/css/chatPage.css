@@ -1,162 +1,146 @@
-/* chatPage.css */
+/* ===============================================
+   CHAT PAGE - WhatsApp/Messenger Style
+=============================================== */
 
-/* 1. GLOBAL ROOT STYLES */
 .root {
-    -fx-font-family: "Segoe UI", "Helvetica", "Arial", sans-serif;
-    -fx-font-size: 14px;
-    -fx-background-color: #ffffff;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
 }
 
-/* 2. TOP BAR (Matches fx:id="topHBox") */
-#topHBox {
-    -fx-background-color: #4A90E2; /* Modern Blue */
-    -fx-padding: 15px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+/* ==================== MAIN LAYOUT ==================== */
+.border-pane {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
 }
 
-#usernameLabel {
-    -fx-text-fill: white;
+
+/* ==================== LEFT SIDEBAR (User List) ==================== */
+#sidebar {
+    -fx-background-color: white;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 0 1 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 3, 0, 1, 0);
+}
+
+#sidebar .label {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
+    -fx-text-fill: #075E54;
+    -fx-padding: 10 0 10 0;
 }
 
-/* 3. SIDEBAR & USER LIST (Matches fx:id="userList") */
-#sidebar {
-    -fx-background-color: #F5F7FA;
-    -fx-border-color: #E6E9ED;
-    -fx-border-width: 0 1px 0 0; /* Right border only */
+/* User List Styling */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
 }
 
-/* The List View Itself */
-#userList {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-padding: 5px;
+.list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-padding: 12 10;
+    -fx-border-color: #F0F0F0;
+    -fx-border-width: 0 0 1 0;
 }
 
-/* Individual User Cells */
-#userList .list-cell {
-    -fx-background-color: transparent;
-    -fx-text-fill: #434a54;
-    -fx-padding: 10px;
-    -fx-border-radius: 5px;
+.list-view .list-cell:hover {
+    -fx-background-color: #F5F5F5;
 }
 
-/* Hover effect on users */
-#userList .list-cell:filled:hover {
-    -fx-background-color: #E6E9ED;
-    -fx-cursor: hand;
+.list-view .list-cell:selected {
+    -fx-background-color: #E8F5E9; /* Light green for selection */
+    -fx-text-fill: #000000;
 }
 
-/* Selected User */
-#userList .list-cell:filled:selected {
-    -fx-background-color: #4A90E2;
-    -fx-text-fill: white;
+.list-view:focused .list-cell:selected {
+    -fx-background-color: #C8E6C9;
 }
 
-/* Empty cells (hide them) */
-#userList .list-cell:empty {
-    -fx-background-color: transparent;
-}
-
-/* 4. CHAT AREA (Matches fx:id="chatScrollPane" and "chatBox") */
+/* ==================== CHAT AREA (Center) ==================== */
 #chatScrollPane {
-    -fx-background: #ffffff;
-    -fx-border-width: 0;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 #chatScrollPane .viewport {
-    -fx-background-color: #ffffff;
+    -fx-background-color: transparent;
 }
 
 #chatBox {
-    -fx-padding: 15px;
-    -fx-spacing: 10px;
-    -fx-background-color: #ffffff;
-}
-
-/* ------------------------------------------------ */
-/* 5. MESSAGE BUBBLES (Matches logic in Controller) */
-/* ------------------------------------------------ */
-
-/* Base class: msgLabel.getStyleClass().add("message-bubble") */
-.message-bubble {
-    -fx-padding: 10px 14px;
-    -fx-background-radius: 15px;
-    -fx-font-size: 14px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 2, 0, 0, 1);
-}
-
-/* YOUR MESSAGES: msgLabel.getStyleClass().add("message-right") */
-.message-right {
-    -fx-background-color: #4A90E2; /* Blue */
-    -fx-text-fill: white;
-    /* Round all corners except bottom-right */
-    -fx-background-radius: 15px 15px 0 15px;
-}
-
-/* THEIR MESSAGES: msgLabel.getStyleClass().add("message-left") */
-.message-left {
-    -fx-background-color: #F1F0F0; /* Light Grey */
-    -fx-text-fill: #333333;
-    /* Round all corners except bottom-left */
-    -fx-background-radius: 15px 15px 15px 0;
-}
-
-/* SYSTEM MESSAGES: msgLabel.getStyleClass().add("message-system") */
-.message-system {
     -fx-background-color: transparent;
-    -fx-text-fill: #999999;
-    -fx-font-size: 12px;
-    -fx-font-style: italic;
-    -fx-padding: 5px;
-    -fx-effect: null; /* Remove shadow for system messages */
-    -fx-alignment: CENTER;
+    -fx-padding: 10;
 }
 
-/* 6. INPUT AREA (Matches fx:id="messageField" & "sendButton") */
-.bottom {
-    -fx-background-color: #ffffff;
-    -fx-padding: 15px;
-    -fx-border-color: #E6E9ED;
-    -fx-border-width: 1px 0 0 0;
+/* ==================== MESSAGE INPUT AREA (Bottom) ==================== */
+#bottomHBox {
+    -fx-background-color: rgba(255, 255, 255, 0.85); /* Light white background */
+    -fx-background-radius: 10;
+    -fx-padding: 10 15;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 3, 0, 0, -1);
 }
 
 #messageField {
-    -fx-background-color: #F5F7FA;
-    -fx-border-color: #CCD1D9;
-    -fx-border-radius: 20px;
-    -fx-background-radius: 20px;
-    -fx-padding: 8px 15px;
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-text-fill: #000000;
+    -fx-padding: 12 15;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-border-color: #D0D0D0;
+    -fx-border-width: 1;
 }
 
 #messageField:focused {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #4A90E2;
+    -fx-border-color: #075E54;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(7, 94, 84, 0.2), 5, 0, 0, 0);
 }
 
+/* ==================== SEND BUTTON ==================== */
 #sendButton {
-    -fx-background-color: #4A90E2;
+    -fx-background-color: #075E54; /* WhatsApp green */
     -fx-text-fill: white;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-background-radius: 20px;
-    -fx-padding: 8px 20px;
+    -fx-padding: 12 25;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 2);
 }
 
 #sendButton:hover {
-    -fx-background-color: #357ABD;
+    -fx-background-color: #128C7E; /* Lighter WhatsApp green */
+    -fx-effect: dropshadow(gaussian, rgba(7, 94, 84, 0.4), 6, 0, 0, 2);
 }
 
-#sendButton:disabled {
-    -fx-background-color: #AAB2BD;
+#sendButton:pressed {
+    -fx-background-color: #075E54;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
 }
 
-/* 7. SCROLLBARS (Optional polish) */
+/* ==================== SCROLL BAR ==================== */
 .scroll-bar:vertical {
     -fx-background-color: transparent;
 }
+
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #CCD1D9;
-    -fx-background-radius: 10px;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 5;
 }
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+

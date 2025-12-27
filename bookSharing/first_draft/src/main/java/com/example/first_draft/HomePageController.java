@@ -1,20 +1,14 @@
 package com.example.first_draft;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,12 +87,14 @@ public class HomePageController {
                 author.getStyleClass().add("author");
 
                 bookBox.getChildren().addAll(cover, title, author);
+
+                // Add click handler to show book details
+                bookBox.setOnMouseClicked(event -> showBookDetails(book));
+                bookBox.setStyle(bookBox.getStyle() + "-fx-cursor: hand;");
+
                 displayBox.getChildren().add(bookBox);
             }
 
-            Region spacer = new Region();
-            HBox.setHgrow(spacer, Priority.ALWAYS);
-            displayBox.getChildren().add(spacer);
 
             Button moreButton = new Button("More Books →");
             moreButton.setOnAction(event -> {
@@ -117,6 +113,15 @@ public class HomePageController {
                 searchCtrl.setUsername(username);
                 searchCtrl.setBooks(booksInGenre);
                 searchCtrl.displayBooks();
+            }
+        });
+    }
+
+    private void showBookDetails(Book book) {
+        SceneManager.switchViewWithData("/com/example/first_draft/bookDetails.fxml", controller -> {
+            if (controller instanceof BookDetailsController bookCtrl) {
+                bookCtrl.setCurrentUser(username);
+                bookCtrl.setBook(book);
             }
         });
     }

@@ -1,83 +1,136 @@
+/* myBooks.css - BookPanda My Books Page with Pop-up Effect */
 
-#bookListVBox {
-    -fx-padding: 15px;
-    -fx-spacing: 12px;
-    -fx-background-color: #f5f5f5;
+.root {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
 }
 
+.anchor-pane {
+    -fx-background-color: transparent; /* Make transparent to show main background */
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Book Row/Card with Pop-up Effect */
 .book-row {
     -fx-background-color: white;
-    -fx-padding: 18px 22px;
-    -fx-spacing: 22px;
-    -fx-background-radius: 8px;
-    -fx-border-radius: 8px;
-    -fx-border-color: #dcdcdc;
-    -fx-border-width: 1px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0.2, 0, 2);
+    -fx-padding: 20;
+    -fx-spacing: 20;
 }
 
 .book-row:hover {
-    -fx-background-color: #f0f4ff;
-    -fx-border-color: #b2c9ff;
+    -fx-effect: dropshadow(gaussian, rgba(255, 107, 107, 0.4), 20, 0.4, 0, 8);
+    -fx-translate-y: -5;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-border-color: #ff6b6b;
+    -fx-border-width: 2;
 }
 
-.details-vbox {
-    -fx-spacing: 6px;
-    -fx-pref-width: 560px;
+/* Book Details Grid */
+.details-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 10;
 }
 
+/* Book Labels */
 .book-title {
-    -fx-font-size: 20px;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2b2b2b;
+    -fx-text-fill: #2d3748;
 }
 
 .book-author {
-    -fx-font-size: 15px;
-    -fx-text-fill: #555;
-    -fx-font-style: italic;
+    -fx-font-size: 14px;
+    -fx-text-fill: #4a5568;
 }
-.book-genre,
-.book-owner,
-.book-rented,
+
+.book-genre {
+    -fx-font-size: 14px;
+    -fx-text-fill: #4a5568;
+}
+
+.book-owner {
+    -fx-font-size: 14px;
+    -fx-text-fill: #718096;
+}
+
+.book-rented {
+    -fx-font-size: 14px;
+    -fx-text-fill: #e53e3e;
+    -fx-font-weight: bold;
+}
+
 .book-due {
     -fx-font-size: 14px;
-    -fx-text-fill: #444;
+    -fx-text-fill: #dd6b20;
 }
 
-/*.book-desc {
+.book-buy {
     -fx-font-size: 14px;
-    -fx-text-fill: #444;
-}*/
+    -fx-text-fill: #38a169;
+    -fx-font-weight: bold;
+}
 
+/* Book Cover Image */
+.book-cover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.3, 0, 3);
+    -fx-border-radius: 8;
+}
 
-.edit-button {
-    -fx-background-color: #db324f;
+/* Buttons */
+.button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #667eea 0%, #764ba2 100%);
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-padding: 6px 12px;
-    -fx-background-radius: 5px;
+    -fx-padding: 8 20;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #764ba2 0%, #667eea 100%);
+    -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.5), 10, 0.4, 0, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.edit-button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #f093fb 0%, #f5576c 100%);
 }
 
 .edit-button:hover {
-    -fx-background-color: #335fd6;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #f5576c 0%, #f093fb 100%);
+    -fx-effect: dropshadow(gaussian, rgba(245, 87, 108, 0.5), 10, 0.4, 0, 3);
 }
 
-.book-cover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 10, 0.2, 0, 2);
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
-}
-.details-grid {
-    -fx-padding: 10;
-    -fx-hgap: 20;
-    -fx-vgap: 8;
-    -fx-pref-width: 560px;
-}
-
-.book-buy,
-.book-rent {
+/* Tab Buttons */
+#btnForSaleRent, #btnRented, #btnBorrowed, #btnAddBook {
+    -fx-background-color: crimson;
+    -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-text-fill: #444;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
 }
+
+#btnForSaleRent:hover, #btnRented:hover, #btnBorrowed:hover, #btnAddBook:hover {
+    -fx-background-color: rgba(110, 4, 41,0.30);
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.5), 10, 0.4, 0, 3);
+}
+

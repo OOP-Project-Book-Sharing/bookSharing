@@ -1,6 +1,7 @@
 package com.example.first_draft;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -27,7 +28,6 @@ public class BookDetailsController {
     private String currentUser;
 
     private BookDatabase bookDatabase = new BookDatabase();
-    private UserDatabase userDatabase = new UserDatabase();
 
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
@@ -83,62 +83,54 @@ public class BookDetailsController {
     }
 
     private void handleBuy() {
-        // Password dialog
-        Dialog<String> passDialog = createPasswordDialog(
-                "Buy Payment",
-                "Enter your password to buy \"" + book.getTitle() + "\""
-        );
-
-        Optional<String> passResult = passDialog.showAndWait();
-        if (passResult.isEmpty()) return;
-
-        String password = passResult.get();
-        if (!userDatabase.validateUser(currentUser, password)) {
-            showAlert(Alert.AlertType.ERROR, "Incorrect password. Payment denied.");
+        // Check if user is trying to buy their own book
+        if (currentUser != null && book.getOwner().equalsIgnoreCase(currentUser)) {
+            showAlert(Alert.AlertType.ERROR, "You cannot buy your own book.");
             return;
         }
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Purchase");
-        confirm.setHeaderText(null);
-        confirm.setContentText("Pay $" + book.getBuyAmount() + " to buy this book?");
-        Optional<ButtonType> result = confirm.showAndWait();
-        if (result.isEmpty() || result.get() != ButtonType.OK) return;
+        // Check if book is available
+        if (!book.isAvailable() || (book.getRentedTo() != null && !book.getRentedTo().isEmpty())) {
+            showAlert(Alert.AlertType.ERROR, "This book is not available.");
+            return;
+        }
 
-        // ---- DELETE BOOK ----
-        book.setOwner(currentUser);
-        book.setAvailable(true);
-        bookDatabase.updateBook(book);
-        //bookDatabase.deleteBook(book.getTitle());
-
-        redirectToSearchPage();
-
-        showAlert(Alert.AlertType.INFORMATION, "Book purchased successfully!");
+        // Add book to cart with BUY action
+        CartItem cartItem = new CartItem(book, CartItem.ActionType.BUY);
+        Cart.getInstance().addItem(cartItem);
+        showAlert(Alert.AlertType.INFORMATION, "Book added to cart for buying! (Price: $" + book.getBuyAmount() + ")");
     }
 
     private void handleRent() {
-        Dialog<String> passDialog = createPasswordDialog(
-                "Rent Payment",
-                "Enter your password to rent \"" + book.getTitle() + "\""
-        );
-
-        Optional<String> passResult = passDialog.showAndWait();
-        if (passResult.isEmpty()) return;
-
-        String password = passResult.get();
-        if (!userDatabase.validateUser(currentUser, password)) {
-            showAlert(Alert.AlertType.ERROR, "Incorrect password. Payment denied.");
+        // Check if user is trying to rent their own book
+        if (currentUser != null && book.getOwner().equalsIgnoreCase(currentUser)) {
+            showAlert(Alert.AlertType.ERROR, "You cannot rent your own book.");
             return;
         }
 
-        // Due date selection
-        Dialog<LocalDate> dateDialog = new Dialog<>();
-        dateDialog.setTitle("Select Due Date");
-        dateDialog.setHeaderText("Choose a due date for returning the book");
+        // Check if book is available
+        if (!book.isAvailable() || (book.getRentedTo() != null && !book.getRentedTo().isEmpty())) {
+            showAlert(Alert.AlertType.ERROR, "This book is not available.");
+            return;
+        }
 
-        DatePicker datePicker = new DatePicker(LocalDate.now().plusDays(1));
-        VBox dateContent = new VBox(10, new Label("Due Date:"), datePicker);
+        // Prompt for rental duration with date picker
+        Dialog<LocalDate> dateDialog = new Dialog<>();
+        dateDialog.setTitle("Select Rental Period");
+        dateDialog.setHeaderText("Choose how long you want to rent \"" + book.getTitle() + "\"");
+
+        DatePicker datePicker = new DatePicker(LocalDate.now().plusDays(7));
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(LocalDate.now().plusDays(1)));
+            }
+        });
+
+        VBox dateContent = new VBox(10, new Label("Return by date:"), datePicker);
         dateContent.setMinWidth(300);
+        dateContent.setPadding(new Insets(10));
         dateDialog.getDialogPane().setContent(dateContent);
         dateDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         dateDialog.setResultConverter(btn -> btn == ButtonType.OK ? datePicker.getValue() : null);
@@ -150,43 +142,17 @@ public class BookDetailsController {
         long days = ChronoUnit.DAYS.between(LocalDate.now(), dueDate);
 
         if (days <= 0) {
-            showAlert(Alert.AlertType.ERROR, "Invalid due date selected.");
+            showAlert(Alert.AlertType.ERROR, "Invalid rental period selected.");
             return;
         }
 
-        int totalPrice = (int) (days * book.getRentAmount());
+        int totalCost = (int) (days * book.getRentAmount());
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Confirm Rent");
-        confirm.setHeaderText(null);
-        confirm.setContentText("Total rent: $" + totalPrice + "\nProceed to rent?");
-        Optional<ButtonType> confirmResult = confirm.showAndWait();
-        if (confirmResult.isEmpty() || confirmResult.get() != ButtonType.OK) return;
-
-        // Update book rental
-        book.setRentedTo(currentUser);
-        book.setAvailable(false);
-        book.setDueDate(dueDate.toString());
-        bookDatabase.updateBook(book);
-
-        redirectToSearchPage();
-
-        showAlert(Alert.AlertType.INFORMATION, "Book rented successfully! Due date: " + dueDate);
-    }
-
-    private Dialog<String> createPasswordDialog(String title, String header) {
-        Dialog<String> passDialog = new Dialog<>();
-        passDialog.setTitle(title);
-        passDialog.setHeaderText(header);
-
-        PasswordField passwordField = new PasswordField();
-        VBox content = new VBox(10, new Label("Password:"), passwordField);
-        content.setMinWidth(300);
-        passDialog.getDialogPane().setContent(content);
-        passDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        passDialog.setResultConverter(btn -> btn == ButtonType.OK ? passwordField.getText() : null);
-
-        return passDialog;
+        // Add book to cart with RENT action and rental days
+        CartItem cartItem = new CartItem(book, CartItem.ActionType.RENT, (int) days, dueDate);
+        Cart.getInstance().addItem(cartItem);
+        showAlert(Alert.AlertType.INFORMATION,
+            "Book added to cart for renting!\n" + days + " days - Total: $" + totalCost);
     }
 
     private void showAlert(Alert.AlertType type, String msg) {
@@ -194,16 +160,5 @@ public class BookDetailsController {
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
-    }
-
-    private void redirectToSearchPage() {
-        SceneManager.switchViewWithData("/com/example/first_draft/searchPage.fxml", controller -> {
-            BookDatabase db = new BookDatabase();
-            if (controller instanceof SearchPageController c) {
-                c.setBooks(db.getAvailableBooksNotOwnedBy(currentUser));
-                c.setUsername(currentUser);
-                c.displayBooks();
-            }
-        });
     }
 }

@@ -10,17 +10,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPane" stylesheets="@css/chatPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.ChatPageController">
+<BorderPane fx:id="borderPane" stylesheets="@css/chatPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.ChatPageController">
 
-    <!-- TOP BAR -->
-    <top>
-        <HBox fx:id="topHBox" alignment="CENTER">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <Label fx:id="usernameLabel" text="Chat" />
-        </HBox>
-    </top>
 
     <!-- LEFT SIDEBAR -->
     <left>

@@ -1,6 +1,10 @@
-/* Main Background */
+/* Root and Main Background */
+.root {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
+}
+
 .account-content {
-    -fx-background-color: #f4f6f8; /* Very light gray/blue */
+    -fx-background-color: transparent; /* Make transparent to show main background */
     -fx-padding: 40;
     -fx-alignment: center; /* Centers the card */
 }

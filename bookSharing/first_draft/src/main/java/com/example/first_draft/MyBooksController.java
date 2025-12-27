@@ -6,10 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -19,7 +16,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 public class MyBooksController {
 
@@ -275,54 +276,79 @@ public class MyBooksController {
 
     private void handleReturnBook(Book book) {
         try {
-            Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.setTitle("Enter Password");
+            // Calculate if there's a late fee
+            int lateFee = 0;
+            long daysLate = 0;
+            boolean isLate = false;
 
-            VBox box = new VBox(15);
-            box.setPadding(new Insets(20));
-            box.setAlignment(Pos.CENTER);
+            if (book.getDueDate() != null && !book.getDueDate().isEmpty()) {
+                try {
+                    LocalDate dueDate = LocalDate.parse(book.getDueDate());
+                    LocalDate today = LocalDate.now();
 
-            Label label = new Label("Enter your password to confirm return:");
-            PasswordField passField = new PasswordField();
-
-            Button confirm = new Button("Confirm");
-            Button cancel = new Button("Cancel");
-
-            HBox buttons = new HBox(10, confirm, cancel);
-            buttons.setAlignment(Pos.CENTER);
-
-            box.getChildren().addAll(label, passField, buttons);
-
-            confirm.setOnAction(ev -> {
-                String password = passField.getText().trim();
-
-                UserDatabase userDb = new UserDatabase();
-                if (!userDb.validateUser(username, password)) {
-                    label.setText("Wrong password! Try again.");
-                    return;
+                    if (today.isAfter(dueDate)) {
+                        isLate = true;
+                        daysLate = ChronoUnit.DAYS.between(dueDate, today);
+                        // Late fee: $5 per day late
+                        lateFee = (int) (daysLate * 5);
+                    }
+                } catch (DateTimeParseException e) {
+                    // If date parsing fails, proceed without late fee
+                    System.err.println("Error parsing due date: " + e.getMessage());
                 }
+            }
 
+            // Create confirmation dialog
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Confirm Return");
+            confirmAlert.setHeaderText("Return Book: " + book.getTitle());
+
+            String message;
+            if (isLate) {
+                message = "You are returning this book " + daysLate + " day(s) late.\n\n" +
+                         "Late Fee: $" + lateFee + " ($5 per day)\n" +
+                         "Due Date: " + book.getDueDate() + "\n" +
+                         "Today: " + LocalDate.now() + "\n\n" +
+                         "Are you sure you want to return this book and pay the late fee?";
+            } else {
+                message = "Are you sure you want to return this book?";
+            }
+
+            confirmAlert.setContentText(message);
+
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Return the book
                 book.setAvailable(true);
                 book.setRentedTo(null);
                 book.setDueDate(null);
-
                 bookDatabase.updateBook(book);
 
-                dialog.close();
+                // Show success message
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Book Returned");
+                successAlert.setHeaderText(null);
 
+                if (isLate) {
+                    successAlert.setContentText("Book returned successfully!\n\nLate fee paid: $" + lateFee);
+                } else {
+                    successAlert.setContentText("Book returned successfully!");
+                }
+                successAlert.showAndWait();
+
+                // Refresh the view
                 allBooks = bookDatabase.getAllBooks();
                 showBorrowed();
-            });
-
-            cancel.setOnAction(ev -> dialog.close());
-
-            dialog.setScene(new Scene(box));
-            dialog.setResizable(false);
-            dialog.showAndWait();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Error");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("An error occurred while returning the book.");
+            errorAlert.showAndWait();
         }
     }
 

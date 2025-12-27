@@ -1,0 +1,90 @@
+/* searchPage.css - BookPanda Search Page with Pop-up Book Cards */
+
+.root {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(242, 213, 213) 0%, rgb(230, 200, 200) 100%);
+}
+
+.anchor-pane {
+    -fx-background-color: transparent; /* Make transparent to show main background */
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #dee2e6;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused {
+    -fx-border-color: #4ECDC4;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.3), 8, 0.3, 0, 0);
+}
+
+.button {
+    -fx-background-color: crimson;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: rgba(110, 4, 41,0.30);
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.5), 10, 0.4, 0, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Book Card Pop-up Effect */
+.book-card {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0.2, 0, 2);
+    -fx-cursor: hand;
+    -fx-padding: 10;
+}
+
+.book-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.4), 20, 0.4, 0, 8);
+    -fx-translate-y: -8;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-border-color: #4ECDC4;
+}
+
+.grid-pane {
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-padding: 20;
+}
+
+.label {
+    -fx-text-fill: #2d3748;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+

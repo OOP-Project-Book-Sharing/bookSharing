@@ -3,7 +3,7 @@ package com.example.first_draft;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class  User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
