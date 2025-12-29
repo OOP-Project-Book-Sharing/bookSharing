@@ -100,7 +100,7 @@
     -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #2ECC71 0%, #27AE60 100%);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(247, 100, 79) 0%, rgb(200, 60, 50) 100%);
     -fx-background-radius: 8;
     -fx-padding: 10 20;
     -fx-min-width: 140;

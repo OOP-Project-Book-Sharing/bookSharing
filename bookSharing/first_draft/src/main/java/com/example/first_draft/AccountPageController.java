@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,10 +17,12 @@ public class AccountPageController {
     @FXML private Label phoneLabel;
     @FXML private Label locationLabel;
     @FXML private Label passwordLabel;
+    @FXML private Button togglePasswordButton;
 
     private UserDatabase userDB = new UserDatabase();
     private String username;
     private User loggedInUser;
+    private boolean isPasswordVisible = false;
 
     public void setUsername(String username) {
         this.username = username;
@@ -61,6 +64,23 @@ public class AccountPageController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleTogglePassword(ActionEvent event) {
+        if (loggedInUser == null) return;
+
+        isPasswordVisible = !isPasswordVisible;
+
+        if (isPasswordVisible) {
+            // Show actual password
+            passwordLabel.setText(loggedInUser.getPassword());
+            togglePasswordButton.setText("🙈"); // closed eye emoji
+        } else {
+            // Hide password
+            passwordLabel.setText("********");
+            togglePasswordButton.setText("👁"); // open eye emoji
         }
     }
 }

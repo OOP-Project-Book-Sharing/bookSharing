@@ -46,7 +46,7 @@
 
 /* Update Button */
 .update-button {
-    -fx-background-color: #3498db; /* Professional Blue */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(52, 152, 219) 0%, rgb(41, 128, 185) 100%);
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
@@ -56,9 +56,29 @@
 }
 
 .update-button:hover {
-    -fx-background-color: #2980b9; /* Darker blue on hover */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(41, 128, 185) 0%, rgb(31, 97, 141) 100%);
 }
 
 .update-button:pressed {
-    -fx-background-color: #1f618d;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(31, 97, 141) 0%, rgb(21, 67, 96) 100%);
+}
+
+/* Toggle Password Button */
+.toggle-password-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-padding: 2 5;
+}
+
+.toggle-password-button:hover {
+    -fx-text-fill: #34495e;
+    -fx-background-color: rgba(52, 73, 94, 0.1);
+    -fx-background-radius: 3;
+}
+
+.toggle-password-button:pressed {
+    -fx-text-fill: #2c3e50;
 }

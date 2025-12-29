@@ -34,7 +34,10 @@
                     <Label fx:id="locationLabel" styleClass="info-value" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                     <Label styleClass="info-label" text="Password:" GridPane.rowIndex="4" />
-                    <Label fx:id="passwordLabel" styleClass="info-value" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="passwordLabel" styleClass="info-value" />
+                        <Button fx:id="togglePasswordButton" onAction="#handleTogglePassword" styleClass="toggle-password-button" text="👁" />
+                    </HBox>
                <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />

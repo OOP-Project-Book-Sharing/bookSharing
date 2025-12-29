@@ -225,8 +225,10 @@ public class SearchPageController {
             if (!book.isAvailable()) continue;
             if (book.getRentedTo() != null && !book.getRentedTo().isEmpty()) continue;
 
+            // Search by title, author, or owner username
             if (book.getTitle().toLowerCase().contains(searchKeyword.toLowerCase()) ||
-                    book.getAuthor().toLowerCase().contains(searchKeyword.toLowerCase())) {
+                    book.getAuthor().toLowerCase().contains(searchKeyword.toLowerCase()) ||
+                    book.getOwner().toLowerCase().contains(searchKeyword.toLowerCase())) {
                 searchResults.add(book);
             }
         }

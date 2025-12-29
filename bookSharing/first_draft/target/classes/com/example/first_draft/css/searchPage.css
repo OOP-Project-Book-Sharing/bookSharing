@@ -32,7 +32,7 @@
 }
 
 .button {
-    -fx-background-color: crimson;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(220, 20, 60) 0%, rgb(178, 34, 34) 100%);
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -44,8 +44,8 @@
 }
 
 .button:hover {
-    -fx-background-color: rgba(110, 4, 41,0.30);
-    -fx-effect: dropshadow(gaussian, rgba(78, 205, 196, 0.5), 10, 0.4, 0, 3);
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, rgb(178, 34, 34) 0%, rgb(139, 0, 0) 100%);
+    -fx-effect: dropshadow(gaussian, rgba(220, 20, 60, 0.5), 10, 0.4, 0, 3);
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
