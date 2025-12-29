@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class GenreDatabase {
-    private static final String FILE_PATH = "genres.txt";
+    private static final String FILE_PATH = "database/genres.txt";
 
     public static List<String> loadGenres() {
         List<String> genres = new ArrayList<>();

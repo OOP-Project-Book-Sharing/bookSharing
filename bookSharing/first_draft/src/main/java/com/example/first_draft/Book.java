@@ -37,7 +37,6 @@ public class Book implements Serializable {
         this.genre = genre;
     }
 
-    // --- Getters ---
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
     public String getDescription() { return description; }
@@ -50,7 +49,7 @@ public class Book implements Serializable {
     public String getDueDate() { return dueDate; }
     public String getGenre() { return genre; }
 
-    // --- Setters ---
+
     public void setTitle(String title) { this.title = title; }
     public void setAuthor(String author) { this.author = author; }
     public void setDescription(String description) { this.description = description; }
@@ -63,7 +62,7 @@ public class Book implements Serializable {
     public void setDueDate(String dueDate) { this.dueDate = dueDate; }
     public void setGenre(String genre) { this.genre = genre; }
 
-    // --- Helper for JavaFX ---
+
     public ImageView getCover() {
         ImageView img = new ImageView();
         img.setFitWidth(100);

@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/first_draft/fxml/login.fxml"));
             if (loader.getLocation() == null) {
                 throw new RuntimeException("ERROR: Cannot find login.fxml. Application not running");
             }
@@ -20,7 +20,7 @@ public class Main extends Application {
             Scene scene = new Scene(loader.load(), 800, 600);
             stage.setScene(scene);
             stage.setTitle("Login");
-            Image icon = new Image(getClass().getResourceAsStream("images/logo.png"));
+            Image icon = new Image(getClass().getResourceAsStream("/com/example/first_draft/images/logo.png"));
             stage.getIcons().add(icon);
             stage.show();
 

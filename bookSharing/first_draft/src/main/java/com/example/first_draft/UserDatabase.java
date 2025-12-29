@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class UserDatabase {
-    private static final String FILE_PATH = "users.dat";
+    private static final String FILE_PATH = "database/users.dat";
     private List<User> users;
 
     public UserDatabase() {

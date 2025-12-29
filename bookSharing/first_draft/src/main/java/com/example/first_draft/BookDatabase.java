@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class BookDatabase {
-    private static final String FILE_PATH = "books.dat";
+    private static final String FILE_PATH = "database/books.dat";
     private List<Book> books;
 
     public BookDatabase() {
