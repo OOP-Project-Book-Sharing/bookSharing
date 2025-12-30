@@ -69,16 +69,17 @@ public class Book implements Serializable {
         img.setFitHeight(150);
         img.setPreserveRatio(true);
 
+        // Use default image holder if imagePath is null or empty
         if (imagePath == null || imagePath.isEmpty()) return img;
 
         try {
             File file = new File(imagePath);
             if (file.exists()) {
                 // Load from absolute file path
-                img.setImage(new Image(file.toURI().toString()));
+                img.setImage(new Image(file.toURI().toString())); //have to input URL not file path
             } else {
                 // Load from project resources
-                img.setImage(new Image(getClass().getResource(imagePath).toExternalForm()));
+                img.setImage(new Image(getClass().getResource(imagePath).toExternalForm())); //toExternalForm converts to URL
             }
         } catch (Exception e) {
             System.out.println("Could not load image: " + imagePath);

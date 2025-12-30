@@ -23,6 +23,7 @@ public class GenreDatabase {
     public static void addGenre(String genre) {
         List<String> genres = loadGenres();
         if (!genres.contains(genre)) {
+            //creates new file if there doesn't exist a file
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
                 bw.write(genre);
                 bw.newLine();

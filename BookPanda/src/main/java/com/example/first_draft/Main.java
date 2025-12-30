@@ -7,6 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class Main extends Application {
 
     @Override
@@ -20,12 +22,12 @@ public class Main extends Application {
             Scene scene = new Scene(loader.load(), 800, 600);
             stage.setScene(scene);
             stage.setTitle("Login");
-            Image icon = new Image(getClass().getResourceAsStream("/com/example/first_draft/images/logo.png"));
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/first_draft/images/logo.png")));
             stage.getIcons().add(icon);
             stage.show();
 
         } catch (Exception e) {
-            e.printStackTrace(); //stack trace of the exception — i.e., it shows where and why the error happened in your code.
+            e.printStackTrace(); //it shows where and why the error happened.
 
             Alert alert = new Alert(
                     Alert.AlertType.ERROR,

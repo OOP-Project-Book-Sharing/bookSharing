@@ -7,19 +7,29 @@ public class BookDatabase {
     private static final String FILE_PATH = "database/books.dat";
     private List<Book> books;
 
+    // Whenever I call this function, it reloads the database from the file.
     public BookDatabase() {
         books = new ArrayList<>();
-        load();
+        try {
+            load();
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("Can't find this file: " + FILE_PATH);
+            save();
+        } catch (IOException | ClassNotFoundException e){
+            e.printStackTrace();
+            System.out.println("Error reading from file: " + FILE_PATH);
+        }
     }
 
-    public void load() {
+    public void load() throws IOException, ClassNotFoundException{
         File file = new File(FILE_PATH);
-        if (!file.exists()) return;
+        if (!file.exists()){
+            throw new FileNotFoundException();
+        }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             books = (List<Book>) ois.readObject();
-        } catch (Exception e) {
-            System.out.println("Error loading book database: " + e.getMessage());
         }
     }
 
@@ -52,40 +62,6 @@ public class BookDatabase {
     }
 
     public List<Book> getAllBooks() { return books; }
-
-    public List<Book> getBooksForSaleOrRent(String username) {
-        List<Book> result = new ArrayList<>();
-        for (Book b : books) {
-            if (b.getOwner().equalsIgnoreCase(username) &&
-                    (b.getRentedTo() == null || b.getRentedTo().isEmpty())) {
-                result.add(b);
-            }
-        }
-        return result;
-    }
-
-    public List<Book> getBorrowedBooks(String username) {
-        List<Book> result = new ArrayList<>();
-        for (Book b : books) {
-            if (username.equalsIgnoreCase(b.getRentedTo()) &&
-                    !b.getOwner().equalsIgnoreCase(username)) {
-                result.add(b);
-            }
-        }
-        return result;
-    }
-
-    public List<Book> getRentedOutBooks(String username) {
-        List<Book> result = new ArrayList<>();
-        for (Book b : books) {
-            if (b.getOwner().equalsIgnoreCase(username) &&
-                    b.getRentedTo() != null &&
-                    !b.getRentedTo().isEmpty()) {
-                result.add(b);
-            }
-        }
-        return result;
-    }
 
     public List<Book> getAvailableBooksNotOwnedBy(String username) {
         List<Book> result = new ArrayList<>();

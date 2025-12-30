@@ -18,20 +18,23 @@ public class UserDatabase {
             e.printStackTrace();
             System.err.println("Error loading user database: " + e.getMessage());
         }
+        // two separate catch blocks to clearly understand what exception occurred
     }
 
     public void load() throws IOException, ClassNotFoundException {
         File file = new File(FILE_PATH);
         if (!file.exists()) {
-            throw new FileNotFoundException("User database file not found: " + FILE_PATH);
+            throw new FileNotFoundException("User database file not found: " + FILE_PATH); //FileNotFoundException extends IOException
         }
 
+        // try block with resources to ensure stream is closed
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            users = (List<User>) ois.readObject();
+            users = (List<User>) ois.readObject(); //Throws ClassNotFoundException
         }
     }
 
     public void save() {
+        //creates a new file or overwrites existing file
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(users);
         } catch (IOException e) {
