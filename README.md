@@ -1,11 +1,11 @@
 # 📚 BookPanda - Book Sharing Platform
 
 <div align="center">
-  
-  ![BookPanda Logo](src/main/resources/com/example/first_draft/images/logo.png)
-  
+
+  ![BookPanda Logo](BookPanda/src/main/resources/com/example/first_draft/images/logo.png)
+
   **A modern JavaFX-based book sharing and rental platform that connects book lovers**
-  
+
   [![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/yourusername/bookpanda/releases/latest/download/bookpanda.apk)
   [![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)](https://www.oracle.com/java/)
   [![JavaFX](https://img.shields.io/badge/JavaFX-21.0.6-blue?style=for-the-badge&logo=java)](https://openjfx.io/)
@@ -48,22 +48,41 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 ### Option 2: Build from Source
 
 #### Prerequisites
-- Java Development Kit (JDK) 21 or higher
-- Maven 3.6 or higher
-- JavaFX SDK 21.0.6
+- **Java Development Kit (JDK) 21 or higher** - [Download here](https://www.oracle.com/java/technologies/downloads/)
+- **Maven** (optional - Maven wrapper included in project)
+- **Git** - [Download here](https://git-scm.com/downloads)
 
-#### Build Steps
+#### Build Steps (Windows - cmd.exe)
+
+```cmd
+REM Clone the repository
+git clone https://github.com/<yourusername>/bookpanda.git
+
+REM Navigate to the Maven project folder
+cd bookpanda\BookPanda
+
+REM Build and run with Maven wrapper (recommended)
+mvnw.cmd clean javafx:run
+```
+
+#### Build Steps (Linux/macOS)
 
 ```bash
 # Clone the repository
 git clone https://github.com/<yourusername>/bookpanda.git
-cd bookpanda/first_draft
 
-# Build with Maven
-mvn clean install
+# Navigate to the Maven project folder
+cd bookpanda/BookPanda
 
-# Run the application
-mvn javafx:run
+# Build and run with Maven wrapper
+./mvnw clean javafx:run
+```
+
+#### Alternative: Using Installed Maven
+
+```cmd
+REM If you have Maven installed globally
+mvn clean javafx:run
 ```
 
 ---
@@ -106,68 +125,35 @@ mvn javafx:run
 ```
 bookSharing/
 │
-├── README.md                      # Main project documentation
-│
-└── first_draft/                   # Maven project root
+└── BookPanda/                     # Maven project root (OPEN THIS IN YOUR IDE)
     │
     ├── pom.xml                    # Maven configuration
-    ├── mvnw                       # Maven wrapper (Unix)
-    ├── mvnw.cmd                   # Maven wrapper (Windows)
+    ├── mvnw / mvnw.cmd            # Maven wrapper scripts
     │
-    ├── database/                  # Data storage
-    │   ├── books.dat              # Serialized book data
-    │   ├── users.dat              # Serialized user data
-    │   └── genres.txt             # Book genres list
-    │
-    ├── images/                    # Uploaded book cover images
-    │   └── [timestamped_images]
-    │
-    ├── chatlogs/                  # Chat conversation logs
-    │   └── [username_folders]/
+    ├── database/                  # Data storage (books.dat, users.dat, genres.txt)
+    ├── images/                    # User-uploaded book covers
+    ├── chatlogs/                  # Chat message history per user
     │
     ├── src/main/
-    │   ├── java/com/example/first_draft/
-    │   │   ├── app/               # Application entry point
-    │   │   │   └── Main.java
-    │   │   │
-    │   │   ├── controllers/       # JavaFX controllers
-    │   │   │   ├── LoginController.java
-    │   │   │   ├── MainLayoutController.java
-    │   │   │   ├── HomePageController.java
-    │   │   │   ├── BookDetailsController.java
-    │   │   │   ├── MyBooksController.java
-    │   │   │   ├── SearchPageController.java
-    │   │   │   ├── AddBookController.java
-    │   │   │   ├── AccountPageController.java
-    │   │   │   └── ...
-    │   │   │
-    │   │   ├── model/             # Data models
-    │   │   │   ├── Book.java
-    │   │   │   └── User.java
-    │   │   │
-    │   │   ├── dbManager/         # Database management
-    │   │   │   ├── BookDatabase.java
-    │   │   │   ├── UserDatabase.java
-    │   │   │   └── GenreDatabase.java
-    │   │   │
-    │   │   ├── cart/              # Shopping cart functionality
-    │   │   │   ├── Cart.java
-    │   │   │   ├── CartItem.java
-    │   │   │   └── CartController.java
-    │   │   │
-    │   │   └── chat/              # Chat system
-    │   │       ├── ChatServer.java
-    │   │       ├── ClientHandler.java
-    │   │       ├── ChatLogManager.java
-    │   │       └── ChatPageController.java
+    │   ├── java/
+    │   │   ├── module-info.java
+    │   │   └── com/example/first_draft/
+    │   │       ├── Main.java
+    │   │       ├── Book.java
+    │   │       ├── User.java
+    │   │       ├── BookDatabase.java
+    │   │       ├── UserDatabase.java
+    │   │       ├── GenreDatabase.java
+    │   │       ├── controller/     # JavaFX FXML controllers
+    │   │       ├── cart/           # Shopping cart system
+    │   │       └── chat/           # Real-time messaging
     │   │
     │   └── resources/com/example/first_draft/
-    │       ├── fxml/              # FXML layout files
-    │       ├── css/               # Stylesheets
-    │       └── images/            # UI resources
+    │       ├── css/                # Stylesheets
+    │       ├── fxml/               # UI layouts
+    │       └── images/             # Static UI resources (logo, etc.)
     │
-    └── target/                    # Build output directory
-        └── classes/
+    └── target/                     # Build output (auto-generated)
 ```
 
 ---
@@ -190,6 +176,8 @@ bookSharing/
 ### Minimum Requirements
 - **OS**: Windows 10/11, macOS 10.14+, or Linux
 - **Java**: JDK 21 or higher
+- **RAM**: 4GB minimum, 8GB recommended
+- **Disk Space**: 500MB for application + dependencies
 
 ---
 
@@ -198,8 +186,23 @@ bookSharing/
 ### First Time Setup
 
 1. **Start the Application**
+   
+   Windows (cmd.exe):
+   ```cmd
+   REM Navigate to BookPanda folder
+   cd path\to\bookSharing\BookPanda
+   
+   REM Run with Maven wrapper
+   mvnw.cmd clean javafx:run
+   ```
+   
+   Linux/macOS:
    ```bash
-   mvn javafx:run
+   # Navigate to BookPanda folder
+   cd path/to/bookSharing/BookPanda
+   
+   # Run with Maven wrapper
+   ./mvnw clean javafx:run
    ```
 
 2. **Register an Account**
@@ -208,8 +211,18 @@ bookSharing/
    - Password must be 8+ characters with uppercase, lowercase, and numbers
 
 3. **Start the Chat Server** (Optional - for chat features)
+   
+   The chat server runs on port 12345. You can start it manually:
+   
+   Windows:
+   ```cmd
+   cd BookPanda\src\main\java
+   java com.example.first_draft.chat.ChatServer
+   ```
+   
+   Linux/macOS:
    ```bash
-   cd src/main/java
+   cd BookPanda/src/main/java
    java com.example.first_draft.chat.ChatServer
    ```
 
@@ -247,4 +260,5 @@ bookSharing/
 - **Session Management**: Secure user session handling
 
 ---
+
 
