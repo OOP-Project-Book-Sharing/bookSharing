@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/MAVEN_RELOAD_INSTRUCTIONS.md">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/MAVEN_RELOAD_INSTRUCTIONS.md" />
+              <option name="updatedContent" value="# How to Manually Reimport Maven Project in IntelliJ IDEA&#10;&#10;## Your project has been fixed! Here's what was done:&#10;&#10;1. ✅ Restored deleted `.idea/workspace.xml` file&#10;2. ✅ Created Maven wrapper files (`.mvn/wrapper/`)&#10;3. ✅ Successfully rebuilt the project with Maven&#10;4. ✅ Created module files (`.iml` and `modules.xml`)&#10;5. ✅ All dependencies downloaded to local Maven repository&#10;&#10;## To reload Maven dependencies in IntelliJ IDEA:&#10;&#10;### Method 1: Maven Tool Window (Recommended)&#10;1. Open IntelliJ IDEA with your project&#10;2. Look for the **Maven** tool window on the right side&#10;3. If you don't see it, go to `View` → `Tool Windows` → `Maven`&#10;4. In the Maven tool window, click the **Reload All Maven Projects** button (circular arrows icon )&#10;5. Wait for the reload to complete&#10;&#10;### Method 2: Right-click on pom.xml&#10;1. In the Project view, right-click on `pom.xml`&#10;2. Select `Maven` → `Reload project`&#10;&#10;### Method 3: From Settings&#10;1. Go to `File` → `Settings` (or `Ctrl+Alt+S`)&#10;2. Navigate to `Build, Execution, Deployment` → `Build Tools` → `Maven`&#10;3. Click `Reimport` or verify your settings&#10;4. Click `OK`&#10;&#10;### Method 4: Invalidate Caches (Nuclear option)&#10;1. Go to `File` → `Invalidate Caches...`&#10;2. Check **Invalidate and Restart**&#10;3. Wait for IntelliJ to restart and reindex&#10;&#10;## Verify External Libraries:&#10;After reimporting, check the **External Libraries** section in your Project view:&#10;- You should see JavaFX libraries (javafx-controls, javafx-fxml, etc.)&#10;- You should see all Maven dependencies from your pom.xml&#10;&#10;## To Run the Project:&#10;1. Set JAVA_HOME environment variable to: `C:\Program Files\Java\jdk-24`&#10;2. Run the Main class from IntelliJ, or&#10;3. Use Maven command: `mvnw.cmd clean javafx:run`&#10;&#10;## Git Status:&#10;- ✅ Workspace files restored&#10;- ⚠️  Remember to commit the `.mvn/wrapper/` directory&#10;- ✅ `.gitignore` has been created to prevent tracking of `.idea/` in the future&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
