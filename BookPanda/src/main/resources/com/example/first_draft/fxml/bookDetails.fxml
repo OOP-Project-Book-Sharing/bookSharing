@@ -16,12 +16,10 @@
     <children>
         <VBox alignment="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="502.0" prefWidth="652.0" spacing="15" style="-fx-padding: 0 0 0 60;">
 
-            <!-- Title Centered -->
             <Label fx:id="titleLabel" styleClass="page-title" />
 
             <HBox alignment="CENTER" prefHeight="280.0" prefWidth="652.0" spacing="40">
 
-                <!-- LEFT: BOOK INFO -->
                 <GridPane alignment="CENTER" hgap="10" prefHeight="274.0" prefWidth="310.0" vgap="12">
                     <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" minWidth="120" />
@@ -47,11 +45,9 @@
                     </rowConstraints>
                 </GridPane>
 
-                <!-- RIGHT: BOOK IMAGE -->
                 <ImageView fx:id="bookImage" fitHeight="150" fitWidth="130" preserveRatio="true" styleClass="book-cover" />
             </HBox>
 
-            <!-- DESCRIPTION -->
             <ScrollPane fitToWidth="true" prefHeight="150.0" prefWidth="652.0" style="-fx-translate-y: -8; -fx-translate-x: 5;  " styleClass="desc-pane">
                 <content>
                     <Label fx:id="descriptionArea" styleClass="description-area" wrapText="true" />

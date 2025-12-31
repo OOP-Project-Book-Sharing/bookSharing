@@ -21,7 +21,6 @@
 
                     <Button mnemonicParsing="false" onAction="#search" text="Search" />
 
-                    <!-- View Cart button -->
                     <Button fx:id="viewCartButton" mnemonicParsing="false" onAction="#openCart" text="View Cart" />
                 </HBox>
 

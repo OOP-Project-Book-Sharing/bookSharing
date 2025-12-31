@@ -12,8 +12,6 @@
 
 <BorderPane fx:id="borderPane" stylesheets="@../css/chatPage.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.first_draft.chat.ChatPageController">
 
-
-    <!-- LEFT SIDEBAR -->
     <left>
         <VBox fx:id="sidebar" prefHeight="451.0" prefWidth="184.0" style="-fx-background-color: #F5F5F5;">
             <padding>
@@ -26,7 +24,6 @@
         </VBox>
     </left>
 
-    <!-- CHAT MESSAGES -->
     <center>
         <ScrollPane fx:id="chatScrollPane" fitToWidth="true">
             <content>
@@ -39,7 +36,6 @@
         </ScrollPane>
     </center>
 
-    <!-- MESSAGE INPUT AREA -->
     <bottom>
         <HBox fx:id="bottomHBox" spacing="10">
             <padding>

@@ -40,7 +40,6 @@ public class AddBookController {
         this.bookDatabase = bookDatabase;
     }
 
-    /** Called by MyBooksController to pre-fill fields for editing */
     public void setBookToEdit(Book book) {
         this.bookToEdit = book;
 
@@ -72,7 +71,6 @@ public class AddBookController {
         cancelButton.setOnAction(e -> closeWindow());
     }
 
-    /** Opens a file chooser to select a cover image */
     private void chooseImage() {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().addAll(
@@ -85,7 +83,6 @@ public class AddBookController {
         }
     }
 
-    /** Save new book or update existing book */
     private void saveBook() {
         String title = titleField.getText().trim();
         String author = authorField.getText().trim();
@@ -148,7 +145,6 @@ public class AddBookController {
         closeWindow();
     }
 
-    /** Closes the window */
     private void closeWindow() {
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();

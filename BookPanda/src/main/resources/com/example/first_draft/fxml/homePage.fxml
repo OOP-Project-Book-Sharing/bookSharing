@@ -9,7 +9,6 @@
             fx:controller="com.example.first_draft.controller.HomePageController"
             stylesheets="@../css/homeWithGenre.css">
 
-    <!-- ScrollPane fills the entire AnchorPane -->
     <children>
         <ScrollPane fx:id="scrollPane" fitToWidth="true"
                     AnchorPane.topAnchor="0.0"
@@ -17,7 +16,6 @@
                     AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0">
             <content>
-                <!-- VBox holds genre buttons and book previews -->
                 <VBox fx:id="vbox" spacing="10.0" />
             </content>
         </ScrollPane>

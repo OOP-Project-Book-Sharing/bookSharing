@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.Priority?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
@@ -17,11 +16,9 @@
             fx:controller="com.example.first_draft.controller.MainLayoutController">
 
     <top>
-        <!-- Proper layout: left / center / right using spacer HBoxes -->
         <HBox alignment="CENTER" prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
 
-                <!-- LEFT -->
                 <HBox alignment="CENTER_LEFT">
                     <children>
                         <Button fx:id="prevButton" mnemonicParsing="false"
@@ -29,7 +26,6 @@
                     </children>
                 </HBox>
 
-                <!-- CENTER (expanded so label stays centered) -->
                 <HBox alignment="CENTER">
                     <children>
                         <Label alignment="CENTER" prefHeight="35.0" prefWidth="180.0"
@@ -44,7 +40,6 @@
                     </HBox.hgrow>
                 </HBox>
 
-                <!-- RIGHT -->
                 <HBox alignment="CENTER_RIGHT">
                     <children>
                         <Button fx:id="logoutButton" mnemonicParsing="false"
