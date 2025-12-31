@@ -13,8 +13,6 @@
 
     <center>
         <HBox alignment="TOP_LEFT" spacing="50" styleClass="account-content">
-
-            <!-- Account Info Block -->
             <VBox prefHeight="539.0" prefWidth="809.0" spacing="20" styleClass="info-block">
 
                 <Label alignment="CENTER" prefHeight="38.0" prefWidth="759.0" styleClass="title-label" text="👤 My Account" textAlignment="CENTER" />

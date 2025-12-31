@@ -29,49 +29,8 @@ public class LoginController {
     @FXML
     public void initialize() {
         passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
-
-        // Add Enter key support for login
-        usernameField.setOnAction(event -> {
-            try {
-                handleLogin(event);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        passwordField.setOnAction(event -> {
-            try {
-                handleLogin(event);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        passwordVisibleField.setOnAction(event -> {
-            try {
-                handleLogin(event);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        togglePasswordBtn.setOnAction(event -> {
-            if (isPasswordVisible) { // Hide password
-                passwordVisibleField.setVisible(false);
-                passwordVisibleField.setManaged(false);
-                passwordField.setVisible(true);
-                passwordField.setManaged(true);
-                togglePasswordBtn.setText("👁"); // closed eye
-            } else { // Show password
-                passwordField.setVisible(false);
-                passwordField.setManaged(false);
-                passwordVisibleField.setVisible(true);
-                passwordVisibleField.setManaged(true);
-                togglePasswordBtn.setText("👁🗨"); // open eye
-            }
-            isPasswordVisible = !isPasswordVisible;
-        });
     }
+
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         String username = usernameField.getText().trim();
@@ -84,9 +43,8 @@ public class LoginController {
         }
 
         if (userDB.validateUser(username, password)) {
-            //loggedInUsername = username; // store logged-in user
             messageLabel.setText("Login successful!");
-            messageLabel.setStyle("-fx-text-fill: #00ff99;");
+            messageLabel.setStyle("-fx-text-fill: green;");
             goToMainLayout(event, username);
         } else {
             messageLabel.setText("Invalid username or password");
@@ -109,6 +67,26 @@ public class LoginController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    private void handleTogglePassword(ActionEvent event)
+    {
+        if (isPasswordVisible) {
+            passwordVisibleField.setVisible(false);
+            passwordVisibleField.setManaged(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            togglePasswordBtn.setText("👁");
+        } else {
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            passwordVisibleField.setVisible(true);
+            passwordVisibleField.setManaged(true);
+            togglePasswordBtn.setText("👁🗨");
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }
+
     @FXML
     private void handleRegisterRedirect(ActionEvent event) {
         try {

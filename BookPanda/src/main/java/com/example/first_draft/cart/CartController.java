@@ -312,10 +312,8 @@ public class CartController {
         passwordVisibleField.setVisible(false);
         passwordVisibleField.setManaged(false);
 
-        // Bind the text between password field and visible field
         passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
 
-        // Toggle button
         Button toggleBtn = new Button("👁");
         toggleBtn.setStyle("-fx-background-color: transparent; -fx-font-size: 14px; -fx-text-fill: black;");
         boolean[] isVisible = {false};

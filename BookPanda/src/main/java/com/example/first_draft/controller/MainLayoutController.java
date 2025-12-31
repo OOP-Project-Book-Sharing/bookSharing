@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+import java.util.Objects;
+
 public class MainLayoutController {
 
     @FXML private StackPane mainStackPane;
@@ -66,7 +68,8 @@ public class MainLayoutController {
             Stage loginStage = new Stage();
             loginStage.setScene(new Scene(root));
             loginStage.setTitle("Login");
-            Image icon = new Image(getClass().getResourceAsStream("/com/example/first_draft/images/logo.png"));
+            loginStage.setResizable(false);
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/first_draft/images/logo.png")));
             loginStage.getIcons().add(icon);
             loginStage.show();
         } catch (Exception e) {

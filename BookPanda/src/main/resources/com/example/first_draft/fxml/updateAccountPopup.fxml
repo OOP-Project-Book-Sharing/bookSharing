@@ -3,7 +3,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.geometry.Insets?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.first_draft.controller.UpdateAccountPopupController"
@@ -18,22 +17,20 @@
     <TextField fx:id="phoneField" promptText="Phone"/>
     <TextField fx:id="locationField" promptText="Location"/>
 
-    <!-- Password Field with Toggle -->
     <StackPane maxWidth="400">
-        <!-- Hidden password (default visible) -->
+
         <PasswordField fx:id="passwordField"
                        promptText="Password"
                        prefWidth="400"/>
 
-        <!-- Visible password (initially hidden) -->
         <TextField fx:id="passwordVisibleField"
                    promptText="Password"
                    prefWidth="400"
                    visible="false"
                    managed="false"/>
 
-        <!-- Eye toggle button -->
         <Button fx:id="togglePasswordBtn"
+                onAction="#handleTogglePassword"
                 text="👁"
                 style="-fx-background-color: transparent; -fx-font-size: 16px; -fx-text-fill: white;"
                 StackPane.alignment="CENTER_RIGHT"

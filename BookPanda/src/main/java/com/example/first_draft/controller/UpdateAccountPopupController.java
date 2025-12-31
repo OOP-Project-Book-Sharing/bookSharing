@@ -2,6 +2,7 @@ package com.example.first_draft.controller;
 
 import com.example.first_draft.User;
 import com.example.first_draft.UserDatabase;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,23 +31,7 @@ public class UpdateAccountPopupController {
     @FXML
     public void initialize() {
         if (passwordVisibleField != null && passwordField != null) {
-            passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
-            togglePasswordBtn.setOnAction(event -> {
-                if (isPasswordVisible) { // Hide password
-                    passwordVisibleField.setVisible(false);
-                    passwordVisibleField.setManaged(false);
-                    passwordField.setVisible(true);
-                    passwordField.setManaged(true);
-                    togglePasswordBtn.setText("👁"); // closed eye
-                } else { // Show password
-                    passwordField.setVisible(false);
-                    passwordField.setManaged(false);
-                    passwordVisibleField.setVisible(true);
-                    passwordVisibleField.setManaged(true);
-                    togglePasswordBtn.setText("👁🗨"); // open eye
-                }
-                isPasswordVisible = !isPasswordVisible;
-            });
+            passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty()); //ensures updating field is bidirectional
         }
     }
 
@@ -133,8 +118,27 @@ public class UpdateAccountPopupController {
     }
 
     @FXML
-    private void handleCancel() {
-        Stage stage = (Stage) emailField.getScene().getWindow();
+    private void handleTogglePassword(ActionEvent event)
+    {
+        if (isPasswordVisible) {
+            passwordVisibleField.setVisible(false);
+            passwordVisibleField.setManaged(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            togglePasswordBtn.setText("👁");
+        } else {
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            passwordVisibleField.setVisible(true);
+            passwordVisibleField.setManaged(true);
+            togglePasswordBtn.setText("👁🗨");
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }
+
+    @FXML
+    private void handleCancel(ActionEvent event) {
+        Stage stage = (Stage) emailField.getScene().getWindow(); //extract stage from any field
         stage.close();
     }
 }

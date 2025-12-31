@@ -31,7 +31,6 @@ public class AccountPageController {
         loadUserData(); // load data when username is set
     }
 
-    /** Always reload user from DB */
     public void loadUserData() {
         if (username == null) return;
 
@@ -60,7 +59,7 @@ public class AccountPageController {
             Stage popup = new Stage();
             popup.setTitle("Update Account");
             popup.setScene(new Scene(root));
-            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.initModality(Modality.APPLICATION_MODAL); //makes the popup block the entire application until it is closed.
             popup.setResizable(false);
             popup.show();
 
@@ -78,11 +77,11 @@ public class AccountPageController {
         if (isPasswordVisible) {
             // Show actual password
             passwordLabel.setText(loggedInUser.getPassword());
-            togglePasswordButton.setText("🙈"); // closed eye emoji
+            togglePasswordButton.setText("👁🗨");
         } else {
             // Hide password
             passwordLabel.setText("********");
-            togglePasswordButton.setText("👁"); // open eye emoji
+            togglePasswordButton.setText("👁");
         }
     }
 }

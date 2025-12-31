@@ -22,38 +22,31 @@
                 </font>
             </Label>
 
-            <!-- Username -->
             <TextField fx:id="usernameField" maxWidth="300" promptText="Enter Username" />
 
-            <!-- Password Field with Toggle -->
             <StackPane maxWidth="300">
-                <!-- Hidden password (default visible) -->
                 <PasswordField fx:id="passwordField"
                                promptText="Enter Password"
                                prefWidth="300"/>
 
-                <!-- Visible password (initially hidden) -->
                 <TextField fx:id="passwordVisibleField"
                            promptText="Enter Password"
                            prefWidth="300"
                            visible="false"
                            managed="false"/>
 
-                <!-- Eye toggle button -->
                 <Button fx:id="togglePasswordBtn"
+                        onAction="#handleTogglePassword"
                         text="👁"
                         style="-fx-background-color: transparent; -fx-font-size: 16px; -fx-text-fill: white;"
                         StackPane.alignment="CENTER_RIGHT"
                         translateX="-10" />
             </StackPane>
 
-            <!-- Email -->
             <TextField fx:id="emailField" maxWidth="300" promptText="Enter Email" />
 
-            <!-- Phone -->
             <TextField fx:id="phoneField" maxWidth="300" promptText="Enter Phone Number" />
 
-            <!-- Location -->
             <TextField fx:id="locationField" maxWidth="300" promptText="Enter Location" />
 
             <Label fx:id="messageLabel" />

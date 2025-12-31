@@ -22,6 +22,7 @@ public class Main extends Application {
             Scene scene = new Scene(loader.load(), 800, 600);
             stage.setScene(scene);
             stage.setTitle("Login");
+            stage.setResizable(false);
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/first_draft/images/logo.png")));
             stage.getIcons().add(icon);
             stage.show();

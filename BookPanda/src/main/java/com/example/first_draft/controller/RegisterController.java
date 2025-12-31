@@ -33,22 +33,6 @@ public class RegisterController {
     @FXML
     public void initialize() {
         passwordVisibleField.textProperty().bindBidirectional(passwordField.textProperty());
-        togglePasswordBtn.setOnAction(event -> {
-            if (isPasswordVisible) { // Hide password
-                passwordVisibleField.setVisible(false);
-                passwordVisibleField.setManaged(false);
-                passwordField.setVisible(true);
-                passwordField.setManaged(true);
-                togglePasswordBtn.setText("👁"); // closed eye
-            } else { // Show password
-                passwordField.setVisible(false);
-                passwordField.setManaged(false);
-                passwordVisibleField.setVisible(true);
-                passwordVisibleField.setManaged(true);
-                togglePasswordBtn.setText("👁🗨"); // open eye
-            }
-            isPasswordVisible = !isPasswordVisible;
-        });
     }
 
     @FXML
@@ -116,13 +100,13 @@ public class RegisterController {
     private void showError(String message) {
         messageLabel.setText(message);
         messageLabel.getStyleClass().clear();
-        messageLabel.getStyleClass().add("message-error");
+        messageLabel.getStyleClass().add("message-error"); //for css purposes
     }
 
     private void showSuccess(String message) {
         messageLabel.setText(message);
         messageLabel.getStyleClass().clear();
-        messageLabel.getStyleClass().add("message-success");
+        messageLabel.getStyleClass().add("message-success"); //for css purposes
     }
 
     @FXML
@@ -136,5 +120,24 @@ public class RegisterController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleTogglePassword(ActionEvent event)
+    {
+        if (isPasswordVisible) {
+            passwordVisibleField.setVisible(false);
+            passwordVisibleField.setManaged(false);
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            togglePasswordBtn.setText("👁");
+        } else {
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            passwordVisibleField.setVisible(true);
+            passwordVisibleField.setManaged(true);
+            togglePasswordBtn.setText("👁🗨");
+        }
+        isPasswordVisible = !isPasswordVisible;
     }
 }

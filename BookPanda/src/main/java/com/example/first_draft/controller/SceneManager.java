@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public class SceneManager {
 
-    private static StackPane mainStackPane;
+    private static StackPane mainStackPane; // static to stack pane on the same stackPane
     private static String currentUser;
 
     private static class SceneEntry {
