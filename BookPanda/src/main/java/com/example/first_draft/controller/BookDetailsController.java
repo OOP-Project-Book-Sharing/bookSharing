@@ -87,38 +87,45 @@ public class BookDetailsController {
     }
 
     private void handleBuy() {
-        // Check if user is trying to buy their own book
         if (currentUser != null && book.getOwner().equalsIgnoreCase(currentUser)) {
             showAlert(Alert.AlertType.ERROR, "You cannot buy your own book.");
             return;
         }
 
-        // Check if book is available
         if (!book.isAvailable() || (book.getRentedTo() != null && !book.getRentedTo().isEmpty())) {
             showAlert(Alert.AlertType.ERROR, "This book is not available.");
             return;
         }
 
-        // Add book to cart with BUY action
+        if (Cart.getInstance().containsBook(book)) {
+            showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+            return;
+        }
+
         CartItem cartItem = new CartItem(book, CartItem.ActionType.BUY);
-        Cart.getInstance().addItem(cartItem);
-        showAlert(Alert.AlertType.INFORMATION, "Book added to cart for buying! (Price: $" + book.getBuyAmount() + ")");
+        if (Cart.getInstance().addItem(cartItem)) {
+            showAlert(Alert.AlertType.INFORMATION, "Book added to cart for buying! (Price: $" + book.getBuyAmount() + ")");
+        } else {
+            showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+        }
     }
 
     private void handleRent() {
-        // Check if user is trying to rent their own book
         if (currentUser != null && book.getOwner().equalsIgnoreCase(currentUser)) {
             showAlert(Alert.AlertType.ERROR, "You cannot rent your own book.");
             return;
         }
 
-        // Check if book is available
         if (!book.isAvailable() || (book.getRentedTo() != null && !book.getRentedTo().isEmpty())) {
             showAlert(Alert.AlertType.ERROR, "This book is not available.");
             return;
         }
 
-        // Prompt for rental duration with date picker
+        if (Cart.getInstance().containsBook(book)) {
+            showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+            return;
+        }
+
         Dialog<LocalDate> dateDialog = new Dialog<>();
         dateDialog.setTitle("Select Rental Period");
         dateDialog.setHeaderText("Choose how long you want to rent \"" + book.getTitle() + "\"");
@@ -152,11 +159,13 @@ public class BookDetailsController {
 
         int totalCost = (int) (days * book.getRentAmount());
 
-        // Add book to cart with RENT action and rental days
         CartItem cartItem = new CartItem(book, CartItem.ActionType.RENT, (int) days, dueDate);
-        Cart.getInstance().addItem(cartItem);
-        showAlert(Alert.AlertType.INFORMATION,
-            "Book added to cart for renting!\n" + days + " days - Total: $" + totalCost);
+        if (Cart.getInstance().addItem(cartItem)) {
+            showAlert(Alert.AlertType.INFORMATION,
+                    "Book added to cart for renting!\n" + days + " days - Total: $" + totalCost);
+        } else {
+            showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+        }
     }
 
     private void showAlert(Alert.AlertType type, String msg) {

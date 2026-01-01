@@ -15,8 +15,26 @@ public class Cart {
         return instance;
     }
 
-    public void addItem(CartItem item) {
+    public boolean addItem(CartItem item) {
+        if (containsBook(item.getBook())) {
+            return false;
+        }
         items.add(item);
+        return true;
+    }
+
+    public boolean containsBook(com.example.first_draft.Book book) {
+        for (CartItem item : items) {
+            if (isSameBook(item.getBook(), book)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isSameBook(com.example.first_draft.Book book1, com.example.first_draft.Book book2) {
+        return book1.getTitle().equals(book2.getTitle()) &&
+                book1.getOwner().equals(book2.getOwner());
     }
 
     public void removeItem(CartItem item) {

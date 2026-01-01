@@ -157,10 +157,12 @@ public class CartController {
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isEmpty() || result.get() != ButtonType.OK) return;
 
-        // Transfer ownership
+        String originalOwner = book.getOwner();
         book.setOwner(currentUser);
         book.setAvailable(true);
-        bookDatabase.updateBook(book);
+
+        bookDatabase.deleteBook(book.getTitle(), originalOwner);
+        bookDatabase.addBook(book);
 
         Cart.getInstance().removeItem(item);
         displayCart();
@@ -250,7 +252,7 @@ public class CartController {
             } else {
                 int rentCost = item.getRentalDays() * book.getRentAmount();
                 summary.append("• RENT: ").append(book.getTitle())
-                       .append(" (").append(item.getRentalDays()).append(" days) - $").append(rentCost).append("\n");
+                        .append(" (").append(item.getRentalDays()).append(" days) - $").append(rentCost).append("\n");
                 totalCost += rentCost;
             }
         }
@@ -271,14 +273,14 @@ public class CartController {
             Book book = item.getBook();
 
             if (item.getAction() == CartItem.ActionType.BUY) {
-                // Process purchase
+                String originalOwner = book.getOwner();
                 book.setOwner(currentUser);
                 book.setAvailable(true);
-                bookDatabase.updateBook(book);
+                bookDatabase.deleteBook(book.getTitle(), originalOwner);
+                bookDatabase.addBook(book);
                 Cart.getInstance().removeItem(item);
                 processedCount++;
             } else {
-                // Process rental
                 LocalDate dueDate = item.getDueDate();
                 if (dueDate != null && item.getRentalDays() > 0) {
                     book.setRentedTo(currentUser);
@@ -295,7 +297,7 @@ public class CartController {
 
         if (processedCount > 0) {
             showAlert(Alert.AlertType.INFORMATION,
-                "Successfully processed " + processedCount + " item(s)!\nTotal cost: $" + totalCost);
+                    "Successfully processed " + processedCount + " item(s)!\nTotal cost: $" + totalCost);
         } else {
             showAlert(Alert.AlertType.WARNING, "No items were processed.");
         }

@@ -191,7 +191,7 @@ public class MyBooksController {
 
                 deleteButton.setOnAction(e -> {
                     if (showConfirmDialog("Are you sure you want to delete this book?")) {
-                        bookDatabase.deleteBook(book.getTitle());
+                        bookDatabase.deleteBook(book.getTitle(), book.getOwner());
                         allBooks = bookDatabase.getAllBooks();
                         refresh();
                     }
@@ -308,10 +308,10 @@ public class MyBooksController {
             String message;
             if (isLate) {
                 message = "You are returning this book " + daysLate + " day(s) late.\n\n" +
-                         "Late Fee: $" + lateFee + " ($5 per day)\n" +
-                         "Due Date: " + book.getDueDate() + "\n" +
-                         "Today: " + LocalDate.now() + "\n\n" +
-                         "Are you sure you want to return this book and pay the late fee?";
+                        "Late Fee: $" + lateFee + " ($5 per day)\n" +
+                        "Due Date: " + book.getDueDate() + "\n" +
+                        "Today: " + LocalDate.now() + "\n\n" +
+                        "Are you sure you want to return this book and pay the late fee?";
             } else {
                 message = "Are you sure you want to return this book?";
             }

@@ -34,10 +34,8 @@ public class ChatPageController {
 
         userList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selectedUser) -> {
             if (selectedUser != null && !selectedUser.trim().isEmpty()) {
-                // Remove the status indicator to get the actual username
-                String actualUser = selectedUser.replace(" 🟢", "").trim();
-                currentChatUser = actualUser;
-                loadChatWith(actualUser);
+                currentChatUser = selectedUser;
+                loadChatWith(selectedUser);
             }
         });
 
@@ -165,8 +163,24 @@ public class ChatPageController {
                         // Save received message to chat log
                         ChatLogManager.saveMessage(sender, username, msgContent, false);
 
+                        // Check if sender is in the user list, if not add them
+                        boolean senderExists = false;
+                        for (String item : userList.getItems()) {
+                            if (item.equals(sender)) {
+                                senderExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!senderExists && !sender.equals(username)) {
+                            Platform.runLater(() -> loadAllChatUsers());
+                        }
+
                         // Display if chatting with this user
-                        if (sender.equals(currentChatUser) || sender.equals(currentChatUser.replace(" 🟢", ""))) {
+                        if (sender.equals(currentChatUser)) {
+                            // Clear "No chat with this user" message if it exists
+                            Platform.runLater(() -> clearNoChatMessage());
+
                             // Track received message
                             String messageKey = "THEM:" + msgContent;
                             if (!displayedMessages.contains(messageKey)) {
@@ -199,11 +213,26 @@ public class ChatPageController {
         }
 
         Platform.runLater(() -> {
-            // Get all users without status indicators
+            // Get all users from chat history
             Set<String> allUsers = new HashSet<>();
+
+            // Add users from existing list (preserve chat history)
             for (String item : userList.getItems()) {
-                String cleanName = item.replace(" 🟢", "").trim();
-                allUsers.add(cleanName);
+                allUsers.add(item.trim());
+            }
+
+            // Add users from chat history folder
+            File userFolder = new File("chatlogs" + File.separator + username);
+            if (userFolder.exists() && userFolder.isDirectory()) {
+                File[] chatFiles = userFolder.listFiles();
+                if (chatFiles != null) {
+                    for (File file : chatFiles) {
+                        if (file.getName().endsWith(".dat")) {
+                            String otherUser = file.getName().replace(".dat", "");
+                            allUsers.add(otherUser);
+                        }
+                    }
+                }
             }
 
             // Add online users
@@ -215,31 +244,17 @@ public class ChatPageController {
             // Clear and rebuild list
             userList.getItems().clear();
 
-            // Add users to list with online indicator
+            // Add users to list without online indicator
             List<String> sortedUsers = new ArrayList<>(allUsers);
             sortedUsers.sort(String::compareTo);
 
             for (String user : sortedUsers) {
-                if (onlineSet.contains(user)) {
-                    userList.getItems().add(user + " 🟢");
-                } else {
-                    userList.getItems().add(user);
-                }
+                userList.getItems().add(user);
             }
         });
     }
 
-    @FXML
-    private void sendMessage() {
-        String message = messageField.getText().trim();
-        if (currentChatUser == null || currentChatUser.isEmpty() || message.isEmpty()) return;
-
-        String cleanRecipient = currentChatUser.replace(" 🟢", "").trim();
-
-        // Track this message as displayed
-        String messageKey = "ME:" + message;
-        displayedMessages.add(messageKey);
-
+    private void clearNoChatMessage() {
         // Clear "No chat with this user" message if it exists
         if (chatBox.getChildren().size() == 1) {
             javafx.scene.Node firstChild = chatBox.getChildren().get(0);
@@ -253,6 +268,19 @@ public class ChatPageController {
                 }
             }
         }
+    }
+
+    @FXML
+    private void sendMessage() {
+        String message = messageField.getText().trim();
+        if (currentChatUser == null || currentChatUser.isEmpty() || message.isEmpty()) return;
+
+        // Track this message as displayed
+        String messageKey = "ME:" + message;
+        displayedMessages.add(messageKey);
+
+        // Clear "No chat with this user" message if it exists
+        clearNoChatMessage();
 
         // Display message immediately for better UX
         addMessageBubble(message, true);
@@ -260,11 +288,11 @@ public class ChatPageController {
 
         // Send to server if connected - server will save it
         if (out != null) {
-            out.println("@" + cleanRecipient + " " + message);
+            out.println("@" + currentChatUser + " " + message);
             // Server saves it, so we don't save locally
         } else {
             // Only in offline mode, save locally
-            ChatLogManager.saveMessage(username, cleanRecipient, message, true);
+            ChatLogManager.saveMessage(username, currentChatUser, message, true);
         }
     }
 
@@ -279,23 +307,23 @@ public class ChatPageController {
             messageLabel.setMaxWidth(400);
             messageLabel.setPadding(new Insets(10, 14, 10, 14));
             messageLabel.setStyle(
-                "-fx-background-radius: 18px; " +
-                "-fx-font-size: 14px; " +
-                "-fx-line-spacing: 2px;"
+                    "-fx-background-radius: 18px; " +
+                            "-fx-font-size: 14px; " +
+                            "-fx-line-spacing: 2px;"
             );
 
             if (isSentByMe) {
                 // Sent message (right side, green)
                 messageLabel.setStyle(messageLabel.getStyle() +
-                    "-fx-background-color: #DCF8C6; " +
-                    "-fx-text-fill: #000000;");
+                        "-fx-background-color: #DCF8C6; " +
+                        "-fx-text-fill: #000000;");
                 messageContainer.setAlignment(Pos.CENTER_RIGHT);
             } else {
                 // Received message (left side, white)
                 messageLabel.setStyle(messageLabel.getStyle() +
-                    "-fx-background-color: #FFFFFF; " +
-                    "-fx-text-fill: #000000; " +
-                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);");
+                        "-fx-background-color: #FFFFFF; " +
+                        "-fx-text-fill: #000000; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);");
                 messageContainer.setAlignment(Pos.CENTER_LEFT);
             }
 

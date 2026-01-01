@@ -13,6 +13,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class AddBookController {
 
@@ -101,10 +103,10 @@ public class AddBookController {
                 String destFileName = System.currentTimeMillis() + "_" + selectedImageFile.getName();
                 File destFile = new File(imagesDir, destFileName);
 
-                java.nio.file.Files.copy(
+                Files.copy(
                         selectedImageFile.toPath(),
                         destFile.toPath(),
-                        java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                        StandardCopyOption.REPLACE_EXISTING
                 );
 
                 imagePath = "images/" + destFileName;

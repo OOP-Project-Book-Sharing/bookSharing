@@ -122,6 +122,12 @@ public class SearchPageController {
                     return;
                 }
 
+                // Check if book is already in cart
+                if (Cart.getInstance().containsBook(book)) {
+                    showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+                    return;
+                }
+
                 List<String> choices = new ArrayList<>();
                 if (book.getBuyAmount() > 0) choices.add("Buy");
                 if (book.getRentAmount() > 0) choices.add("Rent");
@@ -176,14 +182,20 @@ public class SearchPageController {
                     int totalCost = (int) (days * book.getRentAmount());
 
                     CartItem item = new CartItem(book, type, (int) days, dueDate);
-                    Cart.getInstance().addItem(item);
-                    showAlert(Alert.AlertType.INFORMATION,
-                        "Added to cart: " + book.getTitle() + " (Rent for " + days + " days - $" + totalCost + ")");
+                    if (Cart.getInstance().addItem(item)) {
+                        showAlert(Alert.AlertType.INFORMATION,
+                                "Added to cart: " + book.getTitle() + " (Rent for " + days + " days - $" + totalCost + ")");
+                    } else {
+                        showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+                    }
                 } else {
                     // For buy, no date needed
                     CartItem item = new CartItem(book, type);
-                    Cart.getInstance().addItem(item);
-                    showAlert(Alert.AlertType.INFORMATION, "Added to cart: " + book.getTitle() + " (Buy - $" + book.getBuyAmount() + ")");
+                    if (Cart.getInstance().addItem(item)) {
+                        showAlert(Alert.AlertType.INFORMATION, "Added to cart: " + book.getTitle() + " (Buy - $" + book.getBuyAmount() + ")");
+                    } else {
+                        showAlert(Alert.AlertType.WARNING, "This book is already in your cart.");
+                    }
                 }
             });
 

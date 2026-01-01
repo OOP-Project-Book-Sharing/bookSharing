@@ -46,14 +46,16 @@ public class BookDatabase {
         save();
     }
 
-    public void deleteBook(String title) {
-        books.removeIf(b -> b.getTitle().equalsIgnoreCase(title));
+    public void deleteBook(String title, String owner) {
+        books.removeIf(b -> b.getTitle().equalsIgnoreCase(title) && b.getOwner().equalsIgnoreCase(owner));
         save();
     }
 
     public void updateBook(Book book) {
         for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getTitle().equalsIgnoreCase(book.getTitle())) {
+            Book existingBook = books.get(i);
+            if (existingBook.getTitle().equalsIgnoreCase(book.getTitle()) &&
+                    existingBook.getOwner().equalsIgnoreCase(book.getOwner())) {
                 books.set(i, book);
                 break;
             }
