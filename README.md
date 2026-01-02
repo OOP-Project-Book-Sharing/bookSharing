@@ -4,12 +4,6 @@
 
   ![BookPanda Logo](first_draft/src/main/resources/com/example/first_draft/images/logo.png)
 
-  **A modern JavaFX-based book sharing and rental platform that connects book lovers**
-
-  [![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/yourusername/bookpanda/releases/latest/download/bookpanda.apk)
-  [![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)](https://www.oracle.com/java/)
-  [![JavaFX](https://img.shields.io/badge/JavaFX-21.0.6-blue?style=for-the-badge&logo=java)](https://openjfx.io/)
-
 </div>
 
 ---
@@ -34,16 +28,6 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 
 ## 🚀 Download & Installation
 
-### Option 1: Download .exe File
-
-📱 **[Download BookPanda APK](https://github.com/yourusername/bookpanda/releases/latest/download/bookpanda.apk)**
-
-1. Download the APK file from the link above
-2. Enable "Install from Unknown Sources" in your Android settings
-3. Install and run the application
-
-### Option 2: Build from Source
-
 #### Prerequisites
 - **Java Development Kit (JDK) 21 or higher** - [Download here](https://www.oracle.com/java/technologies/downloads/)
 - **Maven** (optional - Maven wrapper included in project)
@@ -59,8 +43,19 @@ REM Navigate to the Maven project folder
 cd bookSharing/first_draft
 
 REM Build and run with Maven wrapper (recommended)
-mvnw.cmd clean javafx:run
+.\mvnw.cmd clean javafx:run
 ```
+
+#### Alternative: Use the executable Jar file
+
+```cmd
+REM Navigate to Directory
+cd first_draft\out\artifacts\BookPanda_jar
+
+REM Run the executable Jar File
+java -jar BookPanda.jar
+```
+
 
 #### Build Steps (Linux/macOS)
 
@@ -122,7 +117,7 @@ mvn clean javafx:run
 ```
 bookSharing/
 │
-└── first_draft/                     # Maven project root
+└── first_draft/                   # Maven project root
     │
     ├── pom.xml                    # Maven configuration
     ├── mvnw / mvnw.cmd            # Maven wrapper scripts
@@ -189,16 +184,16 @@ bookSharing/
    Windows (cmd.exe):
    ```cmd
    REM Navigate to BookPanda folder
-   cd path\to\bookSharing\first_draft
+   cd bookSharing\first_draft
    
    REM Run with Maven wrapper
-   mvnw.cmd clean javafx:run
+   ./mvnw.cmd clean javafx:run
    ```
    
    Linux/macOS:
    ```bash
    # Navigate to BookPanda folder
-   cd path/to/bookSharing/first_draft
+   cd bookSharing/first_draft
    
    # Run with Maven wrapper
    ./mvnw clean javafx:run
