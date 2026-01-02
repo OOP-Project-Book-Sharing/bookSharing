@@ -56,18 +56,15 @@ public class SearchPageController {
         renderBookGrid(searchResults);
     }
 
-    // --- Helper method to fix the layout issue ---
     private void renderBookGrid(List<Book> booksToDisplay) {
         gridPane.getChildren().clear();
         gridPane.getColumnConstraints().clear();
         gridPane.getRowConstraints().clear();
 
-        // Center the grid so there isn't awkward empty space on the right
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(20));
 
         if (booksToDisplay == null || booksToDisplay.isEmpty()) {
-            // Show "No matches found" message
             Label noResultsLabel = new Label("No matches found");
             noResultsLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: #666; -fx-font-weight: bold;");
             gridPane.add(noResultsLabel, 0, 0);

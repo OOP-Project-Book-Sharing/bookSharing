@@ -68,14 +68,17 @@
 
 /* ==================== ACTION BUTTONS ==================== */
 .button {
-    -fx-padding: 12 24 12 24;
-    -fx-font-size: 14px;
+    -fx-padding: 10 16 10 16;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-background-radius: 8;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0.3, 0, 2);
     -fx-border-width: 0;
+    -fx-max-width: infinity;
+    -fx-pref-width: 140;
+    -fx-wrap-text: true;
 }
 
 /* Buy Button */

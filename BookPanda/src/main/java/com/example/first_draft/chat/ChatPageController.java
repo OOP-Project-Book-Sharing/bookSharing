@@ -45,7 +45,7 @@ public class ChatPageController {
 
     public void setUsername(String currentUser) {
         this.username = currentUser;
-        loadAllChatUsers(); // Load users from chat history - RESTORED
+        loadAllChatUsers();
         connectToServer();
     }
 
@@ -89,7 +89,7 @@ public class ChatPageController {
     private void loadChatWith(String otherUser) {
         Platform.runLater(() -> {
             chatBox.getChildren().clear();
-            displayedMessages.clear(); // Clear tracking when switching chats
+            displayedMessages.clear();
             if (otherUser == null || otherUser.isEmpty()) return;
         });
 
@@ -98,7 +98,6 @@ public class ChatPageController {
         List<String> history = ChatLogManager.loadMessages(username, otherUser);
 
         if (history.isEmpty()) {
-            // Show "No chat with this user" message
             Platform.runLater(() -> {
                 Label noChatLabel = new Label("No chat with this user");
                 noChatLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #999; -fx-font-style: italic;");
@@ -178,10 +177,8 @@ public class ChatPageController {
 
                         // Display if chatting with this user
                         if (sender.equals(currentChatUser)) {
-                            // Clear "No chat with this user" message if it exists
                             Platform.runLater(() -> clearNoChatMessage());
 
-                            // Track received message
                             String messageKey = "THEM:" + msgContent;
                             if (!displayedMessages.contains(messageKey)) {
                                 displayedMessages.add(messageKey);
@@ -195,7 +192,6 @@ public class ChatPageController {
                 }
             } catch (IOException e) {
                 Platform.runLater(() -> {
-                    // Connection failed, but chat still works with saved messages
                     System.out.println("Unable to connect to chat server. Working in offline mode.");
                 });
             }
@@ -213,7 +209,6 @@ public class ChatPageController {
         }
 
         Platform.runLater(() -> {
-            // Get all users from chat history
             Set<String> allUsers = new HashSet<>();
 
             // Add users from existing list (preserve chat history)
@@ -235,13 +230,10 @@ public class ChatPageController {
                 }
             }
 
-            // Add online users
             allUsers.addAll(onlineSet);
 
-            // Remove current user
             allUsers.remove(username);
 
-            // Clear and rebuild list
             userList.getItems().clear();
 
             // Add users to list without online indicator
@@ -255,7 +247,6 @@ public class ChatPageController {
     }
 
     private void clearNoChatMessage() {
-        // Clear "No chat with this user" message if it exists
         if (chatBox.getChildren().size() == 1) {
             javafx.scene.Node firstChild = chatBox.getChildren().get(0);
             if (firstChild instanceof VBox) {
@@ -275,14 +266,11 @@ public class ChatPageController {
         String message = messageField.getText().trim();
         if (currentChatUser == null || currentChatUser.isEmpty() || message.isEmpty()) return;
 
-        // Track this message as displayed
         String messageKey = "ME:" + message;
         displayedMessages.add(messageKey);
 
-        // Clear "No chat with this user" message if it exists
         clearNoChatMessage();
 
-        // Display message immediately for better UX
         addMessageBubble(message, true);
         messageField.clear();
 
@@ -313,13 +301,11 @@ public class ChatPageController {
             );
 
             if (isSentByMe) {
-                // Sent message (right side, green)
                 messageLabel.setStyle(messageLabel.getStyle() +
                         "-fx-background-color: #DCF8C6; " +
                         "-fx-text-fill: #000000;");
                 messageContainer.setAlignment(Pos.CENTER_RIGHT);
             } else {
-                // Received message (left side, white)
                 messageLabel.setStyle(messageLabel.getStyle() +
                         "-fx-background-color: #FFFFFF; " +
                         "-fx-text-fill: #000000; " +
@@ -336,7 +322,6 @@ public class ChatPageController {
                 chatScrollPane.setVvalue(1.0);
             });
 
-            // Second attempt after a delay to ensure content is rendered
             new Thread(() -> {
                 try {
                     Thread.sleep(50);
