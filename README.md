@@ -2,14 +2,13 @@
 
 <div align="center">
 
-  ![BookPanda Logo](BookPanda/src/main/resources/com/example/first_draft/images/logo.png)
+  ![BookPanda Logo](first_draft/src/main/resources/com/example/first_draft/images/logo.png)
 
   **A modern JavaFX-based book sharing and rental platform that connects book lovers**
 
   [![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/yourusername/bookpanda/releases/latest/download/bookpanda.apk)
   [![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=java)](https://www.oracle.com/java/)
   [![JavaFX](https://img.shields.io/badge/JavaFX-21.0.6-blue?style=for-the-badge&logo=java)](https://openjfx.io/)
-  [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 </div>
 
@@ -35,15 +34,13 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 
 ## 🚀 Download & Installation
 
-### Option 1: Download APK (Android)
+### Option 1: Download .exe File
 
 📱 **[Download BookPanda APK](https://github.com/yourusername/bookpanda/releases/latest/download/bookpanda.apk)**
 
 1. Download the APK file from the link above
 2. Enable "Install from Unknown Sources" in your Android settings
 3. Install and run the application
-
-> **Note:** Replace `yourusername` with your actual GitHub username in the link above
 
 ### Option 2: Build from Source
 
@@ -56,10 +53,10 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 
 ```cmd
 REM Clone the repository
-git clone https://github.com/<yourusername>/bookpanda.git
+git clone https://github.com/OOP-Project-Book-Sharing/bookSharing.git
 
 REM Navigate to the Maven project folder
-cd bookpanda\BookPanda
+cd bookSharing/first_draft
 
 REM Build and run with Maven wrapper (recommended)
 mvnw.cmd clean javafx:run
@@ -69,10 +66,10 @@ mvnw.cmd clean javafx:run
 
 ```bash
 # Clone the repository
-git clone https://github.com/<yourusername>/bookpanda.git
+git clone https://github.com/OOP-Project-Book-Sharing/bookSharing.git
 
 # Navigate to the Maven project folder
-cd bookpanda/BookPanda
+cd bookSharing/first_draft
 
 # Build and run with Maven wrapper
 ./mvnw clean javafx:run
@@ -125,7 +122,7 @@ mvn clean javafx:run
 ```
 bookSharing/
 │
-└── BookPanda/                     # Maven project root (OPEN THIS IN YOUR IDE)
+└── first_draft/                     # Maven project root
     │
     ├── pom.xml                    # Maven configuration
     ├── mvnw / mvnw.cmd            # Maven wrapper scripts
@@ -133,12 +130,14 @@ bookSharing/
     ├── database/                  # Data storage (books.dat, users.dat, genres.txt)
     ├── images/                    # User-uploaded book covers
     ├── chatlogs/                  # Chat message history per user
+    ├── out/                       # For executable Java File
     │
     ├── src/main/
     │   ├── java/
     │   │   ├── module-info.java
     │   │   └── com/example/first_draft/
     │   │       ├── Main.java
+    │   │       ├── Main_1.java
     │   │       ├── Book.java
     │   │       ├── User.java
     │   │       ├── BookDatabase.java
@@ -190,7 +189,7 @@ bookSharing/
    Windows (cmd.exe):
    ```cmd
    REM Navigate to BookPanda folder
-   cd path\to\bookSharing\BookPanda
+   cd path\to\bookSharing\first_draft
    
    REM Run with Maven wrapper
    mvnw.cmd clean javafx:run
@@ -199,7 +198,7 @@ bookSharing/
    Linux/macOS:
    ```bash
    # Navigate to BookPanda folder
-   cd path/to/bookSharing/BookPanda
+   cd path/to/bookSharing/first_draft
    
    # Run with Maven wrapper
    ./mvnw clean javafx:run
@@ -212,17 +211,17 @@ bookSharing/
 
 3. **Start the Chat Server** (Optional - for chat features)
    
-   The chat server runs on port 12345. You can start it manually:
+   The chat server runs on port 5000. You can start it manually:
    
    Windows:
    ```cmd
-   cd BookPanda\src\main\java
+   cd first_draft\src\main\java
    java com.example.first_draft.chat.ChatServer
    ```
    
    Linux/macOS:
    ```bash
-   cd BookPanda/src/main/java
+   cd first_draft/src/main/java
    java com.example.first_draft.chat.ChatServer
    ```
 
