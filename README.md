@@ -14,6 +14,8 @@
 
 BookPanda is a comprehensive book sharing platform that allows users to buy, rent, and exchange books with other book enthusiasts. Built with JavaFX, it provides a modern, intuitive interface with real-time chat functionality for seamless communication between users.
 
+### 🎥 [**Watch Demonstration Video**](https://youtu.be/28lsGtrP_fI)
+
 ### ✨ Key Features
 
 - 🔐 **User Authentication** - Secure login and registration system with password validation
