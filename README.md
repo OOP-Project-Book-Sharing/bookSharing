@@ -4,6 +4,8 @@
 
   ![BookPanda Logo](first_draft/src/main/resources/com/example/first_draft/images/logo.png)
 
+  ### 📥 [**Download Executable JAR File**](https://drive.google.com/file/d/1KsnhfojAjngrScvNWYVY5Aq-gbKkq6O-/view?usp=sharing)
+
 </div>
 
 ---
@@ -28,6 +30,43 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 
 ## 🚀 Download & Installation
 
+### Option 1: Download Executable JAR File (Easiest)
+
+#### Prerequisites
+- **Java Runtime Environment (JRE) 21 or higher** - [Download here](https://www.oracle.com/java/technologies/downloads/)
+
+#### Steps
+
+1. **Download the JAR file** from [this link](https://drive.google.com/file/d/1KsnhfojAjngrScvNWYVY5Aq-gbKkq6O-/view?usp=sharing)
+
+2. **Extract the downloaded file** (if it's in a zip/archive)
+
+3. **Run the application**
+   
+   Windows (cmd.exe):
+   ```cmd
+   REM Navigate to the directory where you downloaded the JAR file
+   cd path\to\downloaded\file
+   
+   REM Run the JAR file
+   java -jar BookPanda.jar
+   ```
+   
+   Linux/macOS:
+   ```bash
+   # Navigate to the directory where you downloaded the JAR file
+   cd path/to/downloaded/file
+   
+   # Run the JAR file
+   java -jar BookPanda.jar
+   ```
+   
+   **Or simply double-click** the JAR file if you have Java properly configured on your system.
+
+---
+
+### Option 2: Build from Source
+
 #### Prerequisites
 - **Java Development Kit (JDK) 21 or higher** - [Download here](https://www.oracle.com/java/technologies/downloads/)
 - **Maven** (optional - Maven wrapper included in project)
@@ -43,17 +82,7 @@ REM Navigate to the Maven project folder
 cd bookSharing/first_draft
 
 REM Build and run with Maven wrapper (recommended)
-.\mvnw.cmd clean javafx:run
-```
-
-#### Alternative: Use the executable Jar file
-
-```cmd
-REM Navigate to Directory
-cd first_draft\out\artifacts\BookPanda_jar
-
-REM Run the executable Jar File
-java -jar BookPanda.jar
+mvnw.cmd clean javafx:run
 ```
 
 
@@ -187,7 +216,7 @@ bookSharing/
    cd bookSharing\first_draft
    
    REM Run with Maven wrapper
-   ./mvnw.cmd clean javafx:run
+   mvnw.cmd clean javafx:run
    ```
    
    Linux/macOS:
