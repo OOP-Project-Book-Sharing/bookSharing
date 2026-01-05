@@ -4,6 +4,9 @@
 
   ![BookPanda Logo](first_draft/src/main/resources/com/example/first_draft/images/logo.png)
 
+  ### 💾 [**Download Windows Installer**](https://drive.google.com/file/d/1N44BgLfjMljwaKDzvGARJ9zi0ksvtLpy/view?usp=sharing)
+  *Note: Does not include existing databases, chatlogs, and images - starts with fresh data*
+  
   ### 📥 [**Download Executable JAR File**](https://drive.google.com/file/d/1KsnhfojAjngrScvNWYVY5Aq-gbKkq6O-/view?usp=sharing)
 
 </div>
@@ -32,7 +35,7 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 
 ## 🚀 Download & Installation
 
-### Option 1: Download Executable JAR File (Easiest)
+### Option 1: Download Executable JAR File
 
 #### Prerequisites
 - **Java Runtime Environment (JRE) 21 or higher** - [Download here](https://www.oracle.com/java/technologies/downloads/)
@@ -67,7 +70,29 @@ BookPanda is a comprehensive book sharing platform that allows users to buy, ren
 
 ---
 
-### Option 2: Build from Source
+### Option 2: Windows Installer
+
+#### Prerequisites
+- **Windows 10/11** operating system
+
+#### Steps
+
+1. **Download the Windows Installer** from [this link](https://drive.google.com/file/d/1N44BgLfjMljwaKDzvGARJ9zi0ksvtLpy/view?usp=sharing)
+
+2. **Run the installer**
+   - Double-click the installer file (`.msi`)
+   - Follow the installation wizard prompts
+   - Complete the installation
+
+3. **Launch BookPanda**
+   - Find BookPanda in your Desktop shortcut
+   - Double-click to launch the application
+   
+   **Note**: The installer includes all required dependencies, including Java Runtime, so you don't need to install Java separately. However, it does not include the existing databases, chatlogs, and user-uploaded images - the application will start with fresh/empty data files.
+
+---
+
+### Option 3: Build from Source
 
 #### Prerequisites
 - **Java Development Kit (JDK) 21 or higher** - [Download here](https://www.oracle.com/java/technologies/downloads/)
